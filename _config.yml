@@ -21,15 +21,15 @@ footer-links:
   email: pmhahn@pmhahn.de
   facebook:
   flickr:
-  github: pmhahn/jekyll-now
+  github: pmhahn
   instagram:
   linkedin:
   pinterest:
   rss: # just type anything here for a working RSS icon
-  twitter: jekyllrb
+  twitter:
   stackoverflow: users/907658/pmhahn # your stackoverflow profile, e.g. "users/50476/bart-kiers"
   youtube: # channel/<your_long_string> or user/<user-name>
-  googleplus: pmhahn75 # anything in your profile username that comes after plus.google.com/
+  googleplus: 110059045397851960899 # anything in your profile username that comes after plus.google.com/
 
 
 # Enter your Disqus shortname (not your username) to enable commenting on posts
