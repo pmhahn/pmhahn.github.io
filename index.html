@@ -2,6 +2,16 @@
 layout: default
 ---
 
+<div class="categories">
+	{% for category in site.categories %}
+	<li style="font-size: {{ category | last | size | times: 100 | divided_by: site.categories.size }}%">
+		<a href="/{{ category | first | slugize }}/">
+			{{ category | first  }}
+		</a>
+	</li>
+	{% endfor %}
+</div>
+
 <div class="posts">
   {% for post in site.posts %}
     <article class="post">
