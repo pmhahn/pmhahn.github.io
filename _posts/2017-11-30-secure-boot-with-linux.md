@@ -25,10 +25,10 @@ Therefore exists "SHIM":
 It will get loaded by EFI instead of GRUB.
 It itself will only than load GRUB and the Linux kernel if they are also signed.
 Each Linux distribution builds its own version of SHIM:
-It embedds a certificate controlled fully by that distribution.
+It embeds a certificate controlled fully by that distribution.
 This certificate is used to sign GRUB and the Linux kernels.
 SHIM also allows loading "Machine Owner Keys" (MOK).
-This allows using SHIM from one distriubution to load kernels from other distributions or your own.
+This allows using SHIM from one distribution to load kernels from other distributions or your own.
 
 There are two databases within the firmware.
 They contain signatures and certificates for EFI drivers and boot-loaders.
@@ -53,7 +53,7 @@ We create some keys and certificates for our platform:
 	mkdir PLATFORM
 	cd PLATFORM
 
-Create new self-signed certificats:
+Create new self-signed certificates:
 
 	for n in PK KEK db
 	do
@@ -62,7 +62,7 @@ Create new self-signed certificats:
 	openssl x509 -in "$n.pem" -inform PEM -out "$n.der" -outform DER
 	done
 
-Create a GUID to identifiy us:
+Create a GUID to identify us:
 
 	uuidgen >guid
 	read guid <guid
@@ -106,7 +106,7 @@ GRUB is modular by design.
 You must built a customized image:
 It must not contain some modules.
 They would allow loading an unsigned Linux kernel.
-(GRUB has its own mechanism to only load signed things: <https://www.gnu.org/software/grub/manual/grub/html_node/Using-digital-signatures.html#Using-digital-signatures>, <https://ruderich.org/simon/notes/secure-boot-with-grub-and-signed-linux-and-initrd>)
+(GRUB has its own mechanism to only load signed things: [Using digital signatures](https://www.gnu.org/software/grub/manual/grub/html_node/Using-digital-signatures.html#Using-digital-signatures), [secure boot with grub and signed Linux and initrd](https://ruderich.org/simon/notes/secure-boot-with-grub-and-signed-linux-and-initrd))
 
 	sudo apt install grub-efi-amd64-bin
 	cat >grub.cfg <<__CFG__
@@ -138,17 +138,21 @@ You must now sign your boot-loader to get it loaded:
 Microsoft will not do that!
 See #Shim below.
 
-/boot:
+`/boot`:
 	The traditional directory for Linux kernel.
 	May be an extra filesystem readable by GRUB.
-/boot/efi:
+
+`/boot/efi`:
 	The "EFI system partition".
 	It's a FAT32 file system.
-/boot/efi/EFI:
+
+`/boot/efi/EFI`:
 	The directory for different boot entries.
-/boot/efi/EFI/BOOT:
+
+`/boot/efi/EFI/BOOT`:
 	The default directory for removable devices.
-/boot/efi/EFI/BOOT/BOOTX64.EFI:
+
+`/boot/efi/EFI/BOOT/BOOTX64.EFI`:
 	The default boot entry.
 	This is used as the last fall back.
 
@@ -173,7 +177,7 @@ Microsoft signs our build:
 	sbsign --key db.rsa --cert db.pem --output shimx64.efi.signed /usr/lib/shim/shimx64.efi
 
 Thus it gets loaded by PCs using the Microsoft key.
-GRUB needs to be re-signed by our embeded key:
+GRUB needs to be re-signed by our embedded key:
 
 	sbsign --key shim.rsa --cert shim.pem --output grubx64.efi.signed grubx64.efi
 	install -m 0644 grubx64.efi.signed /boot/efi/EFI/BOOT/grubx64.efi
@@ -186,7 +190,7 @@ Install shim:
 
 "Machine Owner Keys" (MOK) allow you to load things yourself.
 You can while-list individual binaries by adding their hash.
-You cann load certificates to allow loading everything signed by them.
+You can load certificates to allow loading everything signed by them.
 This requires the MOK-Manager:
 
 	install -m 0644 /usr/lib/shim/mmx64.efi.signed /boot/efi/EFI/univention/mmx64.efi
@@ -211,17 +215,17 @@ Sign Linux kernel with key embedded in SHIM:
 
 NvVars
 ------
-UEFI requires a writable Flash device.
-`qemu -bios` will only proivde one big read-only ROM.
-In that case "OVMS" stores the EFI variables in '(/boot/EFI/NvVars'.
+UEFI requires a writable flash device.
+`qemu -bios` will only provide one big read-only ROM.
+In that case "OVMS" stores the EFI variables in `/boot/EFI/NvVars`.
 The correct way for Qemu is
 ```
 -drive file=/usr/share/OVMF/OVMF_CODE.fd,if=pflash,format=raw,unit=0,readonly=on
 -drive file=/home/phahn/.config/libvirt/qemu/nvram/uefi_VARS.fd,if=pflash,format=raw,unit=1
 ```
-This stores the EFI-varibales in the `VARS` file.
-But this does not implement the restriction, that some variables must only be modified by the boot-service, e.g. all Secure-Boot realted ones.
-This requirs SMM to work.
+This stores the EFI-variables in the `VARS` file.
+But this does not implement the restriction, that some variables must only be modified by the boot-service, e.g. all Secure-Boot related ones.
+This requires System Management Mode (SMM) to work.
 In that case the EFI-variables flash is write protected, so only SMM can write it.
 This needs to be turned on:
 ```
