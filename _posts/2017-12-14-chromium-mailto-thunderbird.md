@@ -30,9 +30,11 @@ There also is `xdg-email` to compose new emails.
 
 You can launch an email client yourself like this:
 
-	xdg-open 'mailto:pmhahn@pmhahn.de?subject=Subject&body=Body'
-	xdg-email 'mailto:pmhahn@pmhahn.de?subject=Subject&body=Body'
-	xdg-email --to pmhahn@pmhahn.de --subject Subject --body Body
+```bash
+xdg-open 'mailto:pmhahn@pmhahn.de?subject=Subject&body=Body'
+xdg-email 'mailto:pmhahn@pmhahn.de?subject=Subject&body=Body'
+xdg-email --to pmhahn@pmhahn.de --subject Subject --body Body
+```
 
 Issues
 ------
@@ -50,8 +52,10 @@ It has the highest priority.
 This is quiet useful to disable any further URL and command line processing:
 Newer versions of Thunderbird seem to support URL-handling themselves:
 
-	thunderbird -h
-	# Usage: /usr/lib/thunderbird/thunderbird [ options ... ] [URL]
+```bash
+thunderbird -h
+# Usage: /usr/lib/thunderbird/thunderbird [ options ... ] [URL]
+```
 
 You can use this to pass through other mail headers like `In-Reply-To`.
 Create a file `xdg-email-hook.sh` in a directory, which is searched by `PATH`.
@@ -59,8 +63,10 @@ Create a file `xdg-email-hook.sh` in a directory, which is searched by `PATH`.
 * Make it executable
 * Use the following content:
 
-		#!/bin/sh
-		exec /usr/bin/thunderbird "$@"
+```bash
+#!/bin/sh
+exec /usr/bin/thunderbird "$@"
+```
 
 MAILER
 ======
@@ -85,7 +91,9 @@ Or use `gvfs-open` or `gnome-open`.
 
 You can configure *Thunderbird* as your default handler for email like this:
 
-	xdg-mime default /usr/share/applications/thunderbird.desktop x-scheme-handler/mailto
+```bash
+xdg-mime default /usr/share/applications/thunderbird.desktop x-scheme-handler/mailto
+```
 
 XFCE
 ----
@@ -97,10 +105,12 @@ With KDE you have one more indirection:
 You need to get the name of your profile.
 Then you need to get the currently configured mail client:
 
-	kreadconfig5 --file emaildefaults --group Defaults --key Profile
-	# Standard
-	kreadconfig5 --file emaildefaults --group PROFILE_Standard --key EmailClient
-	# thunderbird %u
+```bash
+kreadconfig5 --file emaildefaults --group Defaults --key Profile
+# Standard
+kreadconfig5 --file emaildefaults --group PROFILE_Standard --key EmailClient
+# thunderbird %u
+```
 
 Further reading
 ===============

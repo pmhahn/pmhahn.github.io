@@ -13,9 +13,11 @@ Here is some handy shell command, to find those packages, which are
 * installed on your system
 * but have no version in any of the currently configured APT repositories:
 
-		dpkg-query -W -f '${Package}\n' |
-		xargs apt-cache policy |
-		sed -ne '/^ /{H;$!b};x;/\*\*\* [^\n]*\n[^\n]*\/var\/lib\/dpkg\/status/p'
+```bash
+dpkg-query -W -f '${Package}\n' |
+xargs apt-cache policy |
+sed -ne '/^ /{H;$!b};x;/\*\*\* [^\n]*\n[^\n]*\/var\/lib\/dpkg\/status/p'
+```
 
 How does it work:
 
