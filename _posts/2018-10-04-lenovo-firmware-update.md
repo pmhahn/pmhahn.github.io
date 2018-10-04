@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Levovo ThinkPdad L470 Firmware update with Linux"
+title: "Levovo ThinkPad L470 Firmware update with Linux"
 date: 2018-10-04 09:01:00  +0200
 categories: thinkpad UEFI linux firmware update
 ---
@@ -9,7 +9,7 @@ My company notebook (A Lenovo ThinkPad L470) sometimes crashed when I put it int
 It turn back on, the external monitor turns on, but after that I only see a black screen with the mouse cursor.
 Today I had enough and performed the pending firmware update, which also includes the Intel CPU microcode updates.
 
-As a Linux only user performing the firmware update is still fun, as Lenovo provides only a [Windows tool](https://pcsupport.lenovo.com/de/de/downloads/ds120327) or as an alternative a [bootbale CD](https://support.lenovo.com/de/de/downloads/ds120328).
+As a Linux only user performing the firmware update is still fun, as Lenovo provides only a [Windows tool](https://pcsupport.lenovo.com/de/de/downloads/ds120327) or as an alternative a [bootable CD](https://support.lenovo.com/de/de/downloads/ds120328).
 There also is the [Linux Vendor Firmware Service](https://fwupd.org/) which nowadays simplified the process and Levono also contributes to it, but not for my model.
 
 ```bash
@@ -24,7 +24,7 @@ sudo dd bs=1M if=r0guj17wd.iso of=/dev/sdc
 ```
 But the Notebook refused to boot from it.
 
-Next I had a look at it using `isoinfo -d r0guj17wd.iso` which showed the DVD to be empty but only contain an ElTorito boot image.
+Next I had a look at it using `isoinfo -d r0guj17wd.iso` which showed the DVD to be empty but only contain an [El Torito](https://de.wikipedia.org/wiki/El_Torito) boot image.
 So I extracted the boot image into file:
 
 ```bash
@@ -38,7 +38,7 @@ sudo losetup -P /dev/loop0 ./leno.boot
 sudo mount -o ro /dev/loop0p1 /mnt
 ```
 
-Finally I was able to access the files and copied it onto my Debian 9 Stretch systems EFI parition:
+Finally I was able to access the files and copied it onto my Debian 9 Stretch systems EFI partition:
 
 ```bash
 sudo install -D /mnt/FLASH/NoDCCheck_bootx64.efi /boot/efi/FLASH/NoDCCheck_bootx64.efi
