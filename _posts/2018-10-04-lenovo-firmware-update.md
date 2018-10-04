@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Levovo ThinkPad L470 Firmware update with Linux"
+title: "Lenovo ThinkPad L470 Firmware update with Linux"
 date: 2018-10-04 09:01:00  +0200
 categories: thinkpad UEFI linux firmware update
 ---
