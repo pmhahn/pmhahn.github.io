@@ -5,11 +5,13 @@ date: 2019-02-28 07:59:00  +0100
 categories: git
 ---
 
-[git filter-branch](https://git-scm.com/docs/git-filter-branch) can be used to rewrite the history of one or more branches.
+`git-filter-branch` can be used to rewrite the history of one or more branches.
+As a [Debian Developer](https://www.debian.org/) working for [Univention GmbH](https://www.univention.de/) I often have to work with Debian packages.
+Here are some more examples from my daily work.
 
 Removing files
 ==============
-The manual page for `git-filter-branch` contains several examples already.
+The manual page for [git filter-branch](https://git-scm.com/docs/git-filter-branch) contains several examples already.
 
 The following two commands can be used to remove the file `filename` from all commits in the current branch:
 ```bash
@@ -38,7 +40,6 @@ Otherwise the next commit after the one which got changed will accumulate all pr
 
 Dropping changes to files
 =========================
-As a [Debian Developer](https://www.debian.org) working for [Univention GmbH](https://www.univention.de/) I often have to work with Debian packages.
 Sometimes I have to apply the changes of one feature branch to multiple upstream branches.
 
 This often leads to conflicts with `debian/changelog` as different branches have different versions of this file.
@@ -62,6 +63,16 @@ Some notes on that:
 3. Instead you can use `$GIT_COMMIT`, which points to the commit currently being processed.
 4. `$GIT_COMMIT~1` references the **original** previous commit.
    Using `map $REV` this gets mapped to the **rewritten** previous commit.
+
+With some more thinking this can be simplified to:
+
+```bash
+git filter-branch --prune-empty --index-filter \
+	'git reset @{u} -- "**/debian/changelog"' \
+	@{u}..HEAD
+```
+
+which basically tells git to reset all `changelog` files back to the revision at the branch point.
 
 Dropping hunks
 ==============
