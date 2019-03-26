@@ -67,8 +67,9 @@ Some notes on that:
 With some more thinking this can be simplified to:
 
 ```bash
+base="$(git merge-base @{u} HEAD)"
 git filter-branch --prune-empty --index-filter \
-	'git reset @{u} -- "**/debian/changelog"' \
+	"git reset '$base' -- '**/debian/changelog'" \
 	@{u}..HEAD
 ```
 
