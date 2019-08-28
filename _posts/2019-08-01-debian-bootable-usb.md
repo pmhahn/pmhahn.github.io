@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Bootable Debian Buster on USB stick"
-date: 2019-08-01 14002:00  +0200
+date: 2019-08-01 14:02:00  +0200
 categories: linux debian
 excerpt_separator: <!--more-->
 ---
