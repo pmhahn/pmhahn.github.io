@@ -113,7 +113,7 @@ Linux provides some information on UNIX domain sockets in its `/proc` file syste
 		# Num               RefCount Protocol Flags    Type St Inode    Path
 		# 000000005149f1ab: 00000002 00000000 00010000 0001 01 13381347 /tmp/socket
 		# 00000000ac502341: 00000002 00000000 00010000 0001 01 13383220 /tmp/socket
-															   ^^^^^^^^
+		                                                       ^^^^^^^^
 
 Both `fuser` and `lsof` use that information to find the processes, which opened UNIX sockets.
 But;
@@ -139,7 +139,7 @@ But;
 		$ readlink /proc/12554/fd/3 /proc/12550/fd/3
 		socket:[13383220]
 		socket:[13381347]
-				^^^^^^^^
+		        ^^^^^^^^
 
   The numbers in the square brackets 'socket:[...]` match the Inode numbers from `/proc/net/unix'.
 
