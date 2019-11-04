@@ -114,7 +114,7 @@ Due to [GitLab Issue 3968](https://gitlab.com/gitlab-org/gitlab-runner/issues/39
 cd gitlab-runner
 
 [ -s ucs-too-ca-.crt ] ||
-	wget wget https://nissedal.knut.univention.de/ucs-root-ca.crt
+	wget --no-check-certificate wget https://nissedal.knut.univention.de/ucs-root-ca.crt
 kubectl create secret generic ca --from-file=ucs-root-ca.crt
 
 vi values.yaml
@@ -146,8 +146,27 @@ helm status gitlab-runner
 helm upgrade -f values.yaml gitlab-runner gitlab/gitlab-runner
 
 cd ..
+```
 
-# ERROR: Job failed (system failure): pods is forbidden: User "system:serviceaccount:default:default" cannot create resource "pods" in API group "" in the namespace "default"
-kubectl create role pod-reader --verb=get,list,watch --resource=pods -n default
-kubectl create rolebinding sa-read-pods --role=pod-reader --user=system:serviceaccount:default:default-service-account -n default
+# Issues
+
+## Missing Service account
+
+> ERROR: Job failed (system failure): pods is forbidden: User "system:serviceaccount:default:default" cannot create resource "pods" in API group "" in the namespace "default"
+
+Enable `rbac/create=true` in `values.yaml` for `helm` to create the role automatically.
+
+## Docker image not pulled
+
+> ERROR: Job failed: image pull failed: Back-off pulling image "docker-registry.knut.univention.de/phahn/ucs-minbase:latest"
+
+Missing SSL CA certificate on Host system, where `dockerd` tries to pull the
+image.
+
+```bash
+cd /usr/local/share/ca-certificates
+[ -s ucs-too-ca-.crt ] ||
+	wget --no-check-certificate wget https://nissedal.knut.univention.de/ucs-root-ca.crt
+update-ca-certificates
+systemctl restart docker.service
 ```
