@@ -2,7 +2,7 @@
 layout: post
 title: "Reproducible Build"
 date: 2019-04-09 17:54:00  +0200
-categories: Debian
+categories: debian
 ---
 
 [Debian](https://www.debian.org/) had started to make their build reproducible:

@@ -2,7 +2,7 @@
 layout: post
 title: "Kubernetes on Debian Buster"
 date: 2019-08-28 09:00:00  +0200
-categories: linux debian
+categories: linux debian virt
 excerpt_separator: <!--more-->
 ---
 

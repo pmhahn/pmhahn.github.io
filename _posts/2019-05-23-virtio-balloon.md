@@ -2,7 +2,7 @@
 layout: post
 title: "VirtIO Memory Ballooning"
 date: 2019-05-23 15:00:00  +0200
-categories: linux
+categories: linux virt
 excerpt_separator: <!--more-->
 ---
 
