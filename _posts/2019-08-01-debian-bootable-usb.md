@@ -11,7 +11,7 @@ But how to make a bootable USB stick from it?
 
 <!--more-->
 
-After each Debain release I cannot remeber how to update my pocket USB stick,
+After each Debian release I cannot remember how to update my pocket USB stick,
 You can follow <https://www.debian.org/CD/faq/#write-usb> or do the following;:
 
 	cd /media/phahn/INTENSO/
