@@ -16,7 +16,7 @@ Nach einer kurzen Pause kam ich heute wieder zurück zu meinem Notebook und konn
 In UCS verwenden wir noch `libpam-ldap` und `libnss-ldap,` sie allesamt ein funktionierendes Netzwerk voraussetzen und damit nicht Offlinefähig sind, was aber für ein Notebook flicht ist.
 
 SSSD ist modular aufgebaut und kann neben den Benutzer- und Gruppendaten aus dem LDAP auch mit Kerbenos-Keys umgehen:
-Mit der Authentifizierung bekommt man sein *Kerberos Ticket Grunting Ticket* (KRBTGT), was als Ausweis für eine erfolgreiche Authentifizierung dienst.
+Mit der Authentifizierung bekommt man sein *Kerberos Ticket Granting Ticket* (KRBTGT), was als Ausweis für eine erfolgreiche Authentifizierung dienst.
 Damit weißt man sich gegenüber dem Kerberos-Server aus, wenn man auf weitere Dienste zugreifen will.
 Für jeden Dienst erhält man ein weiteres Ticket, was einen für den Zugriff legitimiert.
 
