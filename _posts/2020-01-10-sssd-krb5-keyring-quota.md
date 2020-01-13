@@ -13,7 +13,7 @@ Nach einer kurzen Pause kam ich heute wieder zurück zu meinem Notebook und konn
 <!--more-->
 
 [SSSD](https://docs.pagure.org/SSSD.sssd/) ist der *System Security Services Daemo* und hat zur Aufgabe, die Benutzer-, Gruppen- und Login-Daten zu verwalten.
-In UCS verwenden wir noch `libpam-ldap` und `libnss-ldap,` sie allesamt ein funktionierendes Netzwerk voraussetzen und damit nicht Offlinefähig sind, was aber für ein Notebook flicht ist.
+In UCS verwenden wir noch `libpam-ldap` und `libnss-ldap,` sie allesamt ein funktionierendes Netzwerk voraussetzen und damit nicht offlinefähig sind, was aber für ein Notebook Pflicht ist.
 
 SSSD ist modular aufgebaut und kann neben den Benutzer- und Gruppendaten aus dem LDAP auch mit Kerbenos-Keys umgehen:
 Mit der Authentifizierung bekommt man sein *Kerberos Ticket Granting Ticket* (KRBTGT), was als Ausweis für eine erfolgreiche Authentifizierung dienst.
@@ -25,7 +25,8 @@ Klassischerweise wurde dafür eine Datei wie `/tmp/krb5cc_$UID` genutzt.
 Auf diese muss man gut aufpassen, denn solange die Tickets gültig sind kann jeder mit Zugriff auf diese Datei sich als besagter Benutzer ausgeben und auf die Dienste zugreifen.
 
 Aus Aspekten der Sicherheit ist es verpönt, solche Daten unverschlüsselt abzuspeichern (`/etc/*.secret` lässt grüßen).
-Auch gibt es Situationen, wo andere Dienste - die gerne auch mit einer eigenständigen Benutzer-ID laufen - dennoch auf diese Schlüssel zugreifen müssen.
+Auch gibt es Situationen, wo andere Dienste, die gerne auch mit einer eigenständigen Benutzer-ID laufen, dennoch auf diese Schlüssel zugreifen müssen.
+Ein prominentes Beispiel dafür ist das *Network File System* (NFS).
 Unter anderem deshalb hat der Linux daher einen eingebauten Keyring, in dem man kryptographisches Material ablegen kann.
 Mit `keyctl` kann man darauf zugreifen und SSSD kann das auch nutzen.
 
