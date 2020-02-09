@@ -33,8 +33,12 @@ vi inventory/univention/group_vars/all/all.yml
 vi inventory/univention/group_vars/k8s-cluster/k8s-cluster.yml
 # kubeconfig_localhost: true
 # kubectl_localhost: true
+# kube_proxy_strict_arp: true
 vi inventory/univention/group_vars/k8s-cluster/addons.yml
 # helm_enabled: true
+# metrics_server_enabled: true
+# metrics_server_kubelet_insecure_tls: true
+# metrics_server_kubelet_preferred_address_types: "InternalIP"
 
 ansible-playbook \
 	-i inventory/univention/hosts.yml \
@@ -88,6 +92,8 @@ subjects:
   name: gitlab-admin
   namespace: kube-system
 ```
+
+(see `contrib/misc/clusteradmin-rbac.yml`)
 
 2. Apply the service account and cluster role binding to your cluster:
 
@@ -170,3 +176,41 @@ cd /usr/local/share/ca-certificates
 update-ca-certificates
 systemctl restart docker.service
 ```
+
+## Dashboard
+
+You need a *bearer token*, which you can retrieb via `kubectl`:
+
+(see `contrib/misc/clusteradmin-rbac.yml`)
+
+```bash
+kubectl get clusterRoleBindings
+# ...
+# tiller                                                 110d
+# tiller-admin                                           110d
+kubectl describe serviceaccount tiller -n kube-system
+# Mountable secrets:   tiller-token-wshmm
+# Tokens:              tiller-token-wshmm
+kubectl describe secret tiller-token-wshmm -n kube-system
+# token:      ...
+```
+
+## Load balancer
+
+By default k8s does not provide a load balaner implementation:
+Many cloud providers provide that service out-of-the-box.
+If k8s runs on bare-metal servers or in your own virtual machines, you must provide that service manually.
+One option is to use [MetalLB](https://metallb.universe.tf/).
+
+```bash
+ansible-playbook \
+	-i inventory/univention/hosts.yml \
+	--become --become-user=root \
+	-e metallb.ip_range=10.200.17.200-10.200.17.216 \
+	contrib/metallb/metallb.yml
+```
+
+## Single node cluster and upgrades
+
+`kubespray` fails to upgrade a single node cluster as it drains and cordons the single node.
+Essential services like `CoreDNS` are then no longer running and the update fails in `roles/kubernetes/master/tasks/kubeadm-upgrade.yml`.
