@@ -157,7 +157,7 @@ For further discussion here is an example from my current VM:
   This includes caches and other data, which can be fetch again from block devices.
   This will then have a higher cost when the data is actually needed again in **the future**.
   On the other hand you might be lucky and the data is not needed again at all.
-  Bug you gain some more free memory to speed up some other tasks **now**.
+  But you gain some more free memory to speed up some other tasks **now**.
 
 So this in a bet on the future, which either will pay off or make your VM crawl as slowly as hell.
 
