@@ -80,15 +80,19 @@ It then uses an `LD_PRELOAD` wrapper to implement `Copy-on-write` in user-space,
 Personally I don't like this approach I feat corruption:
 If the library does not intercept all calls correctly or a process by-passes the library, changes might leak back into the master environment and taint all following builds.
 
-Another variant is [qemu-builder](https://wiki.debian.org/qemubuilder), which uses Qemu to setup a virtual machine for each build.
+Another variant is [qemu-builder](https://wiki.debian.org/qemubuilder), which uses [Qemu](https://www.qemu.org/) to setup a virtual machine for each build.
 Qemu has a built-in *snapshot* feature to protect the master image from changes:
 All changes go into an overlay image, which can be placed on tmpfs for extra speed.
 Using Qemu also allows cross-building for other architectures.
 
+*pbuilder* itself also include [LVM builder](https://pbuilder-team.pages.debian.net/pbuilder/#lvm).
+It uses the *snapshot* feature of the *Logical Volume Manager* built into the Linux kernel.
+Each base image is setup as a separate logical volume and each build gets its own writeable snapshot.
+
 # Using docker
 
 [Docker](https://www.docker.com/) can also be used to build Debian packages.
-There already is [Whalebuilder](https://btrfs.wiki.kernel.org/index.php/Changelog).
+There already is [Whalebuilder](https://www.uhoreg.ca/programming/debian/whalebuilder).
 
 Multiple things make Docker attractive:
 - it is easy to create a clean environment with just a single command
