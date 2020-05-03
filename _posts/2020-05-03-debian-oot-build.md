@@ -29,7 +29,7 @@ Several of them already have an option to overwrite the directory and/or an be i
 * `dpkg-genbuildinfo` has the `-u$dir` option.
 * `dpkg-genchanges` has the `-u$dir` option.
 
-So for first try for an *out-of-tree* build we can do it like this:
+So for a first try for an *out-of-tree* build we can do it like this:
 
 ```sh
 #/bin/sh
@@ -48,12 +48,17 @@ dpkg-buildpackage \
   --buildinfo-option=-u"$out" \
   --changes-option=-u"$out" \
   -b --no-sign
+
+# More work like
 dpkg-source --aftere-build .
+(cd "$out" && debsign *.changes)  # FIXME
 ```
-This *mostly* works but the path for the `.chagnes` file is hard-coded in `dpkg-buildpackage` and cannot be changed.
-For signing you also would need to call `debsign` on the `.changes` files (or the individual parts `.dsc`, `.buldinfo`)
 
-Using `DH_OPTIONS` also is **not** a good idea as the option `--destdir` is not unique for `dh_builddeb`:
-It is also used by `dh_auto_install` so files get installed in the wrong location.
+This *mostly* works but **fails** for two reasons at the moment:
 
-TBC...
+1. The path for the `.chagnes` file is hard-coded in `dpkg-buildpackage` and cannot be changed.
+
+2. Using `DH_OPTIONS` also is **not** a good idea as the option `--destdir` is not unique for `dh_builddeb`:
+   It is also used by `dh_auto_install` so files get installed in the wrong location.
+
+TBC…
