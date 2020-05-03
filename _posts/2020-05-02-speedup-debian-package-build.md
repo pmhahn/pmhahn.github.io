@@ -131,6 +131,12 @@ dpkg-buildpackage -uc -ub -b  # build package
 exit 0
 ```
 
+The good this about this approach is that you can easily use it inside a build pipeline:
+- GitLab (and others) already are based on using Docker images.
+- It's easy to install the required build dependencies.
+- You have to find a way to get the build artifacts archived.
+  Using [Job artifacts](https://docs.gitlab.com/ee/ci/pipelines/job_artifacts.html) might be one option, but see [Repository hosting](#repository-hosting) below for more options.
+
 This naive approach has the following drawbacks:
 - you run the build as the user `root` inside the docker container.
   You have to call `adduser` and `su` to create them inside the container to fix this.
@@ -240,7 +246,7 @@ This is very fast while that data is still cached in the [Linux kernels dentry c
 
 For previous projects I've used [reprepro](https://salsa.debian.org/brlink/reprepro) both personally but also in my company to host packages built by CI.
 Currently I'm investigating the move to [Atly](https://www.aptly.info/), which has a very powerful [REST API](https://www.aptly.info/doc/api/).
-This allows it to be used via [cURL](https://curl.haxx.se/) until GitLab implements its own [Debian](https://gitlab.com/gitlab-org/gitlab/issues/5835] [Package Registry](https://docs.gitlab.com/ee/user/packages/).
+This allows it to be used via [cURL](https://curl.haxx.se/) until GitLab implements its own [Debian](https://gitlab.com/gitlab-org/gitlab/issues/5835) [Package Registry](https://docs.gitlab.com/ee/user/packages/).
 
 # Summary
 
