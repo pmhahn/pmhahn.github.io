@@ -20,3 +20,9 @@ git filter-branch \
 ```
 
 See [GIT filter-branch]({% post_url 2019-02-28-git-filter-branch %}) for other use cases of `git filter-branch`.
+
+Only to find out that is as simple as
+
+```bash
+git rebase --signoff @~89
+```
