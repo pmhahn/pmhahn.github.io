@@ -217,36 +217,19 @@ ansible-playbook \
 Because of [Issue 82361](https://github.com/kubernetes/kubernetes/issues/82361) `k8s` adds new firewall rules to the `DROP` table, which slows down the system.
 For Debian Buster the `iptables` program must be switched back to the legacy version:
 
-	update-alternatives --set iptables /usr/sbin/iptables-legacy)
+	update-alternatives --set iptables /usr/sbin/iptables-legacy
 	iptables -F DROP
 
 # Single node cluster and upgrades
 
 `kubespray` fails to upgrade a single node cluster as it drains and cordons the single node.
 Essential services like `CoreDNS` are then no longer running and the update fails in `roles/kubernetes/master/tasks/kubeadm-upgrade.yml`.
+You explicitly need to disable that on the command-line:
+
+	ansible-playbook -b -i inventory/univention/hosts.yml upgrade-cluster.yml -e drain_nodes=false -e needs_cordoning=false -D
 
 Also see [kubeadm upgrade](https://kubernetes.io/docs/tasks/administer-cluster/kubeadm/kubeadm-upgrade/),
 
 1. Update `inventory/univention/group_vars/k8s-cluster/k8s-cluster.yml`:
 
-		kube_version: v1.16.7
-
-2. Download new binaries and images:
-
-		ansible-playbook -b -i inventory/univention/hosts.yml cluster.yml --tags=download -e download_run_once=true -e download_localhost=true -D
-
-3. Upgrade all components
-
-		ansible-playbook -b -i inventory/univention/hosts.yml cluster.yml --tags=docker
-		ansible-playbook -b -i inventory/univention/hosts.yml cluster.yml --tags=etcd
-		ansible-playbook -b -i inventory/univention/hosts.yml cluster.yml --tags=vault
-		ansible-playbook -b -i inventory/univention/hosts.yml cluster.yml --tags=node --skip-tags=k8s-gen-certs,k8s-gen-tokens
-		ansible-playbook -b -i inventory/univention/hosts.yml cluster.yml --tags=master
-		ansible-playbook -b -i inventory/univention/hosts.yml cluster.yml --tags=client
-		ansible-playbook -b -i inventory/univention/hosts.yml cluster.yml --tags=network
-		ansible-playbook -b -i inventory/univention/hosts.yml cluster.yml --tags=apps
-		ansible-playbook -b -i inventory/univention/hosts.yml cluster.yml --tags=helm
-
-4. Upgrade k8s:
-
-		kubeadm upgrade apply v1.16.7
+		kube_version: v1.16.12
