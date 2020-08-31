@@ -233,3 +233,7 @@ Also see [kubeadm upgrade](https://kubernetes.io/docs/tasks/administer-cluster/k
 1. Update `inventory/univention/group_vars/k8s-cluster/k8s-cluster.yml`:
 
 		kube_version: v1.16.12
+
+## Links
+
+* [DNS horizontal auto-scaling](https://kubernetes.io/docs/tasks/administer-cluster/dns-horizontal-autoscaling/)
