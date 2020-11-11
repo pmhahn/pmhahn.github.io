@@ -168,7 +168,7 @@ Enable `rbac/create=true` in `values.yaml` for `helm` to create the role automat
 
 > ERROR: Job failed: image pull failed: Back-off pulling image "docker-registry.knut.univention.de/phahn/ucs-minbase:latest"
 
-Missing SSL CA certificate on Host system, where `dockerd` tries to pull the
+Missing SSL CA certificate on host system, where `dockerd` tries to pull the
 image.
 
 ```bash
@@ -181,7 +181,7 @@ systemctl restart docker.service
 
 ## Dashboard
 
-You need a *bearer token*, which you can retrieb via `kubectl`:
+You need a *bearer token*, which you can retrieve via `kubectl`:
 
 (see `contrib/misc/clusteradmin-rbac.yml`)
 
@@ -199,7 +199,7 @@ kubectl describe secret tiller-token-wshmm -n kube-system
 
 ## Load balancer
 
-By default k8s does not provide a load balaner implementation:
+By default k8s does not provide a load balancer implementation:
 Many cloud providers provide that service out-of-the-box.
 If k8s runs on bare-metal servers or in your own virtual machines, you must provide that service manually.
 One option is to use [MetalLB](https://metallb.universe.tf/).
