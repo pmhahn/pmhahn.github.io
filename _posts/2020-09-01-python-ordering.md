@@ -53,15 +53,11 @@ class New(Base):
       return NotImplemented
     return (self.a, self.b) <= (other.a, other.b)
 
-  def __eq__(self, other):
-    if not isinstance(other, Base):
-      return NotImplemented
-    return (self.a, self.b) == (other.a, other.b)
+  def __eq__(self, other) -> bool:
+    return isinstance(other, Base) and (self.a, self.b) == (other.a, other.b)
 
-  def __ne__(self, other):
-    if not isinstance(other, Base):
-      return NotImplemented
-    return (self.a, self.b) != (other.a, other.b)
+  def __ne__(self, other) -> bool:
+    return not isinstance(other, Base) or (self.a, self.b) != (other.a, other.b)
 
   def __ge__(self, other):
     if not isinstance(other, Base):
@@ -107,7 +103,8 @@ You can write it more compact like
 ```python
 class Ugly(Base):
   def __lt__(self, other):
-    return (self.a < other.b) or elif ((self.a == self.b) and (self.b < other.b)) if isinstance(self, Base) else NotImplemented
+    return (self.a < other.b) or ((self.a == self.b) and (self.b < other.b)) \
+      if isinstance(self, Base) else NotImplemented
 ```
 
 but this does not get prettier when you compare more then two values.
@@ -119,16 +116,30 @@ Re-using the idea of `total_ordering` you can write your own decorator for class
 from operator import attrgetter
 
 def ordering(getter):
-    def decorator(cls):
-        for op in ('__lt__', '__le__', '__eq__', '__ne__', '__ge__', '__gt__'):
-            if getattr(cls, op, None) is getattr(object, op, None):
-                setattr(cls, op, lambda self, other, op=op: getattr(getter(self), op)(getter(other)) if isinstance(other, cls) else NotImplemented)
-        for op in ('__hash__',):
-            if getattr(cls, op, None) is getattr(object, op, None):
-                setattr(cls, op, lambda self, op=op: getattr(getter(self), op)())
-        return cls
-    return decorator
+  def decorator(cls):
+    ops = {
+      '__lt__': lambda self, other: getter(self) < getter(other) if isinstance(other, cls) else NotImplemented,
+      '__le__': lambda self, other: getter(self) <= getter(other) if isinstance(other, cls) else NotImplemented,
+      '__eq__': lambda self, other: isinstance(other, cls) and getter(self) == getter(other),
+      '__ne__': lambda self, other: not isinstance(other, cls) or getter(self) != getter(other),
+      '__ge__': lambda self, other: getter(self) >= getter(other) if isinstance(other, cls) else NotImplemented,
+      '__gt__': lambda self, other: getter(self) > getter(other) if isinstance(other, cls) else NotImplemented,
+      '__hash__': lambda self: hash(getter(self)),
+    }
+    root = set(dir(cls))
+    for opname, opfunc in ops.items():
+      if opname not in root or getattr(cls, opname, None) is getattr(object, opname, None):
+        opfunc.__name__ = opname
+        setattr(cls, opname, opfunc)
 
+    return cls
+
+  return decorator
+```
+
+This can be used like this:
+
+```python
 @ordering(attrgetter("val"))
 class foo(object):
   def __init__(self, val):
@@ -140,6 +151,22 @@ assert not x == y
 assert x != y
 assert x <= x
 assert x < y
+assert x in {x}
+
+class bar(foo): pass
+
+z = bar(1)
+assert x == z
+assert z == x
+assert z != y
+assert z in {x}
+```
+
+This also work for more complex structures like *tuples*:
+
+```python
+x, y = foo((1, 1)), foo((1, 2))
+z = bar((1, 1))
 ```
 
 If you have a class with **multiple** components, you can implement `__iter__()` to return those parts and use them for comparison:
@@ -156,9 +183,6 @@ class foo(object):
     yield self.b
 
 x, y = foo(0, "x"), foo(0, "y")
-assert x == x
-assert not x == y
-assert x != y
-assert x <= x
-assert x < y
 ```
+
+This works with both Python 2 and 3.
