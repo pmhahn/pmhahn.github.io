@@ -33,7 +33,6 @@ V = (
     '"%s%s%s" % (x, y, z)',
     '"{}{}{}".format(x, y, z)',
     'f"{x}{y}{z}"',
-    # 'c="";for s in (x,y,z):c+=s',
     'c="";c+=x;c+=y;c+=z;c'
 )
 
