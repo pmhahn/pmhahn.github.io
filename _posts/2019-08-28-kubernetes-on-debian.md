@@ -76,10 +76,10 @@ Create **cluster-admin** account:
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: gitlab-admin
+  name: gitlab
   namespace: kube-system
 ---
-apiVersion: rbac.authorization.k8s.io/v1beta1
+apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
   name: gitlab-admin
@@ -89,7 +89,7 @@ roleRef:
   name: cluster-admin
 subjects:
 - kind: ServiceAccount
-  name: gitlab-admin
+  name: gitlab
   namespace: kube-system
 ```
 
@@ -105,7 +105,7 @@ kubectl apply -f gitlab-admin-service-account.yaml
 
 	```bash
 kubectl -n kube-system describe secret \
-	$(kubectl -n kube-system get secret | awk '/gitlab-admin/{print $1}') |
+	$(kubectl -n kube-system get secret | awk '/^gitlab/{print $1}') |
 	sed -ne 's/^token: *//p'
 ```
 
