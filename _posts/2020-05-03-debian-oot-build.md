@@ -54,11 +54,15 @@ dpkg-source --aftere-build .
 (cd "$out" && debsign *.changes)  # FIXME
 ```
 
-This *mostly* works but **fails** for two reasons at the moment:
+This *mostly* works but **fails** for the following reasons at the moment:
 
-1. The path for the `.chagnes` file is hard-coded in `dpkg-buildpackage` and cannot be changed.
+1. The path for the `.changes` file is hard-coded in `dpkg-buildpackage` and cannot be changed.
 
 2. Using `DH_OPTIONS` also is **not** a good idea as the option `--destdir` is not unique for `dh_builddeb`:
    It is also used by `dh_auto_install` so files get installed in the wrong location.
+
+3. [Debian policy](https://www.debian.org/doc/debian-policy/ch-source.html#main-building-script-debian-rules) only **recommends** the use of `debhelper`, but packages are free to use other strategies in their file `debian/rules`.
+   Instead of using the wrapper `dh_builddeb` packages may use `dpkg-deb` directly and pass arbitrary paths.
+   Therefore there is no way for `dpkg-buildpackage` to force an `--output-directory` to `dpkg-deb` without the risk of breaking some obscure package.
 
 TBC…
