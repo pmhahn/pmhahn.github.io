@@ -11,8 +11,8 @@ Long before `rpm` based distributions learned how to install dependant packages 
 You simply can install a high-level package using `apt-get install $pkg`, which  will then automatically resolve all dependencies:
 Dependant packages are downloaded and install along automatically.
 
-This work very well when you just use packages from a single *consistent* source like the *stable* Debian repository.
-It mostly also works with multiple repositories, but from time to time the resolved does *strange* things.
+This works very well when you just use packages from a single *consistent* source like the *stable* Debian repository.
+It mostly also works with multiple repositories, but from time to time the resolver does *strange* things.
 
 Here at Univention GmbH we build our own packages.
 Therefore it is essential for our customers that we get the dependencies right.
@@ -47,13 +47,13 @@ LC_ALL=C apt-get install \
   univention-s4-connector 2>&1 | less
 ```
 
-- `-t apt` boots packages from the repository names `Suite: apt` in its `Release` file.
+- `-t apt` boosts all packages from my repository named `Suite: apt` in its `Release` file.
 - `-s` does a *simulated* install: it only shows what would be done but does not modify the actual state of the system.
 - `-o Debug::pkgDepCache::Marker=yes` shows the initial package marking for installation, keep or removal.
 - `-o Debug::pkgDepCache::AutoInstall=yes` shows installation of additional dependencies.
 - `-o Debug::pkgProblemResolver=yes` enables debug output.
 - `-o Debug::pkgProblemResolver::ShowScores=yes` shows the calculated *importance* score of all packages.
-- `univention-samba4` and `univention-s4-connector` are the packages to install.
+- `univention-s4-connector` is the package to install.
 
 # Explanation
 
@@ -194,8 +194,8 @@ For each package a line consisting of multiple fields is printed by [apt-pkg/pre
 ```
 Starting pkgProblemResolver with broken count: 1
 ```
-By just marking the two given packages as *to be installed*, the dependencies are then *broken* as not all dependencies are satisfied.
-Here `1` package is broken, which the resolver must now fix.
+By just marking the given package as *to be installed*, the dependencies are then *broken* as not all dependencies are satisfied.
+Here one package is broken, which the resolver must now fix.
 
 ```
 Settings used to calculate pkgProblemResolver::Scores::
@@ -220,11 +220,10 @@ Settings used to calculate pkgProblemResolver::Scores::
 ```
 All packages get a score, which matches how important they are: The more packages depends on it, the higher their score is.
 Packages are also boosted by their `Importance` and `Essential` status.
-As two packages are to be installed via the command line they get the `AddProtected` boost; otherwise the resolver would resolve the conflict by not installing them in the first place.
+As one package is to be installed via the command line they get the `AddProtected` boost; otherwise the resolver would resolve the conflict by not installing them in the first place.
 
 ```
 Show Scores
-10000 univention-samba4:amd64 < none -> 9.0.8-2A~5.0.0.202207141233 @un puN >
 9999 univention-s4-connector:amd64 < none -> 14.0.10-2A~5.0.0.202207141231 @un puN >
 ...
 35 python3-ldb:amd64 < 2:2.5.1-1A~5.0.0.202206171844 | 2:2.5.2-1A~5.0.0.202207191717 @ii umH >
@@ -247,9 +246,10 @@ Investigating (0) samba-dsdb-modules:amd64 < 2:4.16.2-1A~5.0.0.202206271026 -> 2
 ```
 - The package `univention-samba4` depends on `samba-dsdb-modules`, which APT claims to be unresolved.
 - Actually version `2:4.16.2-1A~5.0.0.202206271026` is installed but `2:4.16.2-1A~5.0.0.202207191731` is to be installed.
-  the `->` indicates a schedules action to update it; `|` would be used to *inform* you instead.
+  the `->` indicates a schedules action to update it; `|` would be used to *inform* you instead that the package is eithe currently already installed or to be installed.
 - The package should be installed and actually is installed (`@ii`).
 - The package is upgradable `u`, marked `m` and currently scheduled for upgrade `U`.
+- The installation status us currently borken `Ib`.
 
 ```
 Broken samba-dsdb-modules:amd64 Depends on libldb2:amd64 < 2:2.5.1-1A~5.0.0.202206171844 | 2:2.5.2-1A~5.0.0.202207191717 @ii umH > (> 2:2.5.2~)
@@ -267,14 +267,14 @@ As the package `libldb2` has a higher priority `30` over the more low-level pack
   Re-Instated libldb2:amd64
   Re-Instated samba-dsdb-modules:amd64
 ```
-The resolver decides to schedule upgrades to these two packages.
+The resolver decides to schedule upgrades for these two packages as it delcares `Breaks:` on them.
 
 ```
 Investigating (1) python3-ldb:amd64 < 2:2.5.1-1A~5.0.0.202206171844 | 2:2.5.2-1A~5.0.0.202207191717 @ii umH Ib >
 ```
 Upgrading `libdb2` alone violates the containt of `python3-ldb`, which depends on the exact same version: `python3-ldb: Depends: libdb2 (= ${binary:Version})`.
 - Currently version `2:2.5.1-1A~5.0.0.202206171844` is installed.
-- Version `2:2.5.2-1A~5.0.0.202207191717` is available, but (currently) **not** scheduled for installation. (notice the `|` here instead of `->`!)
+- Version `2:2.5.2-1A~5.0.0.202207191717` is available, but (currently) **not** scheduled for installation: notice the `|` here instead of `->`!
 - The package should be installed and actually is installed (`@ii`).
 - The package is upgradable `u`, marked `m` but currently held `H`.
 - The package is in the *install broken state*, which needs fixing next.
@@ -287,7 +287,7 @@ Due to the pending upgrade of `libdb2` package `python3-ldb` is now broken.
   Considering libldb2:amd64 30 as a solution to python3-ldb:amd64 35
 ```
 Because the priority of `python3-ldb` with 35 is higher than priority 30 for `libldb2`, the resolver decides to keep `python3-ldb` in the current state.
-For that it cacnels the upgrade of `libldb2`, which re-established the contraint on the same version match.
+For that it cancels the upgrade of `libldb2`, which re-established the contraint on the same version match.
 ```
   Added libldb2:amd64 to the remove list
   Fixing python3-ldb:amd64 via keep of libldb2:amd64
@@ -307,7 +307,7 @@ There are multiple *fixes*, to get the installation working.
 3. Add a `libldb2: Breaks: python3-ldb (<< ${binary:Version})`.
    When upgrading `libldb2` is considerd, this will also schedule an upgrade of `python3-ldb`, which will then will be in lock-step again.
 
-According to my gut feeling I things 3 is the most correct one, but if you know better: please mail me.
+According to my gut feeling I think 3 is the most correct one, but if you know better: please mail me.
 
 # Disclaimer
 
@@ -315,4 +315,4 @@ Please note that there are different tools, which might use different resolvers:
 - `apt-get` is the stable command line tool, which should be used from scripts.
 - `aptitude` provides an interactive text user interface, but can also be used from scripts.
   It can be used interactively to resolve conflicts, but requires some extra knowledge.
-- `apt` is a new tool for interactive usage: It combines functions from other tools like `apt-cache`, but is not considered stable and should not be used in scripts.
+- `apt` is a new tool for interactive usage: It combines functions from other tools like `apt-cache` and `apt-mark`, but is not yet considered stable and should not be used in scripts.
