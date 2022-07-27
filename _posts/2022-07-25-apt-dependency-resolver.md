@@ -309,6 +309,11 @@ There are multiple *fixes*, to get the installation working.
 
 According to my gut feeling I think 3 is the most correct one, but if you know better: please mail me.
 
+# Post Script
+
+After publishing this and also asking the [APT Team](https://lists.debian.org/deity/2022/07/msg00033.html) _Andre Wagner_ mailed me this link: [An Ubuntu 22.04 LTS Fix Is Coming For A Very Annoying & Serious APT Problem](https://www.phoronix.com/news/Ubuntu-22.04-APT-Breaks-Things)
+It points to an [Ubuntu bug report](https://www.phoronix.com/news/Ubuntu-22.04-APT-Breaks-Things) and includes [a patch](https://salsa.debian.org/apt-team/apt/-/merge_requests/248), which was [merged](https://salsa.debian.org/apt-team/apt/-/merge_requests/248) 2 weeks ago into [apt](https://salsa.debian.org/apt-team/apt/-/merge_requests/248).
+
 # Disclaimer
 
 Please note that there are different tools, which might use different resolvers:
