@@ -76,21 +76,25 @@ I have seen wrong implementation doing it like this:
 ```python
 class Wrong(Base):
   def __lt__(self, other):
-    if self.a < other.b:
+    if not isinstance(other, Base):
+      return NotImplemented
+    if self.a < other.a:
       return True
     if self.b < other.b
       return True
     return False
 ```
 
-This is wrong as the test for `b` must also check for `self.a == self.b`:
+This is wrong as the test for `b` must also check for `self.a == other.a`:
 
 ```python
 class StillIncomplete(Base):
   def __lt__(self, other):
-    if self.a < other.b:
+    if not isinstance(other, Base):
+      return NotImplemented
+    if self.a < other.a:
       return True
-    elif self.a == self.b and self.b < other.b
+    if self.a == other.a and self.b < other.b
       return True
     return False
 ```
@@ -103,7 +107,7 @@ You can write it more compact like
 ```python
 class Ugly(Base):
   def __lt__(self, other):
-    return (self.a < other.b) or ((self.a == self.b) and (self.b < other.b)) \
+    return (self.a < other.a) or ((self.a == self.a) and (self.b < other.b)) \
       if isinstance(self, Base) else NotImplemented
 ```
 
