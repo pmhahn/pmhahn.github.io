@@ -120,7 +120,7 @@ Due to [GitLab Issue 3968](https://gitlab.com/gitlab-org/gitlab-runner/issues/39
 cd gitlab-runner
 
 [ -s ucs-too-ca-.crt ] ||
-	wget --no-check-certificate wget https://nissedal.knut.univention.de/ucs-root-ca.crt
+	wget --no-check-certificate https://nissedal.knut.univention.de/ucs-root-ca.crt
 kubectl create secret generic ca --from-file=ucs-root-ca.crt
 
 vi values.yaml
@@ -174,7 +174,7 @@ image.
 ```bash
 cd /usr/local/share/ca-certificates
 [ -s ucs-too-ca-.crt ] ||
-	wget --no-check-certificate wget https://nissedal.knut.univention.de/ucs-root-ca.crt
+	wget --no-check-certificate https://nissedal.knut.univention.de/ucs-root-ca.crt
 update-ca-certificates
 systemctl restart docker.service
 ```
@@ -226,13 +226,13 @@ For Debian Buster the `iptables` program must be switched back to the legacy ver
 Essential services like `CoreDNS` are then no longer running and the update fails in `roles/kubernetes/master/tasks/kubeadm-upgrade.yml`.
 You explicitly need to disable that on the command-line:
 
-	ansible-playbook -b -i inventory/univention/hosts.yml upgrade-cluster.yml --skip-tags pre-upgrade,post-upgrade # -D -e kube_version=v1.23.7
+	ansible-playbook -b -i inventory/univention/hosts.yml upgrade-cluster.yml --skip-tags pre-upgrade,post-upgrade # -D -e kube_version=v1.26.13
 
 Also see [kubeadm upgrade](https://kubernetes.io/docs/tasks/administer_cluster/kubeadm/kubeadm-upgrade/),
 
 1. Update `inventory/univention/group_vars/k8s-cluster/k8s-cluster.yml`:
 
-		kube_version: v1.23.7
+		kube_version: v1.26.13
 
 ## Multiple versions
 
