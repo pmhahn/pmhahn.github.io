@@ -157,9 +157,9 @@ For each package a line consisting of multiple fields is printed by [apt-pkg/pre
     - `HR`: hold and re-installation required
     - `X`: other
   - Current state:
-    - `n': not installed.
+    - `n`: not installed.
     - `c`: configuration files
-    - `H': half installed
+    - `H`: half installed
     - `U`: unpacked
     - `F`: half configured
     - `W`: triggers awaited
@@ -182,7 +182,7 @@ For each package a line consisting of multiple fields is printed by [apt-pkg/pre
   - `K`: keep
 - Now Broken state:
   - `Nb`: now broken
-  - `NPb': now policy broken
+  - `NPb`: now policy broken
 - Install broken state:
   - `Ib`: installation broken
   - `IPb`: installation policy broken
