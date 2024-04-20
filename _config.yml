@@ -70,10 +70,6 @@ kramdown:
     css_class: 'highlight'
   auto_ids: true
 
-# Set the Sass partials directory, as we're using @imports
-sass:
-  style: :expanded # You might prefer to minify using :compressed
-
 # Use the following plug-ins
 plugins:
   - jekyll-sitemap # Create a sitemap using the official Jekyll sitemap gem
@@ -83,8 +79,16 @@ plugins:
 
 # Exclude these files from your production _site
 exclude:
+  - sass-cache/
+  - .jekyll-cache/
+  - gemfiles/
   - Gemfile
   - Gemfile.lock
+  - node_modules/
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
   - LICENSE
   - README.md
   - CNAME
