@@ -2,7 +2,9 @@
 layout: post
 title: "Python XML parsing"
 date: 2020-12-19 12:50:00  +0200
-categories: python, documentation
+categories:
+ - python
+ - documentation
 excerpt_separator: <!--more-->
 ---
 

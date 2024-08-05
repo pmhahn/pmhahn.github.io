@@ -6,7 +6,7 @@ categories: python
 excerpt_separator: <!--more-->
 ---
 
-In my previous blog post [Python rich comparison](2020-09-01-python-ordering.md) I looked at simplifying the comparison of objects.
+In my previous blog post [Python rich comparison]({% post_url 2020-09-01-python-ordering %}) I looked at simplifying the comparison of objects.
 
 Using [NotImplemented](https://docs.python.org/3/whatsnew/3.9.html#deprecated) in boolean context has been deprecated since Python 3.9:
 As `bool(NotImplemented) is True` this resulted in many wong implementations, including mine.
