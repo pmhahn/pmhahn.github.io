@@ -36,8 +36,10 @@ Der Mechanismus ließe sich als DoS-Attacke mißbrauchen, wenn es keinen Quota-M
 Und genau der hat zugeschlagen, weil der Kerberos-Keyring im Laufe der Zeit zu groß geworden ist.
 Über `/proc/sys/kernel/keys/maxbytes` ist die Größe pro Benutzer auf maximal 20.000 Byte beschränkt:
 
-	# grep $UID /proc/key-users
-	 2260:    28 28/28 28/200 18733/20000
+```console
+# grep $UID /proc/key-users
+ 2260:    28 28/28 28/200 18733/20000
+ ```
 
 (Die Bedeutung der Werte ist genauer in <man:keyrings(7)> beschrieben.)
 Beim Versuch mich zu authentifizieren hat der SSSD nun ein neues Ticket bekommen und wollte dieses an meinen Keyring anhängen.
@@ -45,14 +47,18 @@ Die ist aber wegen der Quota-Limitierung gescheitert.
 
 Ändern lässt sich das global für alle Benutzer so:
 
-	# sysctl -w kernel/keys/maxbytes=64000
-	kernel.keys.maxbytes = 64000
+```console
+# sysctl -w kernel/keys/maxbytes=64000
+kernel.keys.maxbytes = 64000
+```
 
 Danach war die Anmeldung wieder möglich.
 In der Statistik konnte ich danach aus sehen, dass der Speicherplatz nicht ausgereicht hat:
 
-	# grep $UID /proc/key-users
-	 2260:    29 29/29 29/200 20127/64000
+```console
+# grep $UID /proc/key-users
+ 2260:    29 29/29 29/200 20127/64000
+```
 
 Persistent machen kann man diese Anpassung z.B. über eine Datei wie `/etc/sysctl.d/sssd.conf`, wo man diese Änderung bei jedem Start durchführt.
 

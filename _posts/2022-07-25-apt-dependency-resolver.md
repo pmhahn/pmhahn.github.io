@@ -36,7 +36,7 @@ So what happened and why did APT refuse the initial command?
 
 There are some options, which can be set to have a look at the internal working of the APT conflict resolver:
 
-```
+```bash
 LC_ALL=C apt-get install \
   -t apt \
   -s \

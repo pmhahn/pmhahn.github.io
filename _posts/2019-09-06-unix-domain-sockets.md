@@ -32,22 +32,26 @@ Python also provides support and includes server code in [socketserver](https://
 
 If we starts two processes listening on the same path, which one will get new connections?
 
-	$ nc -l -N -U /tmp/socket &
-	$ ls -i /tmp/socket
-	1569897 /tmp/socket
-	^^^^^^^
-	$ nc -l -N -U /tmp/socket &
-	$ ls -i /tmp/socket
-	1569946 /tmp/socket
-	^^^^^^^
+```console
+$ nc -l -N -U /tmp/socket &
+$ ls -i /tmp/socket
+1569897 /tmp/socket
+^^^^^^^
+$ nc -l -N -U /tmp/socket &
+$ ls -i /tmp/socket
+1569946 /tmp/socket
+^^^^^^^
+```
 
 As you see, both listening processes create a *new* UNIX socket Inode in the file system.
 Opening a connection on that path will thus reach only one process: the *latest*:
 
-	$ nc -N -U /tmp/socket </dev/null
-	[2]+  Fertig                  nc -l -N -U /tmp/socket
-	$ nc -N -U /tmp/socket </dev/null
-	nc: unix connect failed: Connection refused
+```console
+$ nc -N -U /tmp/socket </dev/null
+[2]+  Fertig                  nc -l -N -U /tmp/socket
+$ nc -N -U /tmp/socket </dev/null
+nc: unix connect failed: Connection refused
+```
 
 So given the *path* we want to find the *process* serving that *Inode*!
 
@@ -57,15 +61,19 @@ Multiple processes serving the same socket often happens by accident as `bind()`
 If the server process crashes or does not cleanup the path itself, the server will fail to start next time.
 The following Python program shows this nicely:
 
-	import socket
-	s = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
-	s.bind('/tmp/socket')
+```python
+import socket
+s = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
+s.bind('/tmp/socket')
+```
 
-	Traceback (most recent call last):
-	  File "<stdin>", line 1, in <module>
-	  File "/usr/lib/python2.7/socket.py", line 228, in meth
-		return getattr(self._sock,name)(*args)
-	socket.error: [Errno 98] Address already in use
+```
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "/usr/lib/python2.7/socket.py", line 228, in meth
+    return getattr(self._sock,name)(*args)
+socket.error: [Errno 98] Address already in use
+```
 
 Therefore many services unconditionally unlink the socket file before starting.
 If the old service is still running, its socket will no longer be reachable.
@@ -78,21 +86,25 @@ Do you know `fuser` and `lsof`?
 You should!
 They are useful tools for finding processes having opened files and sockets:
 
-	$ fuser /tmp/socket
-	/tmp/socket:         12550 12554
-	$ lsof /tmp/socket
-	COMMAND   PID  USER   FD   TYPE             DEVICE SIZE/OFF     NODE NAME
-	nc      12550 phahn    3u  unix 0x000000005149f1ab      0t0 13381347 /tmp/socket type=STREAM
-	nc      12554 phahn    3u  unix 0x00000000ac502341      0t0 13383220 /tmp/socket type=STREAM
-	                                                            ^^^^^^^^
+```console
+$ fuser /tmp/socket
+/tmp/socket:         12550 12554
+$ lsof /tmp/socket
+COMMAND   PID  USER   FD   TYPE             DEVICE SIZE/OFF     NODE NAME
+nc      12550 phahn    3u  unix 0x000000005149f1ab      0t0 13381347 /tmp/socket type=STREAM
+nc      12554 phahn    3u  unix 0x00000000ac502341      0t0 13383220 /tmp/socket type=STREAM
+                                                            ^^^^^^^^
+```
 
 They both find *both* processes, but we know that only the latest will get all the requests.
 Even worse they might provide no output at all:
 
-	$ cd /tmp
-	$ fuser ./socket
-	/tmp/socket:         12550 12554
-	$ lsof ./socket
+```console
+$ cd /tmp
+$ fuser ./socket
+/tmp/socket:         12550 12554
+$ lsof ./socket
+```
 
 Yes, the output of `lsof` remains empty!
 It also does if your path contains *symbolic links* and you are using the *wrong* path to the socket Inode.
@@ -109,11 +121,13 @@ All previous serving processes remain until they terminate themselves or are kil
 
 Linux provides some information on UNIX domain sockets in its `/proc` file system in `/proc/net/unix`:
 
-		$ grep /tmp/socket /proc/net/unix
-		# Num               RefCount Protocol Flags    Type St Inode    Path
-		# 000000005149f1ab: 00000002 00000000 00010000 0001 01 13381347 /tmp/socket
-		# 00000000ac502341: 00000002 00000000 00010000 0001 01 13383220 /tmp/socket
-		                                                       ^^^^^^^^
+```console
+$ grep /tmp/socket /proc/net/unix
+# Num               RefCount Protocol Flags    Type St Inode    Path
+# 000000005149f1ab: 00000002 00000000 00010000 0001 01 13381347 /tmp/socket
+# 00000000ac502341: 00000002 00000000 00010000 0001 01 13383220 /tmp/socket
+                                                       ^^^^^^^^
+```
 
 Both `fuser` and `lsof` use that information to find the processes, which opened UNIX sockets.
 But;
@@ -125,21 +139,27 @@ But;
   You might assume, that the socket Inode in the file system is not relevant, but it is.
   If you manually rename the socket afterwards, a program can still connect your daemons on the renamed path:
 
-		$ mv /tmp/socket /tmp/socket.old
-		$ nc -N -U /tmp/socket.old </dev/null
+    ```console
+$ mv /tmp/socket /tmp/socket.old
+$ nc -N -U /tmp/socket.old </dev/null
+```
 
 * The listed `Inode` in is different from the Inode in the file system:
   To handle sockets like files the Linux kernel implements a virtual file system called `sockfs`:
 
-		$ grep sock /proc/filesystems
-		nodev   sockf
+    ```console
+$ grep sock /proc/filesystems
+nodev   sockf
+```
 
   For each opened socket it contains an Inode, which then the processes reference:
 
-		$ readlink /proc/12554/fd/3 /proc/12550/fd/3
-		socket:[13383220]
-		socket:[13381347]
-		        ^^^^^^^^
+    ```console
+$ readlink /proc/12554/fd/3 /proc/12550/fd/3
+socket:[13383220]
+socket:[13381347]
+        ^^^^^^^^
+```
 
   The numbers in the square brackets 'socket:[...]` match the Inode numbers from `/proc/net/unix'.
 
@@ -153,17 +173,21 @@ The `Num` column really is a kernel address, which can be linked to a [struct un
 The Linux kernel implements the <man:sock_diag(7)> extension since 4.2, which provides additional information to diagnose socket issues.
 Using `ss` from [iproute2](https://wiki.linuxfoundation.org/networking/iproute2) starting with version [v4.19.0~55](https://git.kernel.org/pub/scm/network/iproute2/iproute2.git/commit/?id=0bab7630e38863d3d2a5ddaeabf8745c4258a1a9) does show the VFS information:
 
-	$ ss --processes --unix --all --extended 'sport = /tmp/socket'
-	Netid  State   Recv-Q  Send-Q  Local Address:Port      Peer Address:Port
-	u_str  LISTEN  0       5         /tmp/socket 13381347             * 0     users:(("nc",pid=12550,fd=3)) <-> ino:1569897 dev:0/65025 peers:
-	u_str  LISTEN  0       5         /tmp/socket 13383220             * 0     users:(("nc",pid=12554,fd=3)) <-> ino:1569946 dev:0/65025 peers:
-	                                             ^^^^^^^^                                                           ^^^^^^^
+```console
+$ ss --processes --unix --all --extended 'sport = /tmp/socket'
+Netid  State   Recv-Q  Send-Q  Local Address:Port      Peer Address:Port
+u_str  LISTEN  0       5         /tmp/socket 13381347             * 0     users:(("nc",pid=12550,fd=3)) <-> ino:1569897 dev:0/65025 peers:
+u_str  LISTEN  0       5         /tmp/socket 13383220             * 0     users:(("nc",pid=12554,fd=3)) <-> ino:1569946 dev:0/65025 peers:
+                                             ^^^^^^^^                                                           ^^^^^^^
+```
 
 This both lists the socket Inode as *Port* and the path Inode in the last column as *ino:*.
 `dev` corresponds to the device number given by `stat`:
 
-	stat -c 'ino:%i dev:0/%d' /tmp/socket
-	ino:1569946 dev:0/65025
+```console
+$ stat -c 'ino:%i dev:0/%d' /tmp/socket
+ino:1569946 dev:0/65025
+```
 
 # Finally
 

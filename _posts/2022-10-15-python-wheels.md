@@ -28,7 +28,7 @@ Wheels are pre-compiled packages which can be uploaded to [PyPI](https://pypi.or
 
 Luckily there is [cibuildwheel](https://gitlab.com/joerick/cibuildwheel), which does all that for you and can be integrated easily in a GitLab pipeline. For [libvirt-python](http://libvirt-python) I have created a [patch](https://git.knut.univention.de/phahn/libvirt-python/-/commit/4849dcb8157160948d8eef783359aa7d7610f05e), also for [python-ldap](https://git.knut.univention.de/phahn/python-ldap/-/commit/f7dca573f61f1e685f333d97d92d99a6087fde3a), which add *cibuildwheel*. The generated wheels are uploaded into a [GitLabs Package Registry](https://git.knut.univention.de/phahn/libvirt-python/-/packages/211), which must be explicitly added:
 
-```
+```console
 $ docker run --rm -ti python:3-slim \
 pip install libvirt-python==8.9.0 \
 --extra-index-url https://git.knut.univention.de/api/v4/projects/686/packages/pypi/simple
@@ -42,7 +42,7 @@ As an alternative to using *latest* and to prevent your pipeline form failing wh
 
 An alternative to install Python packages via *pip* is to use Debian (or Alpine) packages, which get be installed via
 
-```
+```bash
 apt-get -qq update &&
 apt-get -q --assume-yes python3-libvirt &&
 apt-get clean

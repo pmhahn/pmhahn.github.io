@@ -16,29 +16,31 @@ But how to make a bootable USB stick from it?
 After each Debian release I cannot remember how to update my pocket USB stick,
 You can follow <https://www.debian.org/CD/faq/#write-usb> or do the following;:
 
-	cd /media/phahn/INTENSO/
+```bash
+cd /media/phahn/INTENSO/
 
-	rm -f mini.iso
-	wget http://ftp.debian.org/debian/dists/bookworm/main/installer-amd64/current/images/netboot/mini.iso
-	rm -f vmlinuz
-	wget http://ftp.debian.org/debian/dists/bookworm/main/installer-amd64/current/images/hd-media/vmlinuz
-	rm -f initrd.gz
-	wget http://ftp.debian.org/debian/dists/bookworm/main/installer-amd64/current/images/hd-media/initrd.gz
+rm -f mini.iso
+wget http://ftp.debian.org/debian/dists/bookworm/main/installer-amd64/current/images/netboot/mini.iso
+rm -f vmlinuz
+wget http://ftp.debian.org/debian/dists/bookworm/main/installer-amd64/current/images/hd-media/vmlinuz
+rm -f initrd.gz
+wget http://ftp.debian.org/debian/dists/bookworm/main/installer-amd64/current/images/hd-media/initrd.gz
 
-	# rm -f syslinux.cfg
-	cat >syslinux.cfg <<__EOF__
-	prompt 1
-	default vmlinuz
-	append initrd=initrd.gz
-	__EOF__
+# rm -f syslinux.cfg
+cat >syslinux.cfg <<__EOF__
+prompt 1
+default vmlinuz
+append initrd=initrd.gz
+__EOF__
 
-	rm -f debian-*-amd64-netinst.iso
-	wget https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/debian-12.4.0-amd64-netinst.iso
+rm -f debian-*-amd64-netinst.iso
+wget https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/debian-12.4.0-amd64-netinst.iso
 
-	rm -f firmware.tar.gz
-	wget https://cdimage.debian.org/cdimage/unofficial/non-free/firmware/bookworm/current/firmware.tar.gz
-	rm -rf firmware
-	mkdir firmware
-	tar xfC firmware.tar.gz firmware/
+rm -f firmware.tar.gz
+wget https://cdimage.debian.org/cdimage/unofficial/non-free/firmware/bookworm/current/firmware.tar.gz
+rm -rf firmware
+mkdir firmware
+tar xfC firmware.tar.gz firmware/
+```
 
 *[USB]: Universal Serial Bus

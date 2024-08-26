@@ -217,8 +217,10 @@ ansible-playbook \
 Because of [Issue 82361](https://github.com/kubernetes/kubernetes/issues/82361) `k8s` adds new firewall rules to the `DROP` table, which slows down the system.
 For Debian Buster the `iptables` program must be switched back to the legacy version:
 
-	update-alternatives --set iptables /usr/sbin/iptables-legacy
-	iptables -F DROP
+```bash
+update-alternatives --set iptables /usr/sbin/iptables-legacy
+iptables -F DROP
+```
 
 # Single node cluster and upgrades
 
@@ -226,13 +228,17 @@ For Debian Buster the `iptables` program must be switched back to the legacy ver
 Essential services like `CoreDNS` are then no longer running and the update fails in `roles/kubernetes/master/tasks/kubeadm-upgrade.yml`.
 You explicitly need to disable that on the command-line:
 
-	ansible-playbook -b -i inventory/univention/hosts.yml upgrade-cluster.yml --skip-tags pre-upgrade,post-upgrade # -D -e kube_version=v1.26.13
+```bash
+ansible-playbook -b -i inventory/univention/hosts.yml upgrade-cluster.yml --skip-tags pre-upgrade,post-upgrade # -D -e kube_version=v1.26.13
+```
 
 Also see [kubeadm upgrade](https://kubernetes.io/docs/tasks/administer_cluster/kubeadm/kubeadm-upgrade/),
 
 1. Update `inventory/univention/group_vars/k8s-cluster/k8s-cluster.yml`:
 
-		kube_version: v1.26.13
+    ```yaml
+    kube_version: v1.26.13
+    ```
 
 ## Multiple versions
 
