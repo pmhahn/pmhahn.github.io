@@ -88,3 +88,6 @@ Then the previous technique fails because `git` works **tree** based and not **d
 If for example you only do the filtering for `c'`, but not `d'`, then the diff from `c'` to `d'` will include the *dropped* change from `c` to `c'`.
 
 TBC...
+
+*[SSD]: Solid State Disk
+*[TBC]: To be continues

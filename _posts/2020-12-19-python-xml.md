@@ -22,7 +22,7 @@ Solving this with Python is not easy for obscure reasons.
 1. Is you use [xml.sax](https://docs.python.org/3/library/xml.sax.html) you get *line* and *column* numbers from the `Locator`.
    But the default parser [expat](https://docs.python.org/3/library/pyexpat.html) has no support for *XML Catalog*.
 
-2. [libxml2](http://xmlsoft.org/catalog.html) has support for *XML catalog*, but is not installable from [PIP](https://pypi.org/project/libxml2-python3/): It requires `libxml2-dev` to be installed.
+2. [libxml2](http://xmlsoft.org/catalog.html) has support for *XML catalog*, but is not installable from [PyPI](https://pypi.org/project/libxml2-python3/): It requires `libxml2-dev` to be installed.
    At least you can use it to setup the catalog and then use it with a custom resolver like show below.
 
 3. [lxml](https://lxml.de/) is based on `libxml2` itself, but only provides an interface to get the *line* via [sourceline](https://lxml.de/apidoc/lxml.etree.html#lxml.etree._Element.sourceline).
@@ -53,3 +53,7 @@ parser = make_parser()
 resolver = DocBookResolver()
 parser.setEntityResolver(resolver)
 ```
+
+*[DTD]: Document Type Definition
+*[XML]: Extensible Markup Language
+*[PyPI]: Python Package Index

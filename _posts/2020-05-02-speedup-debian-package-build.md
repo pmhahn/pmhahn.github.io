@@ -251,3 +251,6 @@ This allows it to be used via [cURL](https://curl.haxx.se/) until GitLab impleme
 # Summary
 
 I should repeat the compilation test with the different variants.
+
+*[LVM]: Logical Volume Manager
+*[UCS]: Univention Corporate Server

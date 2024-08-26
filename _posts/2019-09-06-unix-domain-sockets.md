@@ -194,3 +194,11 @@ This can be used to have a privileged process, which opens a file on request of 
 Usually it performs additional checks before it passes its opened file on to the requesting process.
 See `SCM_RIGHTS` in the manual page.
 Python only supports this natively since Python-3.3.
+
+*[VFS]: Virtual File System
+*[PID]: Process Identifier
+*[UID]: User Identifier
+*[GID]: Group Identifier
+*[ID]: Identifier
+*[TCP]: Transmission Control Protocol
+*[UDP]: User Datagram Protocol

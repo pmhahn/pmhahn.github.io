@@ -66,3 +66,7 @@ This *mostly* works but **fails** for the following reasons at the moment:
    Therefore there is no way for `dpkg-buildpackage` to force an `--output-directory` to `dpkg-deb` without the risk of breaking some obscure package.
 
 TBC…
+
+*[VM]: Virtual Machine
+*[TBC]: To be continued
+*[CI]: Continuous Integration

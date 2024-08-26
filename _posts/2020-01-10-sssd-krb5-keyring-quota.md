@@ -32,7 +32,7 @@ Mit `keyctl` kann man darauf zugreifen und SSSD kann das auch nutzen.
 
 Die Daten sind sicher im Kernel verfahrt und werden auch nicht versehentlich durch Swapping auf die Festplatte geschrieben.
 Allerdings gibt es da ein Problem:
-Der Mechanismus ließe sich als DOS-Attacke mißbrauchen, wenn es keinen Quota-Mechanismus gäbe, der den maximalen Speicherplatz beschränkt.
+Der Mechanismus ließe sich als DoS-Attacke mißbrauchen, wenn es keinen Quota-Mechanismus gäbe, der den maximalen Speicherplatz beschränkt.
 Und genau der hat zugeschlagen, weil der Kerberos-Keyring im Laufe der Zeit zu groß geworden ist.
 Über `/proc/sys/kernel/keys/maxbytes` ist die Größe pro Benutzer auf maximal 20.000 Byte beschränkt:
 
@@ -55,3 +55,9 @@ In der Statistik konnte ich danach aus sehen, dass der Speicherplatz nicht ausge
 	 2260:    29 29/29 29/200 20127/64000
 
 Persistent machen kann man diese Anpassung z.B. über eine Datei wie `/etc/sysctl.d/sssd.conf`, wo man diese Änderung bei jedem Start durchführt.
+
+*[SSSD]: System Security Services Daemon
+*[UCS]: Univention Corporate Server
+*[KRBTGT]: Kerberos Ticket Granting Ticket
+*[NFS]: Network File System
+*[DoS]: Denial of Service

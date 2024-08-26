@@ -220,3 +220,10 @@ Links
 * [StackExchange: Stateless NAT](https://unix.stackexchange.com/questions/559877/how-can-a-global-scope-be-invalid-when-creating-a-route-with-the-ip-command) (deprecated since 2.6.24)
 * [Dnaiel P. Berrangé: make-tiny-image.py](https://www.berrange.com/posts/2023/03/09/make-tiny-image-py-creating-tiny-initrds-for-testing-qemu-or-linux-kernel-userspace-behaviour/)
 * [QEMU VM templating](https://qemu-project.gitlab.io/qemu/system/vm-templating.html)
+
+*[UCS]: Univention Corporate Server
+*[ARP]: Address Resolution Protocol
+*[IP]: Internet Protocol
+*[NAT]: Network Address Translation
+*[MAC]: Media Access Control
+*[VM]: Virtual Machine

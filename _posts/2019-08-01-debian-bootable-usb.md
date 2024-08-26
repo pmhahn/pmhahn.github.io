@@ -40,3 +40,5 @@ You can follow <https://www.debian.org/CD/faq/#write-usb> or do the following;:
 	rm -rf firmware
 	mkdir firmware
 	tar xfC firmware.tar.gz firmware/
+
+*[USB]: Universal Serial Bus

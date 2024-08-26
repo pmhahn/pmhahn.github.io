@@ -52,3 +52,5 @@ Even a `-Wall -pedantic -ansi -Werror` will not find it. Using [clang](https://c
 So watch out if you for example look at [CrudeSAML](https://github.com/univention/crudesaml/blob/master/cy2_saml.c#L109-L114), which uses both syntax at the same time.
 
 PS: It you ask yourself what values are passed if they are not specified: random data respectively whatever is currently on your stack; so this is a security vulnerability as it discloses the content of your stack, which might contain confidential data.
+
+*[gcc]: GNU Compiler Collection

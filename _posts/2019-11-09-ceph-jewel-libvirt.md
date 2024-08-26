@@ -277,3 +277,9 @@ attribute belongs on the `<auth/>` element, for the volume to the
 I'm also using the `virtio-scsi` controller here as it supports the
 `discard='unmap'` option, which is required for `fstrim` to work. If that is
 not important for you, you can use other buses like `virtio`, `ide` or `sata`.
+
+*[OSD]: Object Storage Device
+*[RBD]: RADOS Block Device
+*[RADOS]: Reliable Autonomic Distributed Object Store
+*[UCS]: Univention Corporate Server
+*[FQHN]: Fully Qualified Host Name
