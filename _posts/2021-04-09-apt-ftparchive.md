@@ -104,7 +104,7 @@ This is then returned by [readdir()](man:readdir(3)) as `d_type`.
 If present the call to [lstat()](man:lstat(2)) can be skipped.
 
 Combining this with `AlwaysStat=false` makes `apt-ftparchive` really fast.
-Buf as `ftw()` is used internally you have to replace this with your own `find`.
+But as `ftw()` is used internally you have to replace this with your own `find`.
 
 # Fast `apt-ftparchive`
 
@@ -126,7 +126,7 @@ find amd64 all source -maxdepth 1 \
   -name \*.dsc        -fprint .files/source.dsc
 ```
 
-## Common config
+## Common configuration
 
 Put this in and the following sections into a `dist.conf` file:
 
@@ -261,7 +261,7 @@ Their *key* is build by appending a `:` and a two-letter code depending on the t
 *   `:st` (stat):
     File statistics for all files like `.deb`, `.udeb`, `.dsc`, `.orig.tar.gz`, `.debian.diff.gz`, `.debian.tar.gz`.
     It uses the file time of last modification `mtime` for cache validation.
-    The file size `size` and caclulated hashes using `md5`, `sha1`, `sha256` and `sha512` are stored within.
+    The file size `size` and calculated hashes using `md5`, `sha1`, `sha256` and `sha512` are stored within.
     Additional `flags` indicate, if other database records exists.
 
     Be aware that this entry is architecture and version dependant!

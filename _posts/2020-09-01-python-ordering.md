@@ -70,7 +70,7 @@ class New(Base):
     return (self.a, self.b) > (other.a, other.b)
 ```
 
-This is a lot more work and also error prone due the repitition of 6 times nearly the same code with subtile differences.
+This is a lot more work and also error prone due the repetition of 6 times nearly the same code with subtile differences.
 I have seen wrong implementation doing it like this:
 
 ```python

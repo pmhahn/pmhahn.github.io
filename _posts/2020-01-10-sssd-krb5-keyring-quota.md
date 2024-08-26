@@ -8,11 +8,11 @@ excerpt_separator: <!--more-->
 
 Nach einer kurzen Pause kam ich heute wieder zurück zu meinem Notebook und konnte mich nicht mehr anmelden. Nach einigem Suchen bin ich in `journalctl -u sssd` über folgende Fehlermeldung gestolpert:
 
-	[sssd[krb5_child[18654]: Disk quota exceeded
+> `[sssd[krb5_child[18654]: Disk quota exceeded`
 
 <!--more-->
 
-[SSSD](https://docs.pagure.org/SSSD.sssd/) ist der *System Security Services Daemo* und hat zur Aufgabe, die Benutzer-, Gruppen- und Login-Daten zu verwalten.
+[SSSD](https://docs.pagure.org/SSSD.sssd/) ist der *System Security Services Daemon* und hat zur Aufgabe, die Benutzer-, Gruppen- und Login-Daten zu verwalten.
 In UCS verwenden wir noch `libpam-ldap` und `libnss-ldap,` sie allesamt ein funktionierendes Netzwerk voraussetzen und damit nicht offlinefähig sind, was aber für ein Notebook Pflicht ist.
 
 SSSD ist modular aufgebaut und kann neben den Benutzer- und Gruppendaten aus dem LDAP auch mit Kerbenos-Keys umgehen:

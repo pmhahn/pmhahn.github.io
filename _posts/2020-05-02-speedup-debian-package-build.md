@@ -29,9 +29,9 @@ echo "force-unsafe-io" > /etc/dpkg/dpkg.cfg.d/force-unsafe-io
 This is already used during the initial setup, but removed after the Debian installer has finished.
 Enabling it in throw-away build environments is a first optimization.
 
-## Using Qemu `cache=unsafe`
+## Using QEMU `cache=unsafe`
 
-When we moved *Repo-NG* from physical servers into *virtual machines*, we gave each VM a *stratch volume* using Qemus `cache=unsafe` feature.
+When we moved *Repo-NG* from physical servers into *virtual machines*, we gave each VM a *scratch volume* using QEMUs `cache=unsafe` feature.
 This filters our all `sync()` calls to flush the data to disk, which greatly improves the time to setup the required build dependencies as `sync()` is used a lot during `dpkg` installing packages.
 
 ## Using Eat-my-data
@@ -80,10 +80,10 @@ It then uses an `LD_PRELOAD` wrapper to implement `Copy-on-write` in user-space,
 Personally I don't like this approach I feat corruption:
 If the library does not intercept all calls correctly or a process by-passes the library, changes might leak back into the master environment and taint all following builds.
 
-Another variant is [qemu-builder](https://wiki.debian.org/qemubuilder), which uses [Qemu](https://www.qemu.org/) to setup a virtual machine for each build.
-Qemu has a built-in *snapshot* feature to protect the master image from changes:
+Another variant is [qemu-builder](https://wiki.debian.org/qemubuilder), which uses [QEMU](https://www.qemu.org/) to setup a virtual machine for each build.
+QEMU has a built-in *snapshot* feature to protect the master image from changes:
 All changes go into an overlay image, which can be placed on tmpfs for extra speed.
-Using Qemu also allows cross-building for other architectures.
+Using QEMU also allows cross-building for other architectures.
 
 *pbuilder* itself also include [LVM builder](https://pbuilder-team.pages.debian.net/pbuilder/#lvm).
 It uses the *snapshot* feature of the *Logical Volume Manager* built into the Linux kernel.
@@ -245,7 +245,7 @@ This is very fast while that data is still cached in the [Linux kernels dentry c
 ## Repository hosting
 
 For previous projects I've used [reprepro](https://salsa.debian.org/brlink/reprepro) both personally but also in my company to host packages built by CI.
-Currently I'm investigating the move to [Atly](https://www.aptly.info/), which has a very powerful [REST API](https://www.aptly.info/doc/api/).
+Currently I'm investigating the move to [Aptly](https://www.aptly.info/), which has a very powerful [REST API](https://www.aptly.info/doc/api/).
 This allows it to be used via [cURL](https://curl.haxx.se/) until GitLab implements its own [Debian](https://gitlab.com/gitlab-org/gitlab/issues/5835) [Package Registry](https://docs.gitlab.com/ee/user/packages/).
 
 # Summary

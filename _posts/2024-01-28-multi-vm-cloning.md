@@ -36,15 +36,15 @@ On the other hand I want to connect to these machines from the **outside**.
 
 <!--more-->
 
-Each *environemt* is mapped to a separate *bridge*.
+Each *environmet* is mapped to a separate *bridge*.
 This allows the VMs inside each bridge to use the *same* IP addresses.
 
 To allow inbound and outbound connections a router is needed, which connects each bridge to the host.
-Network address translation is needed for both incomming and outgoing packages.
+Network address translation is needed for both incoming and outgoing packages.
 The address of that gateway `10.0.0.1` will also be static per environment.
 Now we have **multiple** interfaces sharing the **same** IP address.
-To solve this issue we have to use *network name spaces* to create a *virtual router* for each environemt / bridge.
-Each router is then connectedt to the outside world either via a *host bridge* or my using MACVLAN interfaces.
+To solve this issue we have to use *network name spaces* to create a *virtual router* for each environment / bridge.
+Each router is then connected to the outside world either via a *host bridge* or my using MACVLAN interfaces.
 
 The revised network setup looks like this.
 
@@ -69,7 +69,7 @@ The revised network setup looks like this.
 ```
 
 This can be simplified by using MACVLAN:
-In contrast to *bridging* is does not need to learn MAC addresses as all (internal) MAC addressea are always known.
+In contrast to *bridging* is does not need to learn MAC addresses as all (internal) MAC addresses are always known.
 The downside is that it cannot be used for host-to-VM communication directly.
 
 ```
@@ -119,7 +119,7 @@ do
 
   # Setup router
   ip netns add "ns$ENV"
-  
+
   # Connect router to host network
   ip link add name "gw$ENV" link "$DEV" type macvlan
   ip link set dev "gw$ENV" netns "ns$ENV"
@@ -160,7 +160,7 @@ Instead of running full VMs I decided to create a *minimal Initial RAM disk*.
 Is is easily done using [Dnaiel P. Berrangé: make-tiny-image.py](https://www.berrange.com/posts/2023/03/09/make-tiny-image-py-creating-tiny-initrds-for-testing-qemu-or-linux-kernel-userspace-behaviour/).
 
 ```sh
-# Create minimal InitRamFS for testing with Qemu
+# Create minimal InitRamFS for testing with QEMU
 PATH=$PATH:/sbin:/usr/sbin ./make-tiny-image.py --kmod e1000 \
 
 # Start a VM
@@ -195,17 +195,17 @@ Our main product is [Univention Corporate Server](https://www.univention.com/pro
 It is an enterprise operating system based on [Debian GNU/Linux](https://www.debian.org/).
 For availability and for scaling a standard setup consists of multiple hosts connected via a network.
 Our current test setup always starts with a fresh installation:
-The *Debian Installer* already has partitioned the disks and installed basic backages, but *provisioning* has not happened yet.
-As each server role installes a different set of packages, this is re-done for each test setup.
+The *Debian Installer* already has partitioned the disks and installed basic packages, but *provisioning* has not happened yet.
+As each server role installs a different set of packages, this is re-done for each test setup.
 That takes a long time as many packages are installed and many scripts are run.
 This takes extra long for our *upgrade tests*, which setup an old version of UCS and then install all available updates.
 
-Running the full test suite takes 7 hours 30 minuates to 8 hours 30 minutes.
+Running the full test suite takes 7 hours 30 minutes to 8 hours 30 minutes.
 Setting up the environment takes 40 minutes to 1 hour 20 minutes.
 Upgrade tests take even longer and take up to 13 hours:
 We start with UCS 4.4-9, and then upgrade to 5.0-0 to 5.0-1 to 5.0-2 to 5.0-3 to 5.0-4 to 5.0-5 to finally 5.0-6.
 This is the worst scenario but we still need it as UCS 4.4-9 is still maintained:
-We have to guarentee that our customers still running 4.4-9 will be able to upgrade to 5.0-6 and that their setup will still work then.
+We have to guarantee that our customers still running 4.4-9 will be able to upgrade to 5.0-6 and that their setup will still work then.
 
 Closing notes
 =============
@@ -219,3 +219,4 @@ Links
 * [Linux IP: Stateless NAT with iproute2](http://linux-ip.net/html/nat-stateless.html)
 * [StackExchange: Stateless NAT](https://unix.stackexchange.com/questions/559877/how-can-a-global-scope-be-invalid-when-creating-a-route-with-the-ip-command) (deprecated since 2.6.24)
 * [Dnaiel P. Berrangé: make-tiny-image.py](https://www.berrange.com/posts/2023/03/09/make-tiny-image-py-creating-tiny-initrds-for-testing-qemu-or-linux-kernel-userspace-behaviour/)
+* [QEMU VM templating](https://qemu-project.gitlab.io/qemu/system/vm-templating.html)

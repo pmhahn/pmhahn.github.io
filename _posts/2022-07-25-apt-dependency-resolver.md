@@ -239,17 +239,17 @@ Each line starts with the calculated score for the package.
 ```
 Starting 2 pkgProblemResolver with broken count: 1
 ```
-This is the same line as above, with just the `2` inserted to disginguish those two copy and pasted lines.
+This is the same line as above, with just the `2` inserted to distinguish those two copy and pasted lines.
 
 ```
 Investigating (0) samba-dsdb-modules:amd64 < 2:4.16.2-1A~5.0.0.202206271026 -> 2:4.16.2-1A~5.0.0.202207191731 @ii umU Ib >
 ```
 - The package `univention-samba4` depends on `samba-dsdb-modules`, which APT claims to be unresolved.
 - Actually version `2:4.16.2-1A~5.0.0.202206271026` is installed but `2:4.16.2-1A~5.0.0.202207191731` is to be installed.
-  the `->` indicates a schedules action to update it; `|` would be used to *inform* you instead that the package is eithe currently already installed or to be installed.
+  the `->` indicates a schedules action to update it; `|` would be used to *inform* you instead that the package is either currently already installed or to be installed.
 - The package should be installed and actually is installed (`@ii`).
 - The package is upgradable `u`, marked `m` and currently scheduled for upgrade `U`.
-- The installation status us currently borken `Ib`.
+- The installation status us currently broken `Ib`.
 
 ```
 Broken samba-dsdb-modules:amd64 Depends on libldb2:amd64 < 2:2.5.1-1A~5.0.0.202206171844 | 2:2.5.2-1A~5.0.0.202207191717 @ii umH > (> 2:2.5.2~)
@@ -267,12 +267,12 @@ As the package `libldb2` has a higher priority `30` over the more low-level pack
   Re-Instated libldb2:amd64
   Re-Instated samba-dsdb-modules:amd64
 ```
-The resolver decides to schedule upgrades for these two packages as it delcares `Breaks:` on them.
+The resolver decides to schedule upgrades for these two packages as it declares `Breaks:` on them.
 
 ```
 Investigating (1) python3-ldb:amd64 < 2:2.5.1-1A~5.0.0.202206171844 | 2:2.5.2-1A~5.0.0.202207191717 @ii umH Ib >
 ```
-Upgrading `libdb2` alone violates the containt of `python3-ldb`, which depends on the exact same version: `python3-ldb: Depends: libdb2 (= ${binary:Version})`.
+Upgrading `libdb2` alone violates the constraint of `python3-ldb`, which depends on the exact same version: `python3-ldb: Depends: libdb2 (= ${binary:Version})`.
 - Currently version `2:2.5.1-1A~5.0.0.202206171844` is installed.
 - Version `2:2.5.2-1A~5.0.0.202207191717` is available, but (currently) **not** scheduled for installation: notice the `|` here instead of `->`!
 - The package should be installed and actually is installed (`@ii`).
@@ -287,7 +287,7 @@ Due to the pending upgrade of `libdb2` package `python3-ldb` is now broken.
   Considering libldb2:amd64 30 as a solution to python3-ldb:amd64 35
 ```
 Because the priority of `python3-ldb` with 35 is higher than priority 30 for `libldb2`, the resolver decides to keep `python3-ldb` in the current state.
-For that it cancels the upgrade of `libldb2`, which re-established the contraint on the same version match.
+For that it cancels the upgrade of `libldb2`, which re-established the constraint on the same version match.
 ```
   Added libldb2:amd64 to the remove list
   Fixing python3-ldb:amd64 via keep of libldb2:amd64
@@ -299,13 +299,13 @@ The canceled upgrade of `libdb2` bubbles up the chain and the installation comma
 There are multiple *fixes*, to get the installation working.
 
 1. It can be fixed by adding `libdb2` manually to the `apt-get install` command.
-   The will add `libdb2` with score `10000-2 = 9998` to the list, foring an update.
+   The will add `libdb2` with score `10000-2 = 9998` to the list, forcing an update.
 
 2. `univention-samba4` can add a dependency on `samba-dsdb-modules (>= 2:4.16.2-1A~5.0.0.202207191731),`.
    This explicitly pulls in the newer version, which then also pulls in newer versions of `libldb2` and `python3-ldb`.
 
 3. Add a `libldb2: Breaks: python3-ldb (<< ${binary:Version})`.
-   When upgrading `libldb2` is considerd, this will also schedule an upgrade of `python3-ldb`, which will then will be in lock-step again.
+   When upgrading `libldb2` is considered, this will also schedule an upgrade of `python3-ldb`, which will then will be in lock-step again.
 
 According to my gut feeling I think 3 is the most correct one, but if you know better: please mail me.
 

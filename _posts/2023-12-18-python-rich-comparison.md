@@ -9,7 +9,7 @@ excerpt_separator: <!--more-->
 In my previous blog post [Python rich comparison]({% post_url 2020-09-01-python-ordering %}) I looked at simplifying the comparison of objects.
 
 Using [NotImplemented](https://docs.python.org/3/whatsnew/3.9.html#deprecated) in boolean context has been deprecated since Python 3.9:
-As `bool(NotImplemented) is True` this resulted in many wong implementations, including mine.
+As `bool(NotImplemented) is True` this resulted in many wrong implementations, including mine.
 
 So how do you correctly implement rich comparison?
 
@@ -24,14 +24,14 @@ There are two very important posts about this:
 
 My most important learnings from them are:
 
-- if *left hand side* (LHS) and *right hand side* (RHS) are of the same type, then CPython will only ever call the comparion method if the LHS, e.g. `1 < 2` will result in only `int.__lt__(1,2)` being called, not also `int.__ge__(2, 1)`.
+- if *left hand side* (LHS) and *right hand side* (RHS) are of the same type, then CPython will only ever call the comparison method if the LHS, e.g. `1 < 2` will result in only `int.__lt__(1,2)` being called, not also `int.__ge__(2, 1)`.
 
 - if one argument is a true sub-type of the other, CPython will ask the sub-type first to compare itself to the super-type, e.g. `1 < my_int(2)` is automatically translated to `my_int.__ge__(2, 1)`.
   So if you derive your class `my_subclass` from the super-class `super_class`, make sure your code is able to compare to `super_class`.
 
 Depending on what you compare, the function should `raise TypeError` when incompatible types are compared, but `return NotImplemented` if the types are compatible.
 
-For example comparing *appels* with *oranges* should return a `TypeError`:
+For example comparing *apples* with *oranges* should return a `TypeError`:
 
 ```python
 >>> 1 == None

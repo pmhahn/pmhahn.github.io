@@ -22,8 +22,8 @@ It will pick the right application automatically.
 There also is `xdg-email` to compose new emails.
 `xdg-email` only understands a limited subset of options:
 * `to`
-* `cc` (Carbone Copy)
-* `bcc` (Blind Carbone Copy)
+* `cc` (Carbon Copy)
+* `bcc` (Blind Carbon Copy)
 * `subject`
 * `body`
 * `attach`

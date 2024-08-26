@@ -53,9 +53,9 @@ More less
 
 This image is still quiet large.
 Please have a look at [Debuerro](https://github.com/debuerreotype/debuerreotype) which creates the official *Slim* [Debian Docker Images](https://hub.docker.com/_/debian).
-They use the following [tricks to shrinkt](https://github.com/debuerreotype/debuerreotype/blob/master/scripts/debuerreotype-minimizing-config) the image even more compared to my naive approach:
+They use the following [tricks to shrink](https://github.com/debuerreotype/debuerreotype/blob/master/scripts/debuerreotype-minimizing-config) the image even more compared to my naive approach:
 
 * Setup `/etc/dpkg/dpkg.cfg.d/` to exclude certain files during package installation:
   * All documentation below `/usr/share/doc/` except the `copyright` files.
-  * All locale related files below /usr/share/locale/` except for `C.UTF-8`.
+  * All locale related files below `/usr/share/locale/` except for `C.UTF-8`.
   * The unpacked `Packages`, `Sources`, `Release` files below `/var/lib/apt/`.

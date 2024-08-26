@@ -66,7 +66,7 @@ It only sets up the notebook to perform the firmware update on the **next** rebo
 
 That all went fine so now I'm at version 1.66.
 
-After the update you can remove the files amd the boot entry:
+After the update you can remove the files and the boot entry:
 
 ```bash
 sudo efibootmgr -B -b 0001

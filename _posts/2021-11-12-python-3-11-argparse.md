@@ -7,13 +7,13 @@ categories:
     - python
 ---
 
-[argparse](https://docs.python.org/3/library/argparse.html) has superseeded [optparse](https://docs.python.org/3/library/optparse.html), which is deprecated since Python 3.2 and might get removed in the future. Many of our scripts have already been [migrated](https://docs.python.org/3/library/argparse.html#upgrading-optparse-code), but `argparse` and the migration has several pitfalls. This was already mentioned in one of my previous posts [Python: optparse vs. argparse](https://hutten.knut.univention.de/blog/python-optparse-%e2%86%92-argparse/).
+[argparse](https://docs.python.org/3/library/argparse.html) has superseded [optparse](https://docs.python.org/3/library/optparse.html), which is deprecated since Python 3.2 and might get removed in the future. Many of our scripts have already been [migrated](https://docs.python.org/3/library/argparse.html#upgrading-optparse-code), but `argparse` and the migration has several pitfalls. This was already mentioned in one of my previous posts [Python: optparse vs. argparse](https://hutten.knut.univention.de/blog/python-optparse-%e2%86%92-argparse/).
 
 Alternatives:
 
 - [sys.argv](https://docs.python.org/3/library/sys.html#sys.argv) if you want do parse it yourself. Please do not do this as your colleges will have to maintain this as well.
 - [getop](https://docs.python.org/3/library/getopt.html) if you come from C and still have not switched to the Pythonic way.
-- [click](https://click.palletsprojects.com/) for a Python decorator based approch
+- [click](https://click.palletsprojects.com/) for a Python decorator based approach.
 - [Typer](https://typer.tiangolo.com/) builds on top of <q>click</q>, but also uses Python type hints.
 
 ## Usage

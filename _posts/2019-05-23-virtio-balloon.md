@@ -42,7 +42,7 @@ virsh setmaxmem --domain $VM --size 3G --config
 ```
 
 This updates the maximum memory.
-Please note that Qemu does **not** allow changing the size while the VM is running, so you need to shutdown the VM first.
+Please note that QEMU does **not** allow changing the size while the VM is running, so you need to shutdown the VM first.
 
 But you can modify the balloon by running the following command:
 
@@ -105,9 +105,9 @@ The following values are always reported:
 	`0` means that polling is not enabled.
 
 `rss`:
-	The [resident set size](https://en.wikipedia.org/wiki/Resident_set_size) in KiB, which is the number of pages currently "actively" used by the Qemu process on the host system.
-	Qemu by default only allocates the pages on demand when they are first accessed.
-	A newley started VM actually uses only very few pages, but the number of pages increases with each new memory allocation.
+	The [resident set size](https://en.wikipedia.org/wiki/Resident_set_size) in KiB, which is the number of pages currently "actively" used by the QEMU process on the host system.
+	QEMU by default only allocates the pages on demand when they are first accessed.
+	A newly started VM actually uses only very few pages, but the number of pages increases with each new memory allocation.
 
 The following values are only reported, if the guest OS supports them and polling is enabled:
 
@@ -125,7 +125,7 @@ The following values are only reported, if the guest OS supports them and pollin
 `unused`:
 	Inside the Linux kernel this actually is named `MemFree`.
 	That memory is available for immediate use as it is currently neither used by processes or the kernel for caching.
-	So it is really *unused* (and is just eating energy and provied no benefit).
+	So it is really *unused* (and is just eating energy and provides no benefit).
 
 `usable`:
 	Inside the Linux kernel this is named `MemAvailable`.
@@ -183,7 +183,7 @@ In contrast to that `minor_fault` do not access block devices immediately, but s
 
 Automatic Ballooning
 --------------------
-Currently (2019-05) that ballooning has to be done manually with Qemu.
+Currently (2019-05) that ballooning has to be done manually with QEMU.
 There was a [project from 2013](https://www.linux-kvm.org/page/Projects/auto-ballooning) to implement automatic ballooning, but it was never completed.
 
 Details
@@ -191,13 +191,13 @@ Details
 The naming of the values is somehow confusing, as different components are involved, which name the same thing differently:
 
 * In the Linux kernel the balloon driver is implemented in [linux:drivers/virtio/virtio_balloon.c](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/virtio/virtio_balloon.c#n291).
-* It exports some statistics over the VirtIO interface to Qemu, which is implemented in [qemu:hw/virtio/virtio-balloon.c](https://git.qemu.org/?p=qemu.git;a=blob;f=hw/virtio/virtio-balloon.c#l165).
+* It exports some statistics over the VirtIO interface to QEMU, which is implemented in [qemu:hw/virtio/virtio-balloon.c](https://git.qemu.org/?p=qemu.git;a=blob;f=hw/virtio/virtio-balloon.c#l165).
 * `libvirt` queries it over the JSON protocol implemented in [libvirt:src/qemu/qemu_driver.c](https://libvirt.org/git/?p=libvirt.git;a=blob;f=src/qemu/qemu_driver.c#l20242).
 * The command `virsh dommemstat` is implemented in [libvirt:tools/virsh-domain-monitor.c](https://libvirt.org/git/?p=libvirt.git;a=blob;f=tools/virsh-domain-monitor.c#l356).
 
 The following table shows the values and how they are named in the different components:
 
-| Linux                                 | VirtIO                          | Qemu                    | libvirt                                 | memstat     |
+| Linux                                 | VirtIO                          | QEMU                    | libvirt                                 | memstat     |
 |---------------------------------------|---------------------------------|-------------------------|-----------------------------------------|-------------|
 | /proc/vmstat:pswpin                   | `VIRTIO_BALLOON_S_SWAP_IN`      | `stat-swap-in`          | `VIR_DOMAIN_MEMORY_STAT_SWAP_IN`        | swap_in     |
 | /proc/vmstat:pswpout                  | `VIRTIO_BALLOON_S_SWAP_OUT`     | `stat-swap-out`         | `VIR_DOMAIN_MEMORY_STAT_SWAP_OUT`       | swap_out    |

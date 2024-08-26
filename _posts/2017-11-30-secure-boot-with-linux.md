@@ -13,7 +13,7 @@ The (U)EFI firmware only loads binaries signed by the "Platform key" (PK) certif
 The PK is pre-installed by the manufacturer.
 Probably 9x% come with Microsoft Windows pre-installed.
 Therefor most PCs come with Microsoft key pre-installed.
-For Qemu/KVM there is "OVMF":
+For QEMU/KVM there is "OVMF":
 It is based on the EDK2 (EFI Development KIT).
 It is developed by the "TianoCore" community.
 It has not keys pre-installed.
@@ -250,7 +250,7 @@ NvVars
 UEFI requires a writable flash device.
 `qemu -bios` will only provide one big read-only ROM.
 In that case "OVMS" stores the EFI variables in `/boot/EFI/NvVars`.
-The correct way for Qemu is
+The correct way for QEMU is
 ```
 -drive file=/usr/share/OVMF/OVMF_CODE.fd,if=pflash,format=raw,unit=0,readonly=on
 -drive file=/home/phahn/.config/libvirt/qemu/nvram/uefi_VARS.fd,if=pflash,format=raw,unit=1

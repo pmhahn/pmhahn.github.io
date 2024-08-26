@@ -6,7 +6,7 @@ categories: git
 ---
 
 Working for `libvirt` I had to add the [Developer Certificate of Origin](http://developercertificate.org/) to several previous commits, where I forgot to directly use `git commit --signoff`.
-[StackOverflow](https://stackoverflow.com/questions/13043357/git-sign-off-previous-commits) has that question, but it started mising `-s` for `--signoff` with `-S` for `--gpg-sign`.
+[StackOverflow](https://stackoverflow.com/questions/13043357/git-sign-off-previous-commits) has that question, but it started missing `-s` for `--signoff` with `-S` for `--gpg-sign`.
 
 At the end I used the following so sign the last 89 commits:
 

@@ -13,7 +13,7 @@ We have a tool for spell-checking our documents.
 
 1. It uses [Document Type Definition (DTD)](https://wiki.selfhtml.org/wiki/XML/DTD) for validation and entity declarations.
 2. The DTD and other referenced files should be cached locally by using an [XML catalog](http://www.sagehill.net/docbookxsl/WriteCatalog.html).
-2. For mis-spelled words the tool should prints the *line* and *column* number.
+2. For misspelled words the tool should prints the *line* and *column* number.
 
 Solving this with Python is not easy for obscure reasons.
 

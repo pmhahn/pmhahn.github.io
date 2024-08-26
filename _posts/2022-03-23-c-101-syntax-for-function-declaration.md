@@ -7,44 +7,44 @@ categories:
     - c
 ---
 
-In the early days of [K&amp;R C](https://en.wikipedia.org/wiki/C_(programming_language)#K&R_C) programming the type for functions parameters was optional and declared separately:  
+In the early days of [K&amp;R C](https://en.wikipedia.org/wiki/C_(programming_language)#K&R_C) programming the type for functions parameters was optional and declared separately:
 ```c
-void old(a, b, c)  
- int a;  
- bool b;  
- char *c;  
-{  
- printf("a=%i b=%d c=%p\n", a, b, c);  
-}  
+void old(a, b, c)
+ int a;
+ bool b;
+ char *c;
+{
+ printf("a=%i b=%d c=%p\n", a, b, c);
+}
 ```
 
-For [ANSI C](https://en.wikipedia.org/wiki/ANSI_C) the syntax was changed, which allows the types to be specified directly before the arguments:  
+For [ANSI C](https://en.wikipedia.org/wiki/ANSI_C) the syntax was changed, which allows the types to be specified directly before the arguments:
 ```c
-void new(int a, bool b, char *c) {  
- printf("a=%i b=%d c=%p\n", a, b, c);  
-}  
+void new(int a, bool b, char *c) {
+ printf("a=%i b=%d c=%p\n", a, b, c);
+}
 ```
 
-They nearly looks the same, but there is a subtile draw-back to the old syntax: The [gcc](https://gcc.gnu.org/) compile will not report an error if you do not specify all arguments:  
+They nearly looks the same, but there is a subtile draw-back to the old syntax: The [gcc](https://gcc.gnu.org/) compile will not report an error if you do not specify all arguments:
 
 ```c
 #include <stdio.h>
 #include <stdbool.h>
-int main(void) {  
-#if 1  
- old(); /* missed ? */  
- old(0); /* missed ? */  
- old(0, false); /* missed ? */  
-#endif  
- old(0, false, ""); /* okay ? */  
-#if 1  
- new(); /* error ? */  
- new(0); /* error ? */  
- new(0, false); /* error ? */  
-#endif  
- new(0, false, ""); \* okay ? */  
- return 0;  
-}  
+int main(void) {
+#if 1
+ old(); /* missed ? */
+ old(0); /* missed ? */
+ old(0, false); /* missed ? */
+#endif
+ old(0, false, ""); /* okay ? */
+#if 1
+ new(); /* error ? */
+ new(0); /* error ? */
+ new(0, false); /* error ? */
+#endif
+ new(0, false, ""); \* okay ? */
+ return 0;
+}
 ```
 
 Even a `-Wall -pedantic -ansi -Werror` will not find it. Using [clang](https://clang.llvm.org/) on the other hand reports an error.
