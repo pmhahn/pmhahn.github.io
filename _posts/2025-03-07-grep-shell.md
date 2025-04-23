@@ -1,7 +1,6 @@
 ---
 title: Find shell scripts
 date: '2025-03-07T12:55:00+01:00'
-author: pmhahn
 layout: post
 categories: linux git
 excerpt_separator: <!--more-->

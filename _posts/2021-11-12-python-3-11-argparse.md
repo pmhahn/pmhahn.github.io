@@ -1,7 +1,6 @@
 ---
 title: 'Python 3.11: argparse'
 date: '2021-11-12T17:00:12+01:00'
-author: pmhahn
 layout: post
 categories: python
 ---

@@ -1,23 +1,22 @@
 ---
 title: 'Debian 102: maintainer scripts'
 date: '2021-12-14T09:50:44+01:00'
-author: pmhahn
 layout: post
 categories: debian
 ---
 
 During Debian package installation, upgrade, downgrade and remove the so called [Debian Package maintainer scripts]({% post_url 2020-06-11-dpkg-compareversions %}) are called before and after certain actions:
 
-- preinst
+- `preinst`
   - before the package is unpacked
   - prepare the environment for unpacking
-- postinst
+- `postinst`
   - after the package is unpacked
   - configure the package to make it fully functional
-- prerm
+- `prerm`
   - before the package is removed
   - prepare the package for removal or upgrade
-- postrm
+- `postrm`
   - after the package is removed
   - cleanup after removal or upgrade
 

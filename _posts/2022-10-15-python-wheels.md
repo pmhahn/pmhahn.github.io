@@ -1,7 +1,6 @@
 ---
 title: 'Python 105: wheels'
 date: '2022-10-15T15:49:11+02:00'
-author: pmhahn
 layout: post
 categories: python
 ---

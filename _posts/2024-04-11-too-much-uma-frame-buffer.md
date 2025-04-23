@@ -1,7 +1,6 @@
 ---
 title: 'Too much UMA frame buffer'
 date: '2024-04-11T14:34:39+02:00'
-author: pmhahn
 layout: post
 categories: linux
 ---

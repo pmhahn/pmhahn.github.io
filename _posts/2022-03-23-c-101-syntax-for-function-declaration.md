@@ -1,12 +1,11 @@
 ---
 title: 'C 101: syntax for function declaration'
 date: '2022-03-23T11:21:14+01:00'
-author: pmhahn
 layout: post
 categories: c
 ---
 
-In the early days of [K&amp;R C](https://en.wikipedia.org/wiki/C_(programming_language)#K&R_C) programming the type for functions parameters was optional and declared separately:
+In the early days of [K&R C](https://en.wikipedia.org/wiki/C_(programming_language)#K&R_C) programming the type for functions parameters was optional and declared separately:
 ```c
 void old(a, b, c)
  int a;
