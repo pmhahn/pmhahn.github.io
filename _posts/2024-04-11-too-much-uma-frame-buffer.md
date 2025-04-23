@@ -3,8 +3,7 @@ title: 'Too much UMA frame buffer'
 date: '2024-04-11T14:34:39+02:00'
 author: pmhahn
 layout: post
-categories:
-    - linux
+categories: linux
 ---
 
 Some time ago I received a new Lenovo [P14s](https://www.lenovo.com/de/de/p/laptops/thinkpad/thinkpadp/thinkpad-p14s-gen-4-(14-inch-amd)-mobile-workstation/len101t0070) notebook. My previous [L470](https://www.lenovo.com/de/de/p/laptops/thinkpad/thinkpadl/thinkpad-l470/22tp2tbl470) worked very well for a long time, so I only switch to the new model beginning this year. Since then I experienced regular stalls: Mostly during our daily video conferences the laptop locked up for some minutes; only after 1-2 minutes I was able to resume my work, but found some process(es) gone.

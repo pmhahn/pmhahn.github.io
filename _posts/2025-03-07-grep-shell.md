@@ -3,21 +3,19 @@ title: Find shell scripts
 date: '2025-03-07T12:55:00+01:00'
 author: pmhahn
 layout: post
-categories:
-    - linux
-    - git
+categories: linux git
 excerpt_separator: <!--more-->
 ---
 
 Q: How do I recursively find all shell scripts in my current working directory?
-
-<!--more-->
 
 A: Search for the hash-bang line:
 
 ```console
 $ git -c grep.fallbackToNoIndex=yes grep -lPe '\A#!\s*/bin/([bd]?a)?sh\b'
 ```
+
+<!--more-->
 
 # Explanation
 

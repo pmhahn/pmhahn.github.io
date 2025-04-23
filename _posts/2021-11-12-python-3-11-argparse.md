@@ -3,8 +3,7 @@ title: 'Python 3.11: argparse'
 date: '2021-11-12T17:00:12+01:00'
 author: pmhahn
 layout: post
-categories:
-    - python
+categories: python
 ---
 
 [argparse](https://docs.python.org/3/library/argparse.html) has superseded [optparse](https://docs.python.org/3/library/optparse.html), which is deprecated since Python 3.2 and might get removed in the future. Many of our scripts have already been [migrated](https://docs.python.org/3/library/argparse.html#upgrading-optparse-code), but `argparse` and the migration has several pitfalls. This was already mentioned in one of my previous posts [Python: optparse vs. argparse](https://hutten.knut.univention.de/blog/python-optparse-%e2%86%92-argparse/).

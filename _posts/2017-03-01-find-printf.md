@@ -3,9 +3,7 @@ title: 'find -printf'
 date: '2017-03-01T17:30:41+01:00'
 author: pmhahn
 layout: post
-categories:
-    - linux
-    - filesystem
+categories: linux filesystem
 ---
 
 I had to search [man 1 find](man:find(1)) too often for `printf`:

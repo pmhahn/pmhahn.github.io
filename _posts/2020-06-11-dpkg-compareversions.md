@@ -3,16 +3,15 @@ title: 'dpkg --compare-versions'
 date: '2020-06-11T11:26:58+02:00'
 author: pmhahn
 layout: post
-categories:
-    - debian
+categories: debian
 excerpt_separator: <!--more-->
 ---
 
 Q: Wie unterscheide in Upgrades von Neuinstallationen?
 
-<!--more-->
-
 A: `dpkg --compare-versions "$2" lt-nl "…"`
+
+<!--more-->
 
 Die [Debian package maintainer scripts](https://www.debian.org/doc/debian-policy/ch-maintainerscripts.html) erhalten mehrere Parameter beim Aufruf: `"$1"` enthält die Aktion:
 
