@@ -12,7 +12,8 @@ A: `dpkg --compare-versions "$2" lt-nl "…"`
 
 <!--more-->
 
-Die [Debian package maintainer scripts](https://www.debian.org/doc/debian-policy/ch-maintainerscripts.html) erhalten mehrere Parameter beim Aufruf: `"$1"` enthält die Aktion:
+Die [Debian package maintainer scripts](https://www.debian.org/doc/debian-policy/ch-maintainerscripts.html) erhalten mehrere Parameter beim Aufruf:
+`"$1"` enthält die Aktion:
 
 | action              | preinst | postinst | prerm | postrm |
 | ------------------- | ------- | -------- | ----- | ------ |
@@ -30,9 +31,11 @@ Die [Debian package maintainer scripts](https://www.debian.org/doc/debian-policy
 | `triggered`         |         | ☒        |       |        |
 | `upgrade`           | ☒       |          | ☒     | ☒      |
 
-Der 2. Parameter `"$2"` enthält meist die Vorgänger bzw. Nachfolger-[Version des Pakets]({% post_url 2020-06-10-debian-versions-schema %}). Letztere ist für Neuinstallationen leer `''`, für Upgrades aber nicht.
+Der 2. Parameter `"$2"` enthält meist die Vorgänger bzw. Nachfolger-[Version des Pakets]({% post_url 2020-06-10-debian-versions-schema %}).
+Letztere ist für Neuinstallationen leer `''`, für Upgrades aber nicht.
 
-`dpkg --compare-versions` unterstützt extra dafür die `-nl`-Varianten ("not less") der Vergleichsoperatoren `lt` (less-than), `le` (less-equal), `eq` (equal), `ne` (not-equal), `ge` (greater-equal), `gt` (greater-than), die den leeren-Wert bei Neuinstallationen eben anders behandeln: Normal steht die leere Version `''` immer für die kleinste Version, bei den `-nl`-Varianten dagegen als die größte.
+`dpkg --compare-versions` unterstützt extra dafür die `-nl`-Varianten ("not less") der Vergleichsoperatoren `lt` (less-than), `le` (less-equal), `eq` (equal), `ne` (not-equal), `ge` (greater-equal), `gt` (greater-than), die den leeren-Wert bei Neuinstallationen eben anders behandeln:
+Normal steht die leere Version `''` immer für die kleinste Version, bei den `-nl`-Varianten dagegen als die größte.
 
 Das folgende Fragment findet man z.B. häufiger in `postinst` Skripten:
 

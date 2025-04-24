@@ -65,7 +65,8 @@ Da aber lediglich die Ziel-Adresse als Routing-Entscheidung verwendet werden kan
 Zusätzlich läuft auf dieser EC2-Instanz auch ein **OpenVPN-Server** für unseren **OpenVPN-Tunnel**:
 Nur durch diese gelangen wir überhaupt erst in das VPC bei Amazon.
 Dazu läuft intern in unserer DMZ die VM **ec2-vpn.pingst.univention.de** mit der internen IP `192.168.5.27`.
-Diese baut per **OpenVPN** eine **unverschlüsselte** Verbindung zur NAT-Instanz bei Amazon auf. Diese Verbindung besteht nur logisch, denn es wird das verbindungslose UDP für den Transport der den OpenVPN-Pakete verwendet.
+Diese baut per **OpenVPN** eine **unverschlüsselte** Verbindung zur NAT-Instanz bei Amazon auf.
+Diese Verbindung besteht nur logisch, denn es wird das verbindungslose UDP für den Transport der den OpenVPN-Pakete verwendet.
 
 Technisch ist das durch einen sogenannten *Transit-Tunnel* gelöst:
 Beide OpenVPN-Seiten haben jeweils ein **tun**-Interface mit der IP-Adresse `10.211.0.1` bei Amazon bzw. `10.211.0.2` in unserer DMZ.

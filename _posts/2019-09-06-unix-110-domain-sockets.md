@@ -44,7 +44,8 @@ $ ls -i /tmp/socket
 ```
 
 As you see, both listening processes create a *new* UNIX socket Inode in the file system.
-Opening a connection on that path will thus reach only one process: the *latest*:
+Opening a connection on that path will thus reach only one process:
+the *latest*:
 
 ```console
 $ nc -N -U /tmp/socket </dev/null

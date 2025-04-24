@@ -81,11 +81,20 @@ bfbec70f8488   3 months ago     /bin/sh -c #(nop)  CMD ["bash"]                 
 
 Therefore it is important to write efficient and correct `Dockefiles`:
 
-1. Put steps which change infrequently first like installing base packages from Debian or PyPI: If you dependency do not change often these layers stay unchanged for a long time and can be re-used many time speeding up many builds.
-2. Add your ever changing code as late as possible: That way only the last few layers need to be re-build each time.
-3. Be careful with volatile data and when the current time is important: Your `apt-get update &amp;&amp; apt-get install` command may not pick up the latest package versions as `docker` decides to re-use the layer from a previous build.
-4. Minimize the number of `RUN` commands: each command adds an additional layer to your image, which must be downloaded. It also may lead to strange caching issues and may increase the net image size unnecessarily due to temporary data: For example `apt-get update` will downloaded the Debian package index files and store them below `/var/lib/apt/lists/`. Your final image probably will not need them as you don't expect your users to do a `apt-get install` within your image. On the other hand you will get into trouble yourself, when you re-build the image and do that `apt-get install` yourself in a later step as your index files might be out-of-date by than and do no longer match what is on the ever changing Debian repository servers.
-5. If you ever get into caching issues (on your own host) delete any previous image from your `dockerd` by using `docker image rm …`: That way the old layers will be deleted too and `docker build` will no longer find the layers cached locally.
+1. Put steps which change infrequently first like installing base packages from Debian or PyPI:
+   If you dependency do not change often these layers stay unchanged for a long time and can be re-used many time speeding up many builds.
+2. Add your ever changing code as late as possible:
+   That way only the last few layers need to be re-build each time.
+3. Be careful with volatile data and when the current time is important:
+   Your `apt-get update && apt-get install` command may not pick up the latest package versions as `docker` decides to re-use the layer from a previous build.
+4. Minimize the number of `RUN` commands:
+   each command adds an additional layer to your image, which must be downloaded.
+   It also may lead to strange caching issues and may increase the net image size unnecessarily due to temporary data:
+   For example `apt-get update` will downloaded the Debian package index files and store them below `/var/lib/apt/lists/`.
+   Your final image probably will not need them as you don't expect your users to do a `apt-get install` within your image.
+   On the other hand you will get into trouble yourself, when you re-build the image and do that `apt-get install` yourself in a later step as your index files might be out-of-date by than and do no longer match what is on the ever changing Debian repository servers.
+5. If you ever get into caching issues (on your own host) delete any previous image from your `dockerd` by using `docker image rm …`:
+   That way the old layers will be deleted too and `docker build` will no longer find the layers cached locally.
 
 ## Docker-in-Docker
 
@@ -99,8 +108,16 @@ Therefore you can use `docker build --cache-from=…` to load a previous version
 The architecture of Kaniko is vastly different as there is no central `dockerd` for caching any layers.
 But [2 caching modes](https://github.com/GoogleContainerTools/kaniko#caching) are supported:
 
-- `--cache=true` enabled *Caching Layers*, where `kaniko` builds an artificial image, which can be pushed to a remote image registry. These are no regular OCI images: they re-use the data structure and infrastructure for images, but you cannot execute them with `docker run` or similar. You **must not** push these images to `docker-registry.knut.univention.de` as that registry has no automatic cache cleanup mechanism to remove old and unused layers/images. Use `gitregistry.knut.univention.de` instead but make sure to setup [Cleanup policy](https://docs.gitlab.com/ee/user/packages/container_registry/reduce_container_registry_storage.html) below `Setting → Packages and Registries → Clean up image tag` with a sensible retention period for images named `cache`. A separate registry can be specified via the option `--cache-repo`. By default Kaniko does not cache *COPY* layers, which must be enabled explicitly via the option `--cache-copy-layers` if desired.
-- With *Caching Base Images* layers are cached locally in a directory, but this is a pain to setup: it requires an extra step where a separate command has to be used to *warm the cache*. This is not integrated into Kaniko itself and extra care has to be taken to not create any concurrency issues.
+- `--cache=true` enabled *Caching Layers*, where `kaniko` builds an artificial image, which can be pushed to a remote image registry.
+  These are no regular OCI images:
+  they re-use the data structure and infrastructure for images, but you cannot execute them with `docker run` or similar.
+  You **must not** push these images to `docker-registry.knut.univention.de` as that registry has no automatic cache cleanup mechanism to remove old and unused layers/images.
+  Use `gitregistry.knut.univention.de` instead but make sure to setup [Cleanup policy](https://docs.gitlab.com/ee/user/packages/container_registry/reduce_container_registry_storage.html) below `Setting → Packages and Registries → Clean up image tag` with a sensible retention period for images named `cache`.
+  A separate registry can be specified via the option `--cache-repo`.
+  By default Kaniko does not cache *COPY* layers, which must be enabled explicitly via the option `--cache-copy-layers` if desired.
+- With *Caching Base Images* layers are cached locally in a directory, but this is a pain to setup:
+  it requires an extra step where a separate command has to be used to *warm the cache*.
+  This is not integrated into Kaniko itself and extra care has to be taken to not create any concurrency issues.
 
 Currently caching is not enabled by default in our `kaniko.yml` as setting up the cache retention policy is not automated.
 You can enable it yourself after reading the warning above by passing the extra argument via the pipeline variable `KANIKO_ARGS: --cache=true`.

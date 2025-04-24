@@ -43,12 +43,16 @@ This was deemed enough until the above mentioned security flaws in GRUB were det
 
 `shim` solves the problem of **adding** additional components to the secure boot chain and removes the need to go to Microsoft and requesting them to sign additional components.
 If any of these components can be used to break the secured chain and to modify the environment, before the operation system is started, is must be revoked!
-Not only for the future, but also for the past: Otherwise you can still use an old UCS installation media to break any existing setup.
+Not only for the future, but also for the past:
+Otherwise you can still use an old UCS installation media to break any existing setup.
 
-- Any previous Linux kernel, which is vulnerable, needs to be added to the DBX. Until UCS-4 we have 59 versions of `univention-kernel-image-signed` so far.
-- Any previous GRUB, which is vulnerable, needs to be added to a DBX. Until UCS-4 we have 21 versions of `grub-efi-amd64-signed` so far.
+- Any previous Linux kernel, which is vulnerable, needs to be added to the DBX.
+  Until UCS-4 we have 59 versions of `univention-kernel-image-signed` so far.
+- Any previous GRUB, which is vulnerable, needs to be added to a DBX.
+  Until UCS-4 we have 21 versions of `grub-efi-amd64-signed` so far.
 
-But there is only **one** bridge between those components and the Microsoft root certificate: Our `shim`.
+But there is only **one** bridge between those components and the Microsoft root certificate:
+Our `shim`.
 So Microsoft just revoked our (and RedHats, SUSEs, Debians, Ubuntus, …) `shim` by adding them to the [UEFI Revocation List file](https://uefi.org/revocationlistfile), which is distributed by Windows updates and/or firmware updates (already or in the near future).
 Actually 3 certificates and 150 images were revoked, so ⅓ of the space allocated for DBX is now already used.
 

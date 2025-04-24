@@ -38,7 +38,7 @@ That made the previous approach for *text analysis* useless and we were forces t
 
 We decided to use [vncdotool](https://github.com/sibson/vncdotool) to interact with the virtual machine and to use the [Tesseract Open Source OCR Engine](https://github.com/tesseract-ocr/tesseract) to work with text instead of images.
 We implemented a thin wrapper around this, which we call [vnc-automate](https://github.com/univention/vnc-automate).
-Under the hood [Python twisted](https://twisted.org/) is used, which is <q>an event-driven networking engine written in Python</q>.
+Under the hood [Python twisted](https://twisted.org/) is used, which is "an event-driven networking engine written in Python".
 
 And there the problems start…
 
@@ -71,7 +71,7 @@ In addition to using VNC to get the screen and to interact with the virtual mach
 Back then this was done in the **asynchronous-part** of the application, which allowed us to invoke multiple such processes at the same time.
 Looking at the code you will find a [strange comment](https://github.com/univention/vnc-automate/blob/master/vncautomate/ocr.py#L100-L103):
 ```python
-ef outConnectionLost(self):
+def outConnectionLost(self):
  # FIXME: It's unclear what happens here, but without the sleep
  # processEnded() won't be called.
  time.sleep(0.5)
@@ -81,7 +81,7 @@ So already back then something was not right…
 
 ## Fast forward: Python 3
 
-As <q>legacy Python 2</q> has reached its [end-of-life](https://www.python.org/doc/sunset-python-2/) in 2020 `vnc-automate` needs to be migrated to <q>modern Python 3</q>.
+As _legacy Python 2_ has reached its [end-of-life](https://www.python.org/doc/sunset-python-2/) in 2020 `vnc-automate` needs to be migrated to _modern Python 3_.
 While working on that issue something strange happened:
 the first screen was OCR'ed fine, but the process just got stuck on the next screen or later on.
 None of my runs ever completed.
@@ -129,7 +129,7 @@ A UNIX process gets informed by the Kernel whenever a child-process dies:
 The parent process gets a signal [SIGCHLD](https://man7.org/linux/man-pages/man7/signal.7.html) (or `SIGCLD`), which it then can use to react on the demise.
 But similar to interrupts interrupting the kernel at whatever it is doing, signals interrupts the process at whatever it is doing:
 if the process is currently executing a system call that call returns early returning an error code.
-The process then must check [errno](https://man7.org/linux/man-pages/man3/errno.3.html) and will find it set to `EINTR`, which indicates an <q>Interrupted system call</q>.
+The process then must check [errno](https://man7.org/linux/man-pages/man3/errno.3.html) and will find it set to `EINTR`, which indicates an "Interrupted system call".
 The process is then supposed to re-execute the last system call by hand.
 Because of that most system calls must be put inside a look like
 ```c
@@ -207,9 +207,12 @@ So with `installSignalHandlers=False` this is what happens:
 
 1. STDIN is closed by us just after the process is started as we do not need to feed data into the sub-process.
 2. `tesseract` runs and writes to STDOUT and STDERR until it terminates successfully.
-3. STDOUT and STDERR are closed. Each event gets passed to the protocol as [`childConnectionLost`](https://github.com/twisted/twisted/blob/trunk/src/twisted/internet/protocol.py#L644).
-4. After each closed pipe [`Process.childConnectionLost`](https://github.com/twisted/twisted/blob/trunk/src/twisted/internet/process.py#L915) calls [`maybeCallProcessEnded`](https://github.com/twisted/twisted/blob/trunk/src/twisted/internet/process.py#L926) to check, is all pipes are closed. Only when they are all closed [`reapProcess()`](https://github.com/twisted/twisted/blob/trunk/src/twisted/internet/process.py#L280) is called.
-5. That one uses `waitpid()` to check the status of the child process. If the child-process has exited [`processEnded()`](https://github.com/twisted/twisted/blob/trunk/src/twisted/internet/process.py#L308) is called.
+3. STDOUT and STDERR are closed.
+   Each event gets passed to the protocol as [`childConnectionLost`](https://github.com/twisted/twisted/blob/trunk/src/twisted/internet/protocol.py#L644).
+4. After each closed pipe [`Process.childConnectionLost`](https://github.com/twisted/twisted/blob/trunk/src/twisted/internet/process.py#L915) calls [`maybeCallProcessEnded`](https://github.com/twisted/twisted/blob/trunk/src/twisted/internet/process.py#L926) to check, is all pipes are closed.
+   Only when they are all closed [`reapProcess()`](https://github.com/twisted/twisted/blob/trunk/src/twisted/internet/process.py#L280) is called.
+5. That one uses `waitpid()` to check the status of the child process.
+   If the child-process has exited [`processEnded()`](https://github.com/twisted/twisted/blob/trunk/src/twisted/internet/process.py#L308) is called.
 
 Which brings us back the that [strange comment](https://github.com/univention/vnc-automate/blob/master/vncautomate/ocr.py#L101-L103) from the beginning:
 ```python

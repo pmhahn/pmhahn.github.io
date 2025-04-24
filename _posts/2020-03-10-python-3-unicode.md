@@ -75,7 +75,8 @@ In Python 2 ist folgendes erlaubt:
 ```python
 b"" + u""
 ```
-Python 2 wandelt implizit das `bytes()`-Array in ein `unicode()`-Array und erlaubt das aneinanderhängen. Über `/etc/python2.7/sitecustomize.py` haben wir in UCS es so konfiguriert, dass Python hier implizit UTF-8 annimmt, weshalb das auch für Umlaute funktioniert.
+Python 2 wandelt implizit das `bytes()`-Array in ein `unicode()`-Array und erlaubt das aneinanderhängen.
+Über `/etc/python2.7/sitecustomize.py` haben wir in UCS es so konfiguriert, dass Python hier implizit UTF-8 annimmt, weshalb das auch für Umlaute funktioniert.
 
 Python 3 dagegen steigt mit einem Fehler aus:
 
@@ -93,20 +94,31 @@ Die goldene Regel lautet:
 
 Und ab hier unterschieden sich Python 2 und Python 3 dann in den Details, was das Schreiben von kompatiblen Code erschwert:
 
-- `sys.argv` ist in Python 2 eine `List[bytes]`, unter Python 3 aber eine `List[unicode]`. D.h. will man auch in Python 2 mit `unicode()` arbeiten, muss man die Argumente explizit dekodieren, Python 3 macht es standardmäßig.
-- `open(filename, "r")` liefert einem unter Python 2 `bytes()`, unter Python 3 dagegen `unicode()`. Will man unter Python 3 Binärdaten verarbeiten, sollte man explizit `open(filename, "rb")` verwenden. Will man immer mit Unicode arbeiten, kann man in beiden besser `io.open(filename, "r")` verwenden. Gleiches gilt natürlich für das Schreiben mit `w`.
-- Python 3 setzt `sys.stdin, sys.stdout, sys.stderr` dankenswerterweise schon mit passenden Konvertern aus, dass man sich nicht explizit selber um die Kodierung kümmern muss: Ein `print(u"ä")` ruft implizit `encode('utf-8')` auf. Auch mit Python 2 funktioniert das wegen unserer geänderten Einstellung unter UCS, **außer** man leitet die Ausgabe in eine Pipe um, denn dann verenden StdIn, StdOut, StdErr plötzlich `ASCII` und man muss einiges an [Aufwand]({% post_url 2013-04-17-the-unicode-desaster %}) treiben, um auch dann Unicode automatisch konvertiert zu bekommen.
-- `"ä".isalpha()` ist unter Python 3 `True`, weil hier Python 3 die Unicode-Datenbank konsultiert. Unter Python 2 dagegen `False`, weil hier (standardmäßig) die Byte-Sequenz angeguckt wird und `'\xc3'.isalpha()` eben `False` ist; mit `from __future__ import unicode_literals` bzw. `u"ä".isalpha()` bekommt man auch mit Python 2 ein `True`.
+- `sys.argv` ist in Python 2 eine `List[bytes]`, unter Python 3 aber eine `List[unicode]`.
+  D.h. will man auch in Python 2 mit `unicode()` arbeiten, muss man die Argumente explizit dekodieren, Python 3 macht es standardmäßig.
+- `open(filename, "r")` liefert einem unter Python 2 `bytes()`, unter Python 3 dagegen `unicode()`.
+  Will man unter Python 3 Binärdaten verarbeiten, sollte man explizit `open(filename, "rb")` verwenden.
+  Will man immer mit Unicode arbeiten, kann man in beiden besser `io.open(filename, "r")` verwenden.
+  Gleiches gilt natürlich für das Schreiben mit `w`.
+- Python 3 setzt `sys.stdin, sys.stdout, sys.stderr` dankenswerterweise schon mit passenden Konvertern aus, dass man sich nicht explizit selber um die Kodierung kümmern muss:
+  Ein `print(u"ä")` ruft implizit `encode('utf-8')` auf.
+  Auch mit Python 2 funktioniert das wegen unserer geänderten Einstellung unter UCS, **außer** man leitet die Ausgabe in eine Pipe um, denn dann verenden StdIn, StdOut, StdErr plötzlich `ASCII` und man muss einiges an [Aufwand]({% post_url 2013-04-17-the-unicode-desaster %}) treiben, um auch dann Unicode automatisch konvertiert zu bekommen.
+- `"ä".isalpha()` ist unter Python 3 `True`, weil hier Python 3 die Unicode-Datenbank konsultiert.
+  Unter Python 2 dagegen `False`, weil hier (standardmäßig) die Byte-Sequenz angeguckt wird und `'\xc3'.isalpha()` eben `False` ist;
+  mit `from __future__ import unicode_literals` bzw. `u"ä".isalpha()` bekommt man auch mit Python 2 ein `True`.
 - Auch unterschieden sich die Ausgaben zwischen Python 2 und 3, wenn man `bytes()` oder `unicode()` ausgibt:
     |              | Python 2 | Python 3 |
     | ------------ | -------- | -------- |
     | `print(b"")` |          | b""      |
     | `print(u"")` |          |          |
 
-    Problematisch ist das z.B. bei UDM, weil dieses einen `eval(repr(data))` Zyklus für die Kommunikation zwischen UDM-CLI und UDM-Server über den internen UNIX-Socket verwendet: Durch die unterschiedliche Darstellung hat man dann plötzlich doppelt encodierte Daten und bekommt die seltsamsten `TypeError`-Meldungen.
+    Problematisch ist das z.B. bei UDM, weil dieses einen `eval(repr(data))` Zyklus für die Kommunikation zwischen UDM-CLI und UDM-Server über den internen UNIX-Socket verwendet:
+    Durch die unterschiedliche Darstellung hat man dann plötzlich doppelt encodierte Daten und bekommt die seltsamsten `TypeError`-Meldungen.
 - In Python 2 gibt es `basestring` als gemeinsame
-    Oberklasse von `str=bytes` und `unicode`. In Python 3 gibt es die nicht mehr und man sollte sich davor hüten, das einfach durch `six.string_types` zu ersetzten, denn dann läuft man wieder Gefahr, dass man `bytes()` mit `unicode()` vermischt und einen `TypeError` bekommt. Besser ist es explizit auf den richtigen Type `six.text_type` bzw. `six.binary_type` zu testen.
-- Der Vergleich von `bytes()` und `unicode()` unterscheidet sich je nach Python-Version: ```
+    Oberklasse von `str=bytes` und `unicode`.
+    In Python 3 gibt es die nicht mehr und man sollte sich davor hüten, das einfach durch `six.string_types` zu ersetzten, denn dann läuft man wieder Gefahr, dass man `bytes()` mit `unicode()` vermischt und einen `TypeError` bekommt.
+    Besser ist es explizit auf den richtigen Type `six.text_type` bzw. `six.binary_type` zu testen.
+- Der Vergleich von `bytes()` und `unicode()` unterscheidet sich je nach Python-Version:
 
     ```console
     $ python2 -c 'print(b"" == u"")'

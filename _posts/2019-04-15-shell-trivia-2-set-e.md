@@ -7,7 +7,8 @@ categories: shell
 
 Es gab bereits einen Blog-Eintrag [Shell-trivia #1: set -e]({% post_url 2015-10-19-shell-trivia-1-set-e %}), aus gegebenem Anlass hier die Fortsetzung:
 
-Per `set -e` kann man die Shell veranlassen, ein Skript abzubrechen, sobald eins der Kommandos fehlschlägt. Leider steckt der Teufel hier im Detail.
+Per `set -e` kann man die Shell veranlassen, ein Skript abzubrechen, sobald eins der Kommandos fehlschlägt.
+Leider steckt der Teufel hier im Detail.
 
 Betrachten wir folgendes Beispiel:
 ```bash
@@ -29,7 +30,9 @@ Warum?
 
 Wie üblich muss man die [Manual-Page von bash](https://manpages.debian.org/stretch/bash/bash.1.en.html#Shell_Function_Definitions) sehr genau lesen:
 
-> set -e: Exit immediately if a **simple command** exits with a non-zero status. The shell does **not** exit if the command that fails is part of the command list immediately following a `while` or `until` keyword, part of the test in an `if` statement, part of a `&&` or `⎪⎪` list, or if the command’s return value is being inverted via `!`.
+> set -e:
+> Exit immediately if a **simple command** exits with a non-zero status.
+> The shell does **not** exit if the command that fails is part of the command list immediately following a `while` or `until` keyword, part of the test in an `if` statement, part of a `&&` or `⎪⎪` list, or if the command’s return value is being inverted via `!`.
 
 An [anderer Stelle](https://manpages.debian.org/stretch/bash/bash.1.en.html#Compound_Commands) liest man noch folgendes:
 

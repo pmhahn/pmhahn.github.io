@@ -23,7 +23,8 @@ void new(int a, bool b, char *c) {
 }
 ```
 
-They nearly looks the same, but there is a subtile draw-back to the old syntax: The [gcc](https://gcc.gnu.org/) compile will not report an error if you do not specify all arguments:
+They nearly looks the same, but there is a subtile draw-back to the old syntax:
+The [gcc](https://gcc.gnu.org/) compile will not report an error if you do not specify all arguments:
 
 ```c
 #include <stdio.h>
@@ -45,10 +46,13 @@ int main(void) {
 }
 ```
 
-Even a `-Wall -pedantic -ansi -Werror` will not find it. Using [clang](https://clang.llvm.org/) on the other hand reports an error.
+Even a `-Wall -pedantic -ansi -Werror` will not find it.
+Using [clang](https://clang.llvm.org/) on the other hand reports an error.
 
 So watch out if you for example look at [CrudeSAML](https://github.com/univention/crudesaml/blob/master/cy2_saml.c#L109-L114), which uses both syntax at the same time.
 
-PS: It you ask yourself what values are passed if they are not specified: random data respectively whatever is currently on your stack; so this is a security vulnerability as it discloses the content of your stack, which might contain confidential data.
+PS: It you ask yourself what values are passed if they are not specified:
+random data respectively whatever is currently on your stack;
+so this is a security vulnerability as it discloses the content of your stack, which might contain confidential data.
 
 {% include abbreviations.md %}

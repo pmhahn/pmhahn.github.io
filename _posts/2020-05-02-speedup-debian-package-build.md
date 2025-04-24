@@ -107,7 +107,7 @@ If you build many packages multiple times, most of the time goes into preparing 
 This first step to reduce the time needed for that is to create docker images for building packages.
 For each UCS release I have multiple docker images:
 
-1. The `minbase` version consisting of *Essential: yes* only.
+1. The `minbase` version consisting of `Essential: yes` only.
    Currently this image is created by doing a `debootstrap --variant=minbase`.
    Doing it this way gets you an image, which  still includes lots of extra stuff not needed for Docker.
    In the feature I want to adapt the [approach from slim images](https://ownyourbits.com/2017/02/19/creating-a-minimal-debian-container-for-docker/).
@@ -217,7 +217,8 @@ This needs more investigation, especially with smaller packages and using less p
 
 # Replacing pbuilder
 
-`pbuilder` shows its age: It's a collection of shell script having multiple issues.
+`pbuilder` shows its age:
+It's a collection of shell script having multiple issues.
 Despite the name `pbuilder` prepares the *source package* on your host system, for which it installs all the build-dependencies *on your host*!
 You can disable that by using `--use-pdebuild-internal`, but this is *not* the default!
 As soon as you use that you get a new bunch of shell quoting errors, as many more things then need to be done inside the `chroot` environment.

@@ -18,7 +18,9 @@ Mit QEmu/KVM auf dem lokalen System geht es übrigens noch ein bisschn besser, d
 </filesystem>
 ```
 
-Bei `/domain/devices/filesystem/target/@dir` kann man irgendeine Zeichenkette angeben; sie dient lediglich als Handle, um das Dateisystem innerhalb der VM eindeutig zu bezeichnen. Dort kann man es dann folgendrmaßen einbinden:
+Bei `/domain/devices/filesystem/target/@dir` kann man irgendeine Zeichenkette angeben;
+sie dient lediglich als Handle, um das Dateisystem innerhalb der VM eindeutig zu bezeichnen.
+Dort kann man es dann folgendrmaßen einbinden:
 
 ```bash
 mount -t 9p -o ro,trans=virtio,version=9p2000.L ucs-3.1 /mnt

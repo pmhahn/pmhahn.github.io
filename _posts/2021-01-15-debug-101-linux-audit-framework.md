@@ -21,12 +21,19 @@ This never showed a process forking a `kill -SIGTERM $PID`, so we needed a bigge
 (System calls are the "doors" between user-space and kernel-space and do the transition from unprivileged user-space code to privileged kernel code.)
 
 - Using `strace "$cmd"` traces the system calls done by command `$cmd`.
-- If you also want to (recursively) trance its child processes you have to use the `-f` argument. You also need this if the process is multi-threaded.
-- Using `-o "$file"` the output gets written to the named file. For multiple processes you can give `-f` twice, so each process gets its own file (with suffix `.$PID`); otherwise all system calls of all processes are collected in only that single file.
-- Using `-p "$PID"` you can attach to an already running process. Only that single process is traced, not its already running child processes. But you can use `-f` again to trace newly created child processed.
-- You can use `-e t=process` to limit tracing to system calls from the "process" category. Other categories like "file" exists as well.
+- If you also want to (recursively) trance its child processes you have to use the `-f` argument.
+  You also need this if the process is multi-threaded.
+- Using `-o "$file"` the output gets written to the named file.
+  For multiple processes you can give `-f` twice, so each process gets its own file (with suffix `.$PID`);
+  otherwise all system calls of all processes are collected in only that single file.
+- Using `-p "$PID"` you can attach to an already running process.
+  Only that single process is traced, not its already running child processes.
+  But you can use `-f` again to trace newly created child processed.
+- You can use `-e t=process` to limit tracing to system calls from the "process" category.
+  Other categories like "file" exists as well.
 - Instead of categories you also can name individual system calls or exclude them, e.g. `-e '!futex'`.
-- By default only the first 32 characters of strings are logged. Use `-s 256` to increase that.
+- By default only the first 32 characters of strings are logged.
+  Use `-s 256` to increase that.
 
 # audit
 
@@ -37,7 +44,8 @@ It was designed for CAPP-compliant auditing.
 - Log any failed or successful access to a file like `/etc/shadow`.
 - Intrusion Prevention System can use it to block processes from performing malicious actions.
 - `systemd` logs the start and stop of services through it.
-- PAM & Co. log important events when users log in or log out or change their permissions. This even allows to keep track of users using `sudo` or `su`.
+- PAM & Co. log important events when users log in or log out or change their permissions.
+  This even allows to keep track of users using `sudo` or `su`.
 - SELinux and AppArmor report and log violations via Audit.
 
 First you have to install Debian package `auditd`, which for UCS is in "unmaintained".
@@ -54,7 +62,8 @@ This is done by adding the following rule to file `/etc/audit/rules.d/bug52518.r
 -a always,exit -F arch=b64 -S kill -F a1=15 -k Bug52518
 ```
 
-This tells the Audit system to **always** emit an event, when the architecture **b64** system call **kill** is used with argument `SIGTERM` (**a1=15**). The event is emitted on **exit** (after the Linux kernel already has executed its code) and should be tagged with key `Bug52518`.
+This tells the Audit system to **always** emit an event, when the architecture **b64** system call **kill** is used with argument `SIGTERM` (**a1=15**).
+The event is emitted on **exit** (after the Linux kernel already has executed its code) and should be tagged with key `Bug52518`.
 
 In addition to that we also want to track processes doing an `sys_exit` or `sys_execve`, so we append a second rule:
 
@@ -63,7 +72,9 @@ In addition to that we also want to track processes doing an `sys_exit` or `sys_
 ```
 
 Here two system calls are used in the same rule, which is more efficient then adding individual rules.
-(Performance easily becomes a problem as each additional rule slows down **all** system calls, so the complete system with all of its processes and threads. Anecdote from customer 26: too many rules led to to an release updates taking many hours instead of minutes.)
+(Performance easily becomes a problem as each additional rule slows down **all** system calls, so the complete system with all of its processes and threads.
+Anecdote from customer 26:
+too many rules led to to an release updates taking many hours instead of minutes.)
 
 The individual audit rule snippets must be concatenated to a single file `/etc/audit/audit.rules` and loaded into the Linux kernel, which is done by running `augenrules --load`.
 
@@ -118,7 +129,8 @@ type=SYSCALL msg=audit(13.01.2021 09:00:12.243:7148742) : arch=x86_64 syscall=ki
 
 - `SYSCALL` tells us, that process `pid=5965` is dong a `syscall=kill` with `a1=SIGTERM` on process `0x1312`.
 - From `PROCTITLE` we get the information, that the process doing this kill is `/usr/sbin/univention-management-console-server`.
-- Form `OBJ_PID` we also get the information, that the process being killed is `pid=4882=0x1312`: It's a process running as `ouid=root` and it's abbreviated name is `ocomm=univention-mana`.
+- Form `OBJ_PID` we also get the information, that the process being killed is `pid=4882=0x1312`:
+  It's a process running as `ouid=root` and it's abbreviated name is `ocomm=univention-mana`.
 
 Stupidly the name is abbreviated, so we need to lookup the complete name.
 As we also enabled tracing `sys_execve` we can use that to get the full command line.
@@ -131,7 +143,8 @@ type=PROCTITLE msg=audit(13.01.2021 09:00:12.243:7148745) : proctitle=/usr/bin/p
 type=SYSCALL msg=audit(13.01.2021 09:00:12.243:7148745) : arch=x86_64 syscall=exit a0=EXIT_SUCCESS a1=0x7ff2669099c0 a2=0x3c a3=0x7c0 items=0 ppid=1 pid=4882 auid=unset uid=root gid=root euid=root suid=root fsuid=root egid=root sgid=root fsgid=root tty=(none) ses=unset comm=univention-mana exe=/usr/bin/python2.7 key=Bug_52518
 ```
 
-Et voilà: We only need `proctitle` to see, that `umc-server` is killing `umc-**web**-server`.
+Et voilà:
+We only need `proctitle` to see, that `umc-server` is killing `umc-**web**-server`.
 Those two processes are unrelated, as they have no immediate parent/child association.
 Investigating other usages of `sys_kill` by using the same technique showed `umc-server` to also kill many other processes like `s4c`, `univention-portal` and all other services using `/usr/bin/python2.7`.
 
@@ -176,7 +189,8 @@ Traceback (most recent call first):
     umc_daemon.do_action()
 ```
 
-Nailed it: `umc-server` is using [python-notifier](https://github.com/univention/python-notifier/commit/374993ed530d8b25f90baf8e708bc727cc2ef3a7), where its module for handling sub processes is killing the wrong "children".
+Nailed it:
+`umc-server` is using [python-notifier](https://github.com/univention/python-notifier/commit/374993ed530d8b25f90baf8e708bc727cc2ef3a7), where its module for handling sub processes is killing the wrong "children".
 
 And you also can have a look at Python local variables using `py-locals` (reformatted for improved readability):
 

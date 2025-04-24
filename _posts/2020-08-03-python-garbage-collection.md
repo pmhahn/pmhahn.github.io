@@ -12,7 +12,8 @@ Normalerweise werden Objekt über die Referenzzählung freigegebenen:
 
 > root -> a[1] -> b[1]
 
-Nach einem `del a` sinkt der Referenzzähler von "a" auf 0, was dazu führt, das "a" freigegeben wird. Das führt rekursiv dazu, das auch "b" freigegeben wird, weil durch das implizite `del b` auch dessen Referenzzähler auf 0 sinkt.
+Nach einem `del a` sinkt der Referenzzähler von "a" auf 0, was dazu führt, das "a" freigegeben wird.
+Das führt rekursiv dazu, das auch "b" freigegeben wird, weil durch das implizite `del b` auch dessen Referenzzähler auf 0 sinkt.
 
 Bei zyklischen Strukturen ist es komplizierter:
 

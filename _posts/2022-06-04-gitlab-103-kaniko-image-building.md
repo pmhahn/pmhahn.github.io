@@ -5,7 +5,8 @@ layout: post
 categories: virt git
 ---
 
-[Gitlab 102: container followup]({% post_url 2022-05-24-gitlab-102-container-followup %}) briefly describes building Docker images with [Kaniko](https://github.com/GoogleContainerTools/kaniko) instead of _Docker in docker_. Let's take a look at some common practices to build images.
+[Gitlab 102: container followup]({% post_url 2022-05-24-gitlab-102-container-followup %}) briefly describes building Docker images with [Kaniko](https://github.com/GoogleContainerTools/kaniko) instead of _Docker in docker_.
+Let's take a look at some common practices to build images.
 
 1. Always include the _Kaniko_ fragment:
     ```yaml
@@ -13,8 +14,12 @@ categories: virt git
      – project: univention/dist/docker-services
        file: kaniko.yml
     ```
-2. This fragments defines multiple base jobs, that you can use with the `extends` keyword in your pipeline definition in your `.gitlab-ci.yml` file. They use different Docker registries `$CI_REGISTRY` and image names `$CI_REGISTRY_IMAGE` by default. GitLab already defines these [predefined variables](https://docs.gitlab.com/ee/ci/variables/predefined_variables.html). Some jobs re-define them and you can them in the `variables` section of each job in your pipeline definition.
-3. The Kaniko fragment above defines `latest` for the *docker tag*, when the build runs in the `$CI_DEFAULT_BRANCH`. Otherwise the Kaniko fragments assigns the `$CI_COMMIT_TAG` for tags and `$CI_COMMIT_REF_NAME` for feature branches.
+2. This fragments defines multiple base jobs, that you can use with the `extends` keyword in your pipeline definition in your `.gitlab-ci.yml` file.
+   They use different Docker registries `$CI_REGISTRY` and image names `$CI_REGISTRY_IMAGE` by default.
+   GitLab already defines these [predefined variables](https://docs.gitlab.com/ee/ci/variables/predefined_variables.html).
+   Some jobs re-define them and you can them in the `variables` section of each job in your pipeline definition.
+3. The Kaniko fragment above defines `latest` for the *docker tag*, when the build runs in the `$CI_DEFAULT_BRANCH`.
+   Otherwise the Kaniko fragments assigns the `$CI_COMMIT_TAG` for tags and `$CI_COMMIT_REF_NAME` for feature branches.
 
 ## Default build with Gitlab docker registry
 
@@ -23,10 +28,10 @@ build my docker image:
  extends: .kaniko
 ```
 
-Registry `CI_REGISTRY`
-: gitregistry.knut.univention.de
-Image `CI_REGISTRY_IMAGE`
-: `$CI_REGISTRY/$CI_PROJECT_PATH_SLUG`
+- Registry `CI_REGISTRY`
+  gitregistry.knut.univention.de
+- Image `CI_REGISTRY_IMAGE`
+  `$CI_REGISTRY/$CI_PROJECT_PATH_SLUG`
 
 ## Default build with docker-registry
 
@@ -35,10 +40,10 @@ build my docker image:
  extends: .kaniko_knut
 ```
 
-Registry `CI_REGISTRY`
-: docker-registry.knut.univention.de
-Image `CI_REGISTRY_IMAGE`
-: `$CI_REGISTRY/knut/$CI_PROJECT_NAME`
+- Registry `CI_REGISTRY`
+  docker-registry.knut.univention.de
+- Image `CI_REGISTRY_IMAGE`
+  `$CI_REGISTRY/knut/$CI_PROJECT_NAME`
 
 ## Customized base image name
 
@@ -64,7 +69,7 @@ build my docker image:
 
 ### Explicit tagging
 
-if you also want to explicitly re-tag the image with some extra tag, e.g. latest, use [Skopeo](https://github.com/containers/skopeo) and include `skopeo.yml` as fragment and add a second job for tagging:
+If you also want to explicitly re-tag the image with some extra tag, e.g. latest, use [Skopeo](https://github.com/containers/skopeo) and include `skopeo.yml` as fragment and add a second job for tagging:
 
 ```yaml
 include:
@@ -135,14 +140,15 @@ use my docker image:
 
 ## Variable overrides
 
-`KANIKO_ARGS`
-: can be used to pass arbitrary extra arguments to kaniko, e.g. `--cache=true --cache-repo=$CI_REGISTRY_IMAGE/cache"` for enabling [layer caching](https://cloud.google.com/build/docs/kaniko-cache).
-`KANIKO_BUILD_CONTEXT`
-: defaults to `$CI_PROJECT_DIR` but can be used to specify a different build context directory.
-`DOCKERFILE_PATH`
-: can be used to specify an alternative path for the `Dockerfile`. For kaniko that file must be inside the directory `$KANIKO_BUILD_CONTEXT`.
-`IMAGE_TAG`
-: can be used to specify the full image name including registry and tag.
+- `KANIKO_ARGS`
+  can be used to pass arbitrary extra arguments to kaniko, e.g. `--cache=true --cache-repo=$CI_REGISTRY_IMAGE/cache"` for enabling [layer caching](https://cloud.google.com/build/docs/kaniko-cache).
+- `KANIKO_BUILD_CONTEXT`
+  defaults to `$CI_PROJECT_DIR` but can be used to specify a different build context directory.
+- `DOCKERFILE_PATH`
+  can be used to specify an alternative path for the `Dockerfile`.
+  For kaniko that file must be inside the directory `$KANIKO_BUILD_CONTEXT`.
+- `IMAGE_TAG`
+  can be used to specify the full image name including registry and tag.
 
 ## Known issues
 

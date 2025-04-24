@@ -22,7 +22,8 @@ Relevant für die heutige Nachhilfestunde sind nur **IP(v4)** und **Ethernet**.
 Das Schichtenmodell dient der Vereinfachung und Strukturierung.
 Betrachtet man eine Schichte, regelt diese die Kommunikation auf einer bestimmten Ebene.
 Dazu wird dort ein Protokoll definiert, was diesen Ablauf bestimmt.
-Nur für die **Umsetzung** dieser Kommunikation wird auf die **direkt darunter liegende Ebene** zugegriffen; ansonsten bleiben diese Details außen vor und werde nicht *nach oben* durchgereicht.
+Nur für die **Umsetzung** dieser Kommunikation wird auf die **direkt darunter liegende Ebene** zugegriffen;
+ansonsten bleiben diese Details außen vor und werde nicht *nach oben* durchgereicht.
 
 ## Internet Protocol IPv4
 
@@ -38,8 +39,11 @@ default via 10.200.17.1 dev eth0 onlink
 
 Hier gibt es 2 Arten von Einträgen:
 
-1. `10.200.17.0/24 dev eth0 … src 10.200.17.38` besagt, dass sich dieser Rechner mit der Adresse `10.200.17.38` den IP-Adressbereich `10.200.17.0/24` mit anderen Rechnern teilt. Diese sind **direkt** erreichbar, weshalb für die weitere Kommunikation auf das in diesem Fall darunter liegende Ethernet-Protokoll zurückgegriffen werden muss.
-2. `default via 10.200.17.1` dagegen besagt, da für alle anderen IP-Adressen, für die es explizit keine andere Regel gibt, die Pakete an den Stellvertreter (Gateway/Router) `10.200.17.1` zu senden sind. Um diesen zu erreich muss dessen Adresse wiederum rekursiv aufgelöst werden: In diesem Fall gilt die Regel für `10.200.17.0/24`, die eben besagt, dass dieser direkt im lokalen Segment hängt und damit über das darunter liegende Ethernet-Protokoll erreicht werden kann.
+1. `10.200.17.0/24 dev eth0 … src 10.200.17.38` besagt, dass sich dieser Rechner mit der Adresse `10.200.17.38` den IP-Adressbereich `10.200.17.0/24` mit anderen Rechnern teilt.
+   Diese sind **direkt** erreichbar, weshalb für die weitere Kommunikation auf das in diesem Fall darunter liegende Ethernet-Protokoll zurückgegriffen werden muss.
+2. `default via 10.200.17.1` dagegen besagt, da für alle anderen IP-Adressen, für die es explizit keine andere Regel gibt, die Pakete an den Stellvertreter (Gateway/Router) `10.200.17.1` zu senden sind.
+   Um diesen zu erreich muss dessen Adresse wiederum rekursiv aufgelöst werden:
+   In diesem Fall gilt die Regel für `10.200.17.0/24`, die eben besagt, dass dieser direkt im lokalen Segment hängt und damit über das darunter liegende Ethernet-Protokoll erreicht werden kann.
 
 ## Ethernet Protokoll
 
@@ -110,7 +114,8 @@ Meine VM mit IP-Adresse `10.200.17.38/24` auf `lagan 192.168.0.49` will mit `oma
 3. Dazu wird per ARQ-Request die Adresse `10.200.17.1` aufgelöst
 4. Diese gehört `lerberg`, der mit `80:2a:a8:df:d0:8d` antwortet
 5. Das IP-Paket an `192.168.0.10` wird also in ein Ethernet-Frame an `80:2a:a8:df:d0:8d` verpackt und per `eth0` auf die Reise geschickt
-6. Dort kommt es aus dem virtuellen Interface `vnet0` der VM an. Dieses Steckt in der Bridge `eth0`, von der es weitergeleitet wird.
+6. Dort kommt es aus dem virtuellen Interface `vnet0` der VM an.
+   Dieses Steckt in der Bridge `eth0`, von der es weitergeleitet wird.
 7. Das Ethernet-Paket verlässt `lagan` über `enp96s0f0` in Richtung `lerberg`
 8. Die Netzwerkkarte von `lerberg` fühlt sich angesprochen, weil das Paket an ihr MAC-Adresse adressiert ist
 9. `Lerberg` konsultiert seine konfigurierten IP-Adressen und sieht, dass das Paket nicht an ihn persönlich gerichtet ist.
@@ -130,7 +135,9 @@ Unser KNUT-Netz hat ein paar Besonderheiten:
 Obwohl jedes Mitarbeity seinen iegenen IP-Adressbereich hat, befinden sich alle Rechner und VM in der **selben** Ethernet-Domäne.
 Das führt teilweise zu seltsamen Paket-Routing:
 
-- Kommuniziert meine VM `10.200.17.38` auf `lagan` mit `lagan = 192.168.0.49` selbst, macht auch dieses Paket einen Umweg über `lerberg`, obwohl diese IP-Addresse auf `lagan`’s Bridge `eth0` konfiguriert ist. Die **VM** entscheidet sich für Routing an `lerberg` und trägt **dessen** MAC-Adresse in das Ethernet-Frame ein. Damit passiert dieses die Bridge von `lagan` transparent und erst auf dem Rückweg von `lerberg` steht dann die richtige MAC-Adresse `ac:1f:6b:bc:0b:96` von `lagan` drin, so dass er sich erst dann angesprochen fühlt.
+- Kommuniziert meine VM `10.200.17.38` auf `lagan` mit `lagan = 192.168.0.49` selbst, macht auch dieses Paket einen Umweg über `lerberg`, obwohl diese IP-Addresse auf `lagan`’s Bridge `eth0` konfiguriert ist.
+  Die **VM** entscheidet sich für Routing an `lerberg` und trägt **dessen** MAC-Adresse in das Ethernet-Frame ein.
+  Damit passiert dieses die Bridge von `lagan` transparent und erst auf dem Rückweg von `lerberg` steht dann die richtige MAC-Adresse `ac:1f:6b:bc:0b:96` von `lagan` drin, so dass er sich erst dann angesprochen fühlt.
 - Selbiges gilt auch für 2 VMs aus unterschiedlichen IP-Adressbereichen.
 - Zwei VMs auf dem selben IP-Adressbreich, die zudem auch auf dem selben KVM-Host laufen, nutzen eben kein Routing und kommunizieren direkt per Ethernet, so dass diese Pakete nie den KVM-Server Richtung `lerberg` verlassen müssen.
 

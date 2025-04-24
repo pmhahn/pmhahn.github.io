@@ -44,8 +44,10 @@ Das alles passiert in einem gesonderten Bereich, der erst öffentlich sichtbar w
 
 Um die Sicherheit zu erhöhen gibt es noch 2 Features:
 
-1. damit Pakete überhaupt den Signing-Service nutzen können, müssen die Template-Pakete auf einer Whitelist stehen. Ansonsten könnte jeder Debian-Entwickler sich Binaries signieren lassen, die sich an in Secure-Boot-Umgebungen booten ließen.
-2. Der Signing-Service protokolliert jede Signatur, so dass Unregelmäßigkeiten erkannt werden können. Im schlimmsten Fall müsste Debian seinen SHIM widerrufen wenn bekannt wird, das Signaturen unberechtigt erzeugt wurden.
+1. damit Pakete überhaupt den Signing-Service nutzen können, müssen die Template-Pakete auf einer Whitelist stehen.
+   Ansonsten könnte jeder Debian-Entwickler sich Binaries signieren lassen, die sich an in Secure-Boot-Umgebungen booten ließen.
+2. Der Signing-Service protokolliert jede Signatur, so dass Unregelmäßigkeiten erkannt werden können.
+   Im schlimmsten Fall müsste Debian seinen SHIM widerrufen wenn bekannt wird, das Signaturen unberechtigt erzeugt wurden.
 
 Aktueller Stand ist, das wir (Debian) nun alle notwendige Infrastruktur haben (DAK, signing-code).
 Auch wurde schon alle wichtigen Pakete (Linux Kernel, Shim, GRUB, fwupdate) angepasst, um die signing-templates zu erzeugen.

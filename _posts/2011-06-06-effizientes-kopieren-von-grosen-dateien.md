@@ -5,7 +5,11 @@ layout: post
 categories: linux filesystem
 ---
 
-Mit Virtualisierung trifft man öfters auf mehrere Gigabyte große Image-Dateien, die von Zeit zu Zeit auch mal kopiert werden müssen. Klassischerweise passiert das mit `cp` oder `dd bs=1G`. Beide Varianten lesen die Daten häppchenweise per `read()` in den Hauptspeicher, um ihn anschließend per `write()` in eine neue Datei zu schreiben. Die `dd`-Varianta hat hier den Vorteil, daß man durch Angab der Blockgröße größere Datenblöcke am Stück einlesen kann, was vor allem die Anzahl der Lese-/Schreibkopfpositionierungen der Festplatte reduziert, was zu erheblichen Geschwindigkeitsvorteilen führen kann. `cp` verwendet normalerweise 32 KiB-Blöcke, `shutil.copy2()` aus Python nur 16 KiB-Blöcke (und kopiert nicht alle Berechtigungen!)
+Mit Virtualisierung trifft man öfters auf mehrere Gigabyte große Image-Dateien, die von Zeit zu Zeit auch mal kopiert werden müssen.
+Klassischerweise passiert das mit `cp` oder `dd bs=1G`.
+Beide Varianten lesen die Daten häppchenweise per `read()` in den Hauptspeicher, um ihn anschließend per `write()` in eine neue Datei zu schreiben.
+Die `dd`-Varianta hat hier den Vorteil, daß man durch Angab der Blockgröße größere Datenblöcke am Stück einlesen kann, was vor allem die Anzahl der Lese-/Schreibkopfpositionierungen der Festplatte reduziert, was zu erheblichen Geschwindigkeitsvorteilen führen kann.
+`cp` verwendet normalerweise 32 KiB-Blöcke, `shutil.copy2()` aus Python nur 16 KiB-Blöcke (und kopiert nicht alle Berechtigungen!)
 
 Das es effizienter geht zeiht **BtrFS** mit der Möglichkeit, Dateien per `cp --reflink` zu klonen:
 
@@ -28,6 +32,8 @@ Das es effizienter geht zeiht **BtrFS** mit der Möglichkeit, Dateien per `cp --
 2636db080b31d5181602d5d092d42ea1 copy
 ```
 
-Ähnlich zu `ln` wird hier aber nicht einfach ein neuer Hard-Link auf die Inode angelegt, so daß Änderung über *einen Namen* sich auch auf den Inhalt auswirken, der über *den anderen Namen* angesprochen wird. Statt dessen bekommt die Kopie eine eigene Inode, sie sich per Copy-on-write die *Datenblöcke* mit der Ursprungsdatei teilt. Erst durch Modifikation einer der beiden Dateien driften diese auseinander und verwenden bei fortschreitender Modifikation irgendwann getrennte Datenblöcke.
+Ähnlich zu `ln` wird hier aber nicht einfach ein neuer Hard-Link auf die Inode angelegt, so daß Änderung über *einen Namen* sich auch auf den Inhalt auswirken, der über *den anderen Namen* angesprochen wird.
+Statt dessen bekommt die Kopie eine eigene Inode, sie sich per Copy-on-write die *Datenblöcke* mit der Ursprungsdatei teilt.
+Erst durch Modifikation einer der beiden Dateien driften diese auseinander und verwenden bei fortschreitender Modifikation irgendwann getrennte Datenblöcke.
 
 {% include abbreviations.md %}

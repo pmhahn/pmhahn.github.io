@@ -59,9 +59,11 @@ In der XML-Datei muß natürlich dann ganz normal diese Qcow2-Datei eingebunden 
 </disk>
 ```
 
-Das `copy_on_read` sorgt dafür, daß einmal per NBD gelesene Blöcke auch in die lokalen Qcow2-Datei kopiert werden sollen, damit der Block, falls er später nochmals gelesen werden muß, nicht erneut über das Netzwerk gelesen werden muß, sondern schon in der lokalen Datei vorliegt. Geschriebene Blöcke werden natürlich sofort und nur in der lokalen Datei gespeichert, wie man das eben vom Qcow2-Backgind-Datei-Mechanismus bereits kennt.
+Das `copy_on_read` sorgt dafür, daß einmal per NBD gelesene Blöcke auch in die lokalen Qcow2-Datei kopiert werden sollen, damit der Block, falls er später nochmals gelesen werden muß, nicht erneut über das Netzwerk gelesen werden muß, sondern schon in der lokalen Datei vorliegt.
+Geschriebene Blöcke werden natürlich sofort und nur in der lokalen Datei gespeichert, wie man das eben vom Qcow2-Backgind-Datei-Mechanismus bereits kennt.
 
-Damit entsteht im Laufe der Zeit ein mehr-oder-minder vollständiges lokales Abbild der entfernten Datei. Will man wirklich wirklich alle Daten kopieren, kann man anschließend auch dem laufenden Qemu-KVM-Prozess sagen, daß es (in aller Ruhe) die Blöcke der Backing-Datei kopieren soll, so daß anschließend die lokale Qcow2-Datei alle Datenblöcke enthält und man die Verbindung zur ursprünglichen Datei kappen kann:
+Damit entsteht im Laufe der Zeit ein mehr-oder-minder vollständiges lokales Abbild der entfernten Datei.
+Will man wirklich wirklich alle Daten kopieren, kann man anschließend auch dem laufenden Qemu-KVM-Prozess sagen, daß es (in aller Ruhe) die Blöcke der Backing-Datei kopieren soll, so daß anschließend die lokale Qcow2-Datei alle Datenblöcke enthält und man die Verbindung zur ursprünglichen Datei kappen kann:
 ```bash
 virsh blockpull --domain "$domain" \
  --path "/var/lib/libvirt/images/lenny-0.qcow2" \
@@ -72,9 +74,11 @@ Per `virsh blockjob "$domain" "$path"` kann man sich anschließend über den For
 
 Ein paar Probleme sollen nicht verheimlicht werden:
 
-- `sudo iptables` ist auf unseren KVM-Servern leider nicht direkt möglich, aber natürlich kann man auch einfach einen der hohen VNC-Ports 5900:5999 missbrauchen: die sind schon erreichbar und man kann sich das `sudo`-sparen.
+- `sudo iptables` ist auf unseren KVM-Servern leider nicht direkt möglich, aber natürlich kann man auch einfach einen der hohen VNC-Ports 5900:5999 missbrauchen:
+  die sind schon erreichbar und man kann sich das `sudo`-sparen.
 - `sudo virsh blockpull` und `blockjob` sind leider auch nicht freigeschaltet — "ceterum censeo sudo virsh …"
 
-Interessant ist NBD vor allem deswegen auch, weil das genau der gleiche Mechanismus ist, der für die Migration von Storage-Volumes bei einer Live-Migration genutzt wird, wenn man kein Shared-Storage hat: Der Qemu-Prozess startet intern einfach einen NBD-Server und nutzt dann genau den eben beschriebenen Mechanismus… Ein bisschen wissen darüber wird also auch in der Zukunft nicht schaden.
+Interessant ist NBD vor allem deswegen auch, weil das genau der gleiche Mechanismus ist, der für die Migration von Storage-Volumes bei einer Live-Migration genutzt wird, wenn man kein Shared-Storage hat:
+Der Qemu-Prozess startet intern einfach einen NBD-Server und nutzt dann genau den eben beschriebenen Mechanismus… Ein bisschen wissen darüber wird also auch in der Zukunft nicht schaden.
 
 {% include abbreviations.md %}

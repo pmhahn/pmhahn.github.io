@@ -6,7 +6,8 @@ categories: virt
 tags: totw
 ---
 
-Wer kennt das Problem nicht: Die VM wurde über Nacht auf die Festplatte suspendiert und am nächste Morgen geht die Uhr der VM falsch.
+Wer kennt das Problem nicht:
+Die VM wurde über Nacht auf die Festplatte suspendiert und am nächste Morgen geht die Uhr der VM falsch.
 
 Mit `tinker panic 0` in `/etc/ntpd.conf` korrigiert sich das zwar irgendwann, aber nervig ist es trotzdem.
 
@@ -18,7 +19,8 @@ libvirt bietet die Möglichkeit, innerhalb der VM den sog. **qemu-guest-agent** 
 4. Informationen über gemountete Dateisysteme abfragen: `domfsinfo $VM`
 5. und [mehr](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/virtualization_deployment_and_administration_guide/sect-using_the_qemu_guest_virtual_machine_agent_protocol_cli-libvirt_commands)
 
-Dazu braucht libvirt zunächst einen Kanal in die VM: Mit `virsh edit "$VM"` fügt man innerhalb vom Abschnitt `<devices>..</devices>` folgendes Fragment hinzu:
+Dazu braucht libvirt zunächst einen Kanal in die VM:
+Mit `virsh edit "$VM"` fügt man innerhalb vom Abschnitt `<devices>..</devices>` folgendes Fragment hinzu:
 ```xml
  <channel type="unix">
   <source mode="bind"/>

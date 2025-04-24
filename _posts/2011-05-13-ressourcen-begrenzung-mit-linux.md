@@ -12,9 +12,12 @@ Das kann dazu führen, daß der Benutzer mit 10 Prozessen eben auch die 10-fache
 
 <!--more-->
 
-Unter Xen kann man die CPU-Zeit der virtuellen Instanzen per [xm sched-credit](http://wiki.xensource.com/xenwiki/CreditScheduler) limitieren, unter KVM sucht man Vergleichbares zunächst vergebens. Das ist auch kein Wunder, den die Philosophie der *Kernel-based Virtual Machine* (KVM) ist es ja gerade, die Standard-Funktionen des Linux-Kernel wie (Speicher- und Prozeßverwaltung) zu benutzen, anstatt sie abermals neu umzusetzen, wie es Xen mit seinem Hypervisor tut.
+Unter Xen kann man die CPU-Zeit der virtuellen Instanzen per [xm sched-credit](http://wiki.xensource.com/xenwiki/CreditScheduler) limitieren, unter KVM sucht man Vergleichbares zunächst vergebens.
+Das ist auch kein Wunder, den die Philosophie der *Kernel-based Virtual Machine* (KVM) ist es ja gerade, die Standard-Funktionen des Linux-Kernel wie (Speicher- und Prozeßverwaltung) zu benutzen, anstatt sie abermals neu umzusetzen, wie es Xen mit seinem Hypervisor tut.
 
-Umgekehrt bedeutet das eben, das die Funktionen zum Beschränken von Ressourcen eben nicht nur auf virtuelle Maschinen beschränkt ist, sondern für alle Prozesse eines Linux-Systems zur Verfügung stehen: Willkommen bei [cgroups](http://www.serverwatch.com/tutorials/article.php/3920051/Introduction-to-Linux-Cgroups.htm), dem Linux-Kernel-Subsystem für die Ressourcen-Verwaltung. Grundgedanke dahinter ist es, alle Prozesse bezüglich unterschiedlicher Kategorien zu partitionieren, d.h. bezüglich einer Kategorie (z.B. CPU-Zeit) ist jeder Prozess genau **einer** Gruppe von Prozessen zugehörig, für die gemeinsam ein gewisses Kontingent von Ressourcen zur Verfügung steht.
+Umgekehrt bedeutet das eben, das die Funktionen zum Beschränken von Ressourcen eben nicht nur auf virtuelle Maschinen beschränkt ist, sondern für alle Prozesse eines Linux-Systems zur Verfügung stehen:
+Willkommen bei [cgroups](http://www.serverwatch.com/tutorials/article.php/3920051/Introduction-to-Linux-Cgroups.htm), dem Linux-Kernel-Subsystem für die Ressourcen-Verwaltung.
+Grundgedanke dahinter ist es, alle Prozesse bezüglich unterschiedlicher Kategorien zu partitionieren, d.h. bezüglich einer Kategorie (z.B. CPU-Zeit) ist jeder Prozess genau **einer** Gruppe von Prozessen zugehörig, für die gemeinsam ein gewisses Kontingent von Ressourcen zur Verfügung steht.
 
 Ein kleines Beispiel:
 
@@ -40,12 +43,18 @@ PID  USER     PR NI VIRT RES SHR S %CPU %MEM TIME+  COMMAND
                                    ^^
 ```
 
-Wichtig ist hier, das obwohl die 5 Prozesse eigentlich die selbe Endlosschleife ausführen, sie unterschiedliche CPU-Zeiten erhalten. Je nach dem in welcher Ressourcen-Gruppe (*hi* bzw. *low*) sie sind, erhalten sie zusammen von der insgesamt zur Verfügung stehenden CPU-Zeit entweder 512 Anteile oder nur 256 Anteile. Die ersten beiden Prozesse (5822, 5823) erhalten zusammen etwa doppelt so viel Zeit wie die anderen drei Prozesse zusammen.
+Wichtig ist hier, das obwohl die 5 Prozesse eigentlich die selbe Endlosschleife ausführen, sie unterschiedliche CPU-Zeiten erhalten.
+Je nach dem in welcher Ressourcen-Gruppe (*hi* bzw. *low*) sie sind, erhalten sie zusammen von der insgesamt zur Verfügung stehenden CPU-Zeit entweder 512 Anteile oder nur 256 Anteile.
+Die ersten beiden Prozesse (5822, 5823) erhalten zusammen etwa doppelt so viel Zeit wie die anderen drei Prozesse zusammen.
 
-Neben der CPU-Zeit-Begrenzung gibt es noch weitere Kategorien, so z.B. auch für die Beschränkung auf verschiedenen CPU-Kerne, das Beschränken des Öffnen von Gerätedateien unter */dev/*, das Beschränken der IO-Bandbreite, das Einfrieren kompletter Gruppen von Prozessen, und einige andere. [libvirt](http://berrange.com/posts/2009/12/03/using-cgroups-with-libvirt-and-lxckvm-guests-in-fedora-12/ "Using CGroups with libvirt and LXC/KVM guests in Fedora 12") nutzt cgroups berreits, um die CPU-Zeit der virtuellen Instanzen zu beschränken oder den Zugriff von virtuellen Instanzen auf Block-Devices zu regeln.
+Neben der CPU-Zeit-Begrenzung gibt es noch weitere Kategorien, so z.B. auch für die Beschränkung auf verschiedenen CPU-Kerne, das Beschränken des Öffnen von Gerätedateien unter */dev/*, das Beschränken der IO-Bandbreite, das Einfrieren kompletter Gruppen von Prozessen, und einige andere.
+[libvirt](http://berrange.com/posts/2009/12/03/using-cgroups-with-libvirt-and-lxckvm-guests-in-fedora-12/ "Using CGroups with libvirt and LXC/KVM guests in Fedora 12") nutzt cgroups berreits, um die CPU-Zeit der virtuellen Instanzen zu beschränken oder den Zugriff von virtuellen Instanzen auf Block-Devices zu regeln.
 
-Das Interessante an cgroups ist, das Kind-Prozesse zunächst immer der gleichen cgroup angehören, wie ihr Vaterprozeß (außer sie werden eben explizit in eine andere Partition verschoben). Während es durch double-*fork*s möglich ist, seinen Eltern zu entkommen (was z.B. Daemon-Prozesse machen), ist das bei cgroups nicht so. Da nutzt z.B. auch [systemd](http://freedesktop.org/wiki/Software/systemd) dazu, beim Beenden von Diensten auch alle von diesen geforkten Kindprozesse mit zu beenden.
+Das Interessante an cgroups ist, das Kind-Prozesse zunächst immer der gleichen cgroup angehören, wie ihr Vaterprozeß (außer sie werden eben explizit in eine andere Partition verschoben).
+Während es durch double-*fork*s möglich ist, seinen Eltern zu entkommen (was z.B. Daemon-Prozesse machen), ist das bei cgroups nicht so.
+Da nutzt z.B. auch [systemd](http://freedesktop.org/wiki/Software/systemd) dazu, beim Beenden von Diensten auch alle von diesen geforkten Kindprozesse mit zu beenden.
 
-PS: Das Verzeichnis `/sys/fs/cgroup/` ist hier willkürlich gewählt, man kann auch jedes andere Verzeichnis verwenden. Bei Debian ist es z.B. `/mnt/cgroups/`, bei RedHat `/dev/cgroups/`, … Es lebe der Standard!
+PS: Das Verzeichnis `/sys/fs/cgroup/` ist hier willkürlich gewählt, man kann auch jedes andere Verzeichnis verwenden.
+Bei Debian ist es z.B. `/mnt/cgroups/`, bei RedHat `/dev/cgroups/`, … Es lebe der Standard!
 
 {% include abbreviations.md %}

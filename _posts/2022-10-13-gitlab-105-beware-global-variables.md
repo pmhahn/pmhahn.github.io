@@ -39,6 +39,7 @@ Someone™ should collect these best practices for writing GitLab pipelines and 
 
 PS: [Ceterum censeo](https://en.wikipedia.org/wiki/Carthago_delenda_est) stop using [docker-registry]({% post_url 2022-03-10-gitlab-101-container-usage %}) but switch to [GitLab container gitregistry](https://docs.gitlab.com/ee/user/packages/container_registry/).
 
-PPS: If you have to debug tricky GitLab pipeline issued gibt [`CI_DEBUG_TRAGE: "true"`](https://docs.gitlab.com/ee/ci/variables/#debug-logging) a try. This is similar to *bash -x* and might reveal credentials, so be careful.
+PPS: If you have to debug tricky GitLab pipeline issued gibt [`CI_DEBUG_TRAGE: "true"`](https://docs.gitlab.com/ee/ci/variables/#debug-logging) a try.
+This is similar to *bash -x* and might reveal credentials, so be careful.
 
 {% include abbreviations.md %}

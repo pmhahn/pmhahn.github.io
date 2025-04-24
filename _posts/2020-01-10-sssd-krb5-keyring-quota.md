@@ -6,7 +6,8 @@ categories: linux debian filesystem security
 excerpt_separator: <!--more-->
 ---
 
-Nach einer kurzen Pause kam ich heute wieder zurück zu meinem Notebook und konnte mich nicht mehr anmelden. Nach einigem Suchen bin ich in `journalctl -u sssd` über folgende Fehlermeldung gestolpert:
+Nach einer kurzen Pause kam ich heute wieder zurück zu meinem Notebook und konnte mich nicht mehr anmelden.
+Nach einigem Suchen bin ich in `journalctl -u sssd` über folgende Fehlermeldung gestolpert:
 
 > `[sssd[krb5_child[18654]: Disk quota exceeded`
 

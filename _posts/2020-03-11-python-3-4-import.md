@@ -27,7 +27,8 @@ import ..siblling.child
 from ..sibling import child
 ```
 
-Problematisch dabei ist, dass man ab dann diese Module nicht mehr direkt aufrufen kann, also so etwas wie: `python2 /usr/lib/python2.7/dist-packages/abso/lut.py`.
+Problematisch dabei ist, dass man ab dann diese Module nicht mehr direkt aufrufen kann, also so etwas wie:
+`python2 /usr/lib/python2.7/dist-packages/abso/lut.py`.
 Denn das Modul weiß nicht, das es eigentlich `sys.modules["abso.lut"]` ist und kann deswegen die relativen Referenzen nicht auflösen.
 Ein `python2 -m abso.lut` dagegen funktioniert, weil Python das Modul dann eben über diesen Namen importiert und damit dann auch relative Imports auflösen kann.
 
@@ -35,7 +36,8 @@ Ein `python2 -m abso.lut` dagegen funktioniert, weil Python das Modul dann eben 
 
 Mit der Umstellung von `python-support` auf `dh-python2` haben wir gerade mühevoll überall `/usr/share/pyshared/` bzw. `/usr/lib/pymodules/python2.7/` durch `/usr/lib/python2.7/dist-packages/` ersetzt, mit Python 3 gibt es natürlich einen neue Pfade:
 Unter `/usr/lib/python3/dist-packages/` landen unsere Pakete, aber es gibt eben auch noch `/usr/lib/python3**.X**/dist-packages/` für jede Version des Python 3 Interpreters.
-Mit UCS-4 (= Debian Stretch) haben wir **Python 3.5**, UCS-5 (= Debian Buster) aber **Python 3.7**. Zum Glück kann uns das derzeit aber egal sein.
+Mit UCS-4 (= Debian Stretch) haben wir **Python 3.5**, UCS-5 (= Debian Buster) aber **Python 3.7**.
+Zum Glück kann uns das derzeit aber egal sein.
 Trotzdem sollten wir es vermeiden, diese Pfade überall hart zu kodieren, wie es derzeit aber leider in UCS manchmal noch der Fall ist:
 ```bash
 # Bad

@@ -5,7 +5,9 @@ layout: post
 categories: linux
 ---
 
-Mit `iproute2` hat Linux schon lange einen Nachfolger für die althergebrachten Tools wie `ifconfig` und `route`. Die gibt es zwar immer noch, aber für viele neuen Funktionen braucht man dann schon extra Tools wie `bridge-utils`, `vlan`, `ifenslave` (für Bonding). Der exakte Umfang hängt allerdings von der Kernel-Version und von der Paket-Version von `iproute2` ab.
+Mit `iproute2` hat Linux schon lange einen Nachfolger für die althergebrachten Tools wie `ifconfig` und `route`.
+Die gibt es zwar immer noch, aber für viele neuen Funktionen braucht man dann schon extra Tools wie `bridge-utils`, `vlan`, `ifenslave` (für Bonding).
+Der exakte Umfang hängt allerdings von der Kernel-Version und von der Paket-Version von `iproute2` ab.
 
 Mit [iproute2](http://baturin.org/docs/iproute2/) gibt es eine sehr schöne Übersicht, was man mit iproute so alles machen kann:
 
@@ -16,7 +18,8 @@ ip addr replace 10.200.17.2/24 dev "eth0"
 ip link set dev "eth0" up
 ip route replace default via 10.200.17.1 dev "eth0"
 ```
-`replace` sorgt dafür, das eine ggf. vorher bereits existierende Adresse bzw. Route ersetzt wird; `add` würde sich sonst darüber beschweren.
+`replace` sorgt dafür, das eine ggf. vorher bereits existierende Adresse bzw. Route ersetzt wird;
+`add` würde sich sonst darüber beschweren.
 Es lassen sich auch weitere Adressen hinzufügen, ohne das man die früheren virtuellen Interfaces (eth0:1) weiterhin verwenden muss, was bei IPv6 durchaus standard ist:
 ```bash
 ip addr add f001:4dd0:ff00:8c42:ff17::5254:00af:f03c/80 dev "eth0"
@@ -68,7 +71,8 @@ ip link set dev "tap0" up
 …
 ip link del dev "tap0"
 ```
-Alternativ kann man auch **tun**-Interfaces für IP(v4)-Pakete konfigurieren: Wie `tap`, nur das IP(v4)-Pakete statt Ethernet-Frames verarbeitet werden.
+Alternativ kann man auch **tun**-Interfaces für IP(v4)-Pakete konfigurieren:
+Wie `tap`, nur das IP(v4)-Pakete statt Ethernet-Frames verarbeitet werden.
 Mit **macvtap** gibt es noch ein zu `tap` kompatible Interfaces für VMs, die aber auch wie `macvlan` direkt eine eigene MAC-Adresse bekommen und so keine explizite Bridge benötigen.
 Allerdings kann (Design-bedingt) der Host dann nicht direkt mit den VMs kommunizieren, sondern der (externe) Switch muss die Pakete zurück schicken.
 Hintergrund ist, dass die Linux-Bridge eher ineffizient ist, weil das Ethernet-Device dann im promiscuous-Modus laufen muss und damit zu viele Pakete aus dem Netzwerk die Bridge erreichen und damit von der Host-CPU gefiltert werden müssen.

@@ -15,9 +15,14 @@ Die [Versionsnummer](man:deb-version(7)) von Debian-Paketen baut sich nach folge
 Grob gesprochen funktioniert der [Vergleich](man:deb-version(7)) wie folgt:
 
 - Die Version wird in zusammenhängende Folgen von Ziffern `[0-9]+` und nicht-Ziffern `[~A…Za…z+-.:]+` aufgeteilt.
-- Zusammenhängende Ziffernfolgen werden als Zahl verglichen: `2 < 10`
-- Ale anderen Zeichenfolgen werden als Zeichenkette verglichen, wobei Buchstaben aber **vor** den übrigen Sonderzeichen rangieren: `"2" > "10"`
-- Die _Tilde_ hat eine Sonderrolle: ihr Wert ist kleiner als der der leeren Zeichenkette, ist also eher **negativ**. Deshalb sortiert sich z.B. `1~something` vor `1` ein: `"~something" < ""`
+- Zusammenhängende Ziffernfolgen werden als Zahl verglichen:
+  `2 < 10`
+- Ale anderen Zeichenfolgen werden als Zeichenkette verglichen, wobei Buchstaben aber **vor** den übrigen Sonderzeichen rangieren:
+  `"2" > "10"`
+- Die _Tilde_ hat eine Sonderrolle:
+  ihr Wert ist kleiner als der der leeren Zeichenkette, ist also eher **negativ**.
+  Deshalb sortiert sich z.B. `1~something` vor `1` ein:
+  `"~something" < ""`
 - Es gibt weitere Einschränkungen, welche Zeichen in welchen Komponenten der Versionsnummer zulässig sind:
     - Die Epoche muss rein numerisch sein,
     - die Upstrem-Version muss mit einer Ziffer beginnen,
@@ -80,7 +85,8 @@ Die Epoche dient dafür, bei solchen **gravierenden** Änderungen noch eine Mög
 Die Verwendung sollte eine **absolute Ausnahme** bleiben, denn sie hat mehrere Nachteile:
 
 - Man wir sie nie wieder los
-- Die Epoche ist **nicht** Teil des Dateinames, wohl aber der Meta-Daten. D.h. das Vergleichen von Paketen anhand der Versionsnummer aus dem Dateinamen ist **nicht korrekt** und hat in der Vergangenheit schon mehrfach zu Fehlentscheidungen geführt!
+- Die Epoche ist **nicht** Teil des Dateinames, wohl aber der Meta-Daten.
+  D.h. das Vergleichen von Paketen anhand der Versionsnummer aus dem Dateinamen ist **nicht korrekt** und hat in der Vergangenheit schon mehrfach zu Fehlentscheidungen geführt!
 
 Das Erhöhen der Epoche muss deshalb vorher auf der [debian-devel](https://lists.debian.org/debian-devel/)-Mailingliste diskutiert werden und wird nur als letzter Ausweg akzeptiert.
 Deshalb gibt es so kuriose Versionsnummern in Debian wie `1.4+really1.3.35-1`, weil sich das eben wieder auswächst, sobald dann doch mal die richtige Version `1.4` von Debian paketiert und veröffentlicht wird.
@@ -95,16 +101,19 @@ Nur diese haben das Recht, das Paket anzupassen und eine neue Version hochzulade
 
 Von Zeit-zu-zeit kommt es aber vor, das andere Personen ein Paket verändern müssen, z.B. weil die ursprünglichen Maintainer nicht mehr reagieren oder nicht mehr auffindbar sind.
 Damit diese Änderungen durch Dritte nicht mit den Änderungen der eigentlichen Maintainer kollidieren gibt es den Mechanismus des [NMU](https://wiki.debian.org/NonMaintainerUpload)s:
-Hier wird an _Debian-Revision_, die normalerweise nur aus einer Zahl besteht, eine zweite Zahl separiert durch einen Punkt angehängt: `-1.1` bzw. dann diese zweite Stelle für jedes weitere NMU erhöht.
+Hier wird an _Debian-Revision_, die normalerweise nur aus einer Zahl besteht, eine zweite Zahl separiert durch einen Punkt angehängt:
+`-1.1` bzw. dann diese zweite Stelle für jedes weitere NMU erhöht.
 Erwünscht sind hier nur **minimale Änderungen** am Paket und es ist Aufgabe der Paket-Betreuer, diese Änderungen dann in deren nächste offizielle Version zu übernehmen.
-Zu diesem Zeitpunkt wird dann die erste Stelle erhöht und die angehängte zweite Stelle verschwindet wieder: `-2`.
+Zu diesem Zeitpunkt wird dann die erste Stelle erhöht und die angehängte zweite Stelle verschwindet wieder:
+`-2`.
 
 ### binNMU
 
 Neben den vorherigen Fällen, bei denen immer auch eine Änderung an den Quellen stattfindet, gibt es von Zeit zu Zeit den Fall, dass ein Paket neu gebaut werden muss, **ohne** dass es eine auslösende Änderung an diesem Quellpaket gibt:
 
 - Wenn sich in einer verwendeten Bibliothek durch eine ABI-Änderung der [soname](https://en.wikipedia.org/wiki/Soname) ändert, muss das Paket gegen die neue Bibliothek neu gebaut werden, um die alte Bibliothek loswerden zu können.
-- U.a. die Programmiersprache [go](https://golang.org/) baut **statische** Binaries, d.h. es gibt keine Abhängigkeiten zur Laufzeit auf andere Pakete. Das führt aber z.B. bei Sicherheitsupdates an den verwendeten Komponenten dazu, das **alle** verwendenden Pakete neu gebaut werden müssen.
+- U.a. die Programmiersprache [go](https://golang.org/) baut **statische** Binaries, d.h. es gibt keine Abhängigkeiten zur Laufzeit auf andere Pakete.
+  Das führt aber z.B. bei Sicherheitsupdates an den verwendeten Komponenten dazu, das **alle** verwendenden Pakete neu gebaut werden müssen.
 
 In Debian kann man deshalb den Neubau eines Pakets **ohne** das Hochladen neuer Quellpaketdateien veranlassen.
 Das kann für alle von Debian unterstützen Architekturen passieren, aber auch (und i.d.R.) nur für einzelne.
@@ -141,7 +150,7 @@ Daneben gibt es viele weitere Ausnahmen, z.B. die Pakete des Linux-Kernels, von 
 
 ```console
 # grep-dctrl -s Package,Version,Source -F Source ' ' ./Packages
-…  
+…
 Package: iceweasel-l10n-all
 Version: 1:68.8.0esr-1~deb10u1
 Source: firefox-esr (68.8.0esr-1~deb10u1)
@@ -195,6 +204,7 @@ Bringe folgende Versionsnummer in die richtige Reihenfolge:
 - 1-1.42.202006110951
 - 1-1A~4.4.4.202006110951
 
-Für die Auflösung: `~phahn/bin/deb-ver-comp 1 0:2 0.9 1:1 1-1 1alpha-0.1 1~beta-1 1~rc1-1 2+really1-1 1-1+b1 1+deb10u1-1 1-1.42.202006110951 1-1A~4.4.4.202006110951`
+Für die Auflösung:
+`~phahn/bin/deb-ver-comp 1 0:2 0.9 1:1 1-1 1alpha-0.1 1~beta-1 1~rc1-1 2+really1-1 1-1+b1 1+deb10u1-1 1-1.42.202006110951 1-1A~4.4.4.202006110951`
 
 {% include abbreviations.md %}

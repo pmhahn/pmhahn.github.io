@@ -5,7 +5,8 @@ layout: post
 categories: virt
 ---
 
-Following [Gitlab 101: Container usage]({% post_url 2022-03-10-gitlab-101-container-usage %}) and [Gitlab 102: container followup]({% post_url 2022-05-24-gitlab-102-container-followup %}) let's have a look at *Docker images* itself, also known as [OCI](https://www.opencontainers.org/ "Open Container Initative") Images. If you want to know the gory details have a look at the [image specification](https://github.com/opencontainers/image-spec/blob/main/spec.md) yourself.
+Following [Gitlab 101: Container usage]({% post_url 2022-03-10-gitlab-101-container-usage %}) and [Gitlab 102: container followup]({% post_url 2022-05-24-gitlab-102-container-followup %}) let's have a look at *Docker images* itself, also known as [OCI](https://www.opencontainers.org/ "Open Container Initative") Images.
+If you want to know the gory details have a look at the [image specification](https://github.com/opencontainers/image-spec/blob/main/spec.md) yourself.
 
 When working with images multiple parts are involved:
 
@@ -14,9 +15,13 @@ When working with images multiple parts are involved:
 3. A **manifest** to describe an image
 4. A **directory** to map human usable names to sha256s
 
-The last two only exist when the image is uploaded to respectively downloaded from a (remote) registry: When images are transferred between hosts the layers are transferred as *compressed tape archives* (`.tar.gz`). Locally they are stored in some other (unpacked) format as `.tgz` files are not efficient for random access.
+The last two only exist when the image is uploaded to respectively downloaded from a (remote) registry:
+When images are transferred between hosts the layers are transferred as *compressed tape archives* (`.tar.gz`).
+Locally they are stored in some other (unpacked) format as `.tgz` files are not efficient for random access.
 
-Content like manifests, configurations and layers are identified by their unique sha256 fingerprint. Any change would result in a different sha256 unless you get a [collision](https://en.wikipedia.org/wiki/Collision_resistance), which is very unlikely to happen. (Docker changed their implementation some years ago to using the sha256 instead of some random [UUID](https://en.wikipedia.org/wiki/Universally_unique_identifier "Universally Unique Identifier").)
+Content like manifests, configurations and layers are identified by their unique sha256 fingerprint.
+Any change would result in a different sha256 unless you get a [collision](https://en.wikipedia.org/wiki/Collision_resistance), which is very unlikely to happen.
+(Docker changed their implementation some years ago to using the sha256 instead of some random [UUID](https://en.wikipedia.org/wiki/Universally_unique_identifier "Universally Unique Identifier").)
 
 ## A simple example
 
@@ -39,18 +44,20 @@ REPOSITORY   TAG      DIGEST   IMAGE ID               CREATED          SIZE
 empty        latest            sha256:4cd7d90bcd38…   11 seconds ago   30B
 ```
 
-REPOSITORY:empty
-: (local) name of the image.
-TAG:latest
-: (local) tag for the image; it defaults to `latest`.
-DIGEST:<none>
-: (global) sha256 of manifest; exists only when image is `push`ed or `pull`ed.
-IMAGE ID:4cd7d90bcd3800618661bc93f9a8d298a2dcffa7bf179a990c6be9f0b3da3a60
-: (local) sha256 of configuration.
-CREATED:11 seconds ago
-: Time image was created.
-SIZE:30B
-: Cumulative size of all layers.
+- REPOSITORY:empty
+  (local) name of the image.
+- TAG:latest
+  (local) tag for the image;
+  it defaults to `latest`.
+- DIGEST:<none>
+  (global) sha256 of manifest;
+  exists only when image is `push`ed or `pull`ed.
+- IMAGE ID:4cd7d90bcd3800618661bc93f9a8d298a2dcffa7bf179a990c6be9f0b3da3a60
+  (local) sha256 of configuration.
+- CREATED:11 seconds ago
+  Time image was created.
+- SIZE:30B
+  Cumulative size of all layers.
 
 ## Docker registry layout
 

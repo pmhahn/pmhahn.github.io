@@ -58,7 +58,8 @@ For Debian package repositories there is a very important rule:
 
 > In ideal world, tuple (architecture, name, version) should identify unique package.
 
-This allows tools to uniquely identify packages using that triple, which form the package file name: `${name}_${version}_${architecture}.${tyype}`
+This allows tools to uniquely identify packages using that triple, which form the package file name:
+`${name}_${version}_${architecture}.${tyype}`
 Many tools use this invariant and **break badly** if the name is **reused** for a file with **different** content.
 This easily happens if a package is re-built, bit is not [reproducible](https://reproducible-builds.org/).
 
@@ -70,7 +71,9 @@ This usually breaks when such a package is first downloaded by a client as then 
 This can be solved in two ways:
 
 1. Make sure to **never** re-use the triple respective the filename.
-2. Invoke `apt-ftpachive` with `-o APT::FTPArchive::AlwaysStat=true`: This will store the package files modification time-stamp with the cache entry. The cached entry is then only used if the files time-stamp is still the same.
+2. Invoke `apt-ftpachive` with `-o APT::FTPArchive::AlwaysStat=true`:
+   This will store the package files modification time-stamp with the cache entry.
+   The cached entry is then only used if the files time-stamp is still the same.
 
 ## Performance issues
 
@@ -207,7 +210,8 @@ Tree "dists/dist/" {
 1. Do not use `ftw()` on large directories.
 2. In Python use [scandir()](https://docs.python.org/3/library/os.html#os.scandir) instead of [listdir()](https://docs.python.org/3/library/os.html#os.listdir).
 3. `apt-ftparchive` still does a lot of `readlink()` calls, which need more investigation.
-4. The cache lookup used the path as given; make sure to not prefix it with `./` only in same cases as this leads to duplicate cache entries.
+4. The cache lookup used the path as given;
+   make sure to not prefix it with `./` only in same cases as this leads to duplicate cache entries.
 
 # Appendix
 

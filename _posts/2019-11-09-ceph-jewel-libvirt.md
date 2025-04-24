@@ -6,25 +6,16 @@ categories: linux UCS filesystem virt
 excerpt_separator: <!--more-->
 ---
 
-For some development work on an [Univention Corporate Server
-4.4](https://www.univention.de/blog-de/2019/10/verteilter-datenspeicher-mit-ucs-und-ceph/),
-which is based on Debian Stretch, I needed a [Ceph cluster](https://ceph.io/)
-based on the Jewel release. Most of the tutorials were based on newer [Ceph
-releases](https://docs.ceph.com/docs/master/releases/) (Luminous, Mimic) or
-were using [ceph-deploy](https://docs.ceph.com/docs/master/start/), which is
-not part of Debian and must be installed separately.
+For some development work on an [Univention Corporate Server 4.4](https://www.univention.de/blog-de/2019/10/verteilter-datenspeicher-mit-ucs-und-ceph/), which is based on Debian Stretch, I needed a [Ceph cluster](https://ceph.io/) based on the Jewel release.
+Most of the tutorials were based on newer [Ceph releases](https://docs.ceph.com/docs/master/releases/) (Luminous, Mimic) or were using [ceph-deploy](https://docs.ceph.com/docs/master/start/), which is not part of Debian and must be installed separately.
 
-Therefor I did a [manual
-installation](https://docs.ceph.com/docs/jewel/install/manual-deployment/),
-using the low-level tools. In contrast to [Ceph Storage with
-UCS](https://help.univention.com/t/cool-solution-ceph-storage-with-ucs/12535)
-I do not want to use CephFS, but use Rados directly.
+Therefor I did a [manual installation](https://docs.ceph.com/docs/jewel/install/manual-deployment/), using the low-level tools.
+In contrast to [Ceph Storage with UCS](https://help.univention.com/t/cool-solution-ceph-storage-with-ucs/12535) I do not want to use CephFS, but use Rados directly.
 
 This is a **test setup** and not appropriate for production:
 * I'm only running one monitor, which is a *single point of failure*.
 * I disabled replication on purpose.
-* all nodes have a single big `ext4` file system, so no partitioning, no fast
-  journal disks, and [issues with extended attributes](https://docs.ceph.com/docs/jewel/rados/configuration/filesystem-recommendations/#not-recommended).
+* all nodes have a single big `ext4` file system, so no partitioning, no fast journal disks, and [issues with extended attributes](https://docs.ceph.com/docs/jewel/rados/configuration/filesystem-recommendations/#not-recommended).
 
 <!--more-->
 
@@ -47,8 +38,7 @@ ssh-copy-id hdmi3
 
 # Setup firewall
 
-Port 6789 is used for inter-OSD-communication, port 6800-7100 for clients to
-connect to the OSD.
+Port 6789 is used for inter-OSD-communication, port 6800-7100 for clients to connect to the OSD.
 
 ```bash
 for osd in hdmi1 hdmi2 hdmi3
@@ -67,9 +57,8 @@ create a *degraded* cluster:
 
 * My nodes only have a single network interface, so my public network is the
   same as my internal (`cluser`) network.
-* You have to explicitly list all OSD with their name; otherwise the monitor
-  will not initialize the OSDs correctly and they will remain stuck in the
-  `booting` stage.
+* You have to explicitly list all OSD with their name;
+  otherwise the monitor will not initialize the OSDs correctly and they will remain stuck in the `booting` stage.
 
 ```bash
 FS_UUID=$(uuidgen)
@@ -131,8 +120,7 @@ install -d -o ceph -g ceph /var/lib/ceph/mon/ceph-hdmi1
 sudo -u ceph ceph-mon --mkfs -i hdmi1 --monmap /tmp/monmap --keyring /tmp/ceph.mon.keyring
 ```
 
-The original guide is missing the `chown ceph:` command, which is required, as
-Debian runs all services using the account `ceph`.
+The original guide is missing the `chown ceph:` command, which is required, as Debian runs all services using the account `ceph`.
 
 ## Start the monitor
 
@@ -143,11 +131,9 @@ systemctl start ceph-mon@hdmi1.service
 ceph -s
 ```
 
-It took me hours to get to this point, as the last command timed out and
-failed to connect to the monitor. Make sure to use the correct IP addresses
-everywhere. If you still experience problems, use `ceph --admin-daemon
-/var/run/ceph/ceph-mon.hdmi1.asok mon_status` to directly connect to the
-daemon to get its status.
+It took me hours to get to this point, as the last command timed out and failed to connect to the monitor.
+Make sure to use the correct IP addresses everywhere.
+If you still experience problems, use `ceph --admin-daemon /var/run/ceph/ceph-mon.hdmi1.asok mon_status` to directly connect to the daemon to get its status.
 
 # Setup Ceph OSDs
 
@@ -169,14 +155,12 @@ do
 done
 ```
 
-Again use `ceph -s` to verify the OSDs are setup correctly. In my first try I
-forgot to add the `[osd.X] host = hdmiY` entries in `ceph.conf` and the nodes
-never left the `booting` state.
+Again use `ceph -s` to verify the OSDs are setup correctly.
+In my first try I forgot to add the `[osd.X] host = hdmiY` entries in `ceph.conf` and the nodes never left the `booting` state.
 
 # Setup libvirt RBD storage pool
 
-Following [RBD](https://docs.ceph.com/docs/jewel/rbd/libvirt/) create the
-pool:
+Following [RBD](https://docs.ceph.com/docs/jewel/rbd/libvirt/) create the pool:
 
 ## Create pool
 
@@ -236,16 +220,12 @@ virsh vol-list myrbdpool
 ```
 
 Do not use the fully qualified host name (FQHN) in `host/@name`:
-`libvirtd` resolved it to `localhost` and tried to connect the monitor at
-`127.0.0.1:6789`, where `ceph-mon` is **not**
-[listening](https://docs.ceph.com/docs/jewel/rados/configuration/network-config-ref/#bind):
-The monitor is only bound to `192.168.0.15`, but not `127.0.0.1` (or
-`0.0.0.0`).
+`libvirtd` resolved it to `localhost` and tried to connect the monitor at `127.0.0.1:6789`, where `ceph-mon` is **not** [listening](https://docs.ceph.com/docs/jewel/rados/configuration/network-config-ref/#bind):
+The monitor is only bound to `192.168.0.15`, but not `127.0.0.1` (or `0.0.0.0`).
 
 # Using the image
 
-The test image can be used by any VM after adding the volume to the domain
-description, which can be edited using `virsh edit $VM`:
+The test image can be used by any VM after adding the volume to the domain description, which can be edited using `virsh edit $VM`:
 
 ```xml
 <domain type='kvm' ...>
@@ -269,13 +249,10 @@ description, which can be edited using `virsh edit $VM`:
 </domain>
 ```
 
-Notice that the `<auth>...</auth>`-section between the storage **pool** and
-storage **volume** are slightly different: For the pool the `type='ceph'`
-attribute belongs on the `<auth/>` element, for the volume to the
-`<secret/>`element.
+Notice that the `<auth>...</auth>`-section between the storage **pool** and storage **volume** are slightly different:
+For the pool the `type='ceph'` attribute belongs on the `<auth/>` element, for the volume to the `<secret/>`element.
 
-I'm also using the `virtio-scsi` controller here as it supports the
-`discard='unmap'` option, which is required for `fstrim` to work. If that is
-not important for you, you can use other buses like `virtio`, `ide` or `sata`.
+I'm also using the `virtio-scsi` controller here as it supports the `discard='unmap'` option, which is required for `fstrim` to work.
+If that is not important for you, you can use other buses like `virtio`, `ide` or `sata`.
 
 {% include abbreviations.md %}

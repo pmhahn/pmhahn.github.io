@@ -97,24 +97,24 @@ Statistics
 ==========
 The following values are always reported:
 
-`actual`:
+- `actual`:
 	The actual memory size in KiB available with ballooning enabled.
 
-`last_update`:
+- `last_update`:
 	The time in seconds sine the UNIX epoch (1970-01-01) at which the statistics where last updated.
 	`0` means that polling is not enabled.
 
-`rss`:
+- `rss`:
 	The [resident set size](https://en.wikipedia.org/wiki/Resident_set_size) in KiB, which is the number of pages currently "actively" used by the QEMU process on the host system.
 	QEMU by default only allocates the pages on demand when they are first accessed.
 	A newly started VM actually uses only very few pages, but the number of pages increases with each new memory allocation.
 
 The following values are only reported, if the guest OS supports them and polling is enabled:
 
-`swap_in`, `swap_out`:
+- `swap_in`, `swap_out`:
 	The number of swapped-in and swapped-out pages as reported by the guest OS since the start of the VM.
 
-`major_fault`, `minor_fault`:
+- `major_fault`, `minor_fault`:
 	The number of page faults as reported by the guest OS since the start of the VM.
 	<br/>
 	*Minor* page faults happen quiet often, for example when first accessing newly allocated memory or on copy-on-write.
@@ -122,17 +122,17 @@ The following values are only reported, if the guest OS supports them and pollin
 	<br/>
 	*Major* page faults on the other hand require disk IO as some data is accessed, which  must be paged in from disk first.
 
-`unused`:
+- `unused`:
 	Inside the Linux kernel this actually is named `MemFree`.
 	That memory is available for immediate use as it is currently neither used by processes or the kernel for caching.
 	So it is really *unused* (and is just eating energy and provides no benefit).
 
-`usable`:
+- `usable`:
 	Inside the Linux kernel this is named `MemAvailable`.
 	This consists of the *free* space **plus** the space, which can be easily reclaimed.
 	This for example includes read caches, which contain data read from IO devices, from which the data can be read again if the need arises in the future.
 
-`available`:
+- `available`:
 	Inside the Linux kernel this is named `MemTotal`.
 	This is the maximum allowed memory, which is slightly less than the currently configured memory size, as the Linux kernel and BIOS need some space for themselves.
 
@@ -170,7 +170,8 @@ It will start swapping, which requires slow IO operations and will take a lot of
 If you become too greedy the Linux kernel might also start killing processes as its out-of-memory-handler will kick in more often.
 So probably you should stay below `usable` or even `unused`.
 
-Its probably also a good idea to do it iteratively: Just take some small amount from many VMs and monitor their behavior, if they still run fine with their reduced memory foot-print.
+Its probably also a good idea to do it iteratively:
+Just take some small amount from many VMs and monitor their behavior, if they still run fine with their reduced memory foot-print.
 If they still run fine, you can take more memory from them in the next iteration.
 
 Expanding
@@ -190,28 +191,28 @@ Details
 =======
 The naming of the values is somehow confusing, as different components are involved, which name the same thing differently:
 
-* In the Linux kernel the balloon driver is implemented in [linux:drivers/virtio/virtio_balloon.c](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/virtio/virtio_balloon.c#n291).
-* It exports some statistics over the VirtIO interface to QEMU, which is implemented in [qemu:hw/virtio/virtio-balloon.c](https://git.qemu.org/?p=qemu.git;a=blob;f=hw/virtio/virtio-balloon.c#l165).
-* `libvirt` queries it over the JSON protocol implemented in [libvirt:src/qemu/qemu_driver.c](https://libvirt.org/git/?p=libvirt.git;a=blob;f=src/qemu/qemu_driver.c#l20242).
-* The command `virsh dommemstat` is implemented in [libvirt:tools/virsh-domain-monitor.c](https://libvirt.org/git/?p=libvirt.git;a=blob;f=tools/virsh-domain-monitor.c#l356).
+* In the Linux kernel the balloon driver is implemented in [linux:`drivers/virtio/virtio_balloon.c`](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/virtio/virtio_balloon.c#n291).
+* It exports some statistics over the VirtIO interface to QEMU, which is implemented in [qemu:`hw/virtio/virtio-balloon.c`](https://git.qemu.org/?p=qemu.git;a=blob;f=hw/virtio/virtio-balloon.c#l165).
+* `libvirt` queries it over the JSON protocol implemented in [libvirt:`src/qemu/qemu_driver.c`](https://libvirt.org/git/?p=libvirt.git;a=blob;f=src/qemu/qemu_driver.c#l20242).
+* The command `virsh dommemstat` is implemented in [libvirt:`tools/virsh-domain-monitor.c`](https://libvirt.org/git/?p=libvirt.git;a=blob;f=tools/virsh-domain-monitor.c#l356).
 
 The following table shows the values and how they are named in the different components:
 
-| Linux                                 | VirtIO                          | QEMU                    | libvirt                                 | memstat     |
-|---------------------------------------|---------------------------------|-------------------------|-----------------------------------------|-------------|
-| /proc/vmstat:pswpin                   | `VIRTIO_BALLOON_S_SWAP_IN`      | `stat-swap-in`          | `VIR_DOMAIN_MEMORY_STAT_SWAP_IN`        | swap_in     |
-| /proc/vmstat:pswpout                  | `VIRTIO_BALLOON_S_SWAP_OUT`     | `stat-swap-out`         | `VIR_DOMAIN_MEMORY_STAT_SWAP_OUT`       | swap_out    |
-| /proc/vmstat:pgmajfault               | `VIRTIO_BALLOON_S_MAJFLT`       | `stat-major-faults`     | `VIR_DOMAIN_MEMORY_STAT_MAJOR_FAULT`    | major_fault |
-| /proc/vmstat:pgfault                  | `VIRTIO_BALLOON_S_MINFLT`       | `stat-minor-faults`     | `VIR_DOMAIN_MEMORY_STAT_MINOR_FAULT`    | minor_fault |
-| /proc/vmstat:htlb_buddy_alloc_success | `VIRTIO_BALLOON_S_HTLB_PGALLOC` | `stat-htlb-pgalloc`     |                                         |             |
-| /proc/vmstat:htlb_buddy_alloc_fail    | `VIRTIO_BALLOON_S_HTLB_PGFAIL`  | `stat-htlb-pgfail`      |                                         |             |
-| /proc/meminfo:MemFree                 | `VIRTIO_BALLOON_S_MEMFREE`      | `stat-free-memory`      | `VIR_DOMAIN_MEMORY_STAT_UNUSED`         | unused      |
-| /proc/meminfo:MemTotal                | `VIRTIO_BALLOON_S_MEMTOT`       | `stat-total-memory`     | `VIR_DOMAIN_MEMORY_STAT_AVAILABLE`      | available   |
-| /proc/meminfo:MemAvailable            | `VIRTIO_BALLOON_S_AVAIL`        | `stat-available-memory` | `VIR_DOMAIN_MEMORY_STAT_USABLE`         | usable      |
-| /proc/meminfo:Cached                  | `VIRTIO_BALLOON_S_CACHES`       | `stat-disk-caches`      | `VIR_DOMAIN_MEMORY_STAT_DISK_CACHES`    | disk_caches |
-|                                       |                                 |                         | `VIR_DOMAIN_MEMORY_STAT_ACTUAL_BALLOON` | actual      |
-| /proc/$pid/status:VmRSS               |                                 |                         | `VIR_DOMAIN_MEMORY_STAT_RSS`            | rss         |
-|                                       |                                 | `last-update`           | `VIR_DOMAIN_MEMORY_STAT_LAST_UPDATE`    | last_update |
+| Linux                                   | VirtIO                          | QEMU                    | libvirt                                 | memstat       |
+|-----------------------------------------|---------------------------------|-------------------------|-----------------------------------------|---------------|
+| /proc/vmstat:`pswpin`                   | `VIRTIO_BALLOON_S_SWAP_IN`      | `stat-swap-in`          | `VIR_DOMAIN_MEMORY_STAT_SWAP_IN`        | `swap_in`     |
+| /proc/vmstat:`pswpout`                  | `VIRTIO_BALLOON_S_SWAP_OUT`     | `stat-swap-out`         | `VIR_DOMAIN_MEMORY_STAT_SWAP_OUT`       | `swap_out`    |
+| /proc/vmstat:`pgmajfault`               | `VIRTIO_BALLOON_S_MAJFLT`       | `stat-major-faults`     | `VIR_DOMAIN_MEMORY_STAT_MAJOR_FAULT`    | `major_fault` |
+| /proc/vmstat:`pgfault`                  | `VIRTIO_BALLOON_S_MINFLT`       | `stat-minor-faults`     | `VIR_DOMAIN_MEMORY_STAT_MINOR_FAULT`    | `minor_fault` |
+| /proc/vmstat:`htlb_buddy_alloc_success` | `VIRTIO_BALLOON_S_HTLB_PGALLOC` | `stat-htlb-pgalloc`     |                                         |               |
+| /proc/vmstat:`htlb_buddy_alloc_fail`    | `VIRTIO_BALLOON_S_HTLB_PGFAIL`  | `stat-htlb-pgfail`      |                                         |               |
+| /proc/meminfo:`MemFree`                 | `VIRTIO_BALLOON_S_MEMFREE`      | `stat-free-memory`      | `VIR_DOMAIN_MEMORY_STAT_UNUSED`         | `unused`      |
+| /proc/meminfo:`MemTotal`                | `VIRTIO_BALLOON_S_MEMTOT`       | `stat-total-memory`     | `VIR_DOMAIN_MEMORY_STAT_AVAILABLE`      | `available`   |
+| /proc/meminfo:`MemAvailable`            | `VIRTIO_BALLOON_S_AVAIL`        | `stat-available-memory` | `VIR_DOMAIN_MEMORY_STAT_USABLE`         | `usable`      |
+| /proc/meminfo:`Cached`                  | `VIRTIO_BALLOON_S_CACHES`       | `stat-disk-caches`      | `VIR_DOMAIN_MEMORY_STAT_DISK_CACHES`    | `disk_caches` |
+|                                         |                                 |                         | `VIR_DOMAIN_MEMORY_STAT_ACTUAL_BALLOON` | `actual`      |
+| /proc/$pid/status:`VmRSS`               |                                 |                         | `VIR_DOMAIN_MEMORY_STAT_RSS`            | `rss`         |
+|                                         |                                 | `last-update`           | `VIR_DOMAIN_MEMORY_STAT_LAST_UPDATE`    | `last_update` |
 
 Linux kernel
 ------------

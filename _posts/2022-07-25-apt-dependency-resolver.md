@@ -26,7 +26,8 @@ So what happened and why did APT refuse the initial command?
 
 [Dependency resolution](https://github.com/Debian/apt#dependency-resolution) has some very useful information on how the resolver works:
 > APT works in its internal resolver in two stages:
-> First all packages are visited and marked for installation, keep back or removal. Option `Debug::pkgDepCache::Marker` shows this.
+> First all packages are visited and marked for installation, keep back or removal.
+> Option `Debug::pkgDepCache::Marker` shows this.
 > This also decides which packages are to be installed to satisfy dependencies, which can be seen by `Debug::pkgDepCache::AutoInstall`.
 > After this is done, we might be in a situation in which two packages want to be installed, but only one of them can be.
 > It is the job of the `pkgProblemResolver` to decide which of two packages 'wins' and can therefore decide what has to happen.
@@ -48,7 +49,8 @@ LC_ALL=C apt-get install \
 ```
 
 - `-t apt` boosts all packages from my repository named `Suite: apt` in its `Release` file.
-- `-s` does a *simulated* install: it only shows what would be done but does not modify the actual state of the system.
+- `-s` does a *simulated* install:
+  it only shows what would be done but does not modify the actual state of the system.
 - `-o Debug::pkgDepCache::Marker=yes` shows the initial package marking for installation, keep or removal.
 - `-o Debug::pkgDepCache::AutoInstall=yes` shows installation of additional dependencies.
 - `-o Debug::pkgProblemResolver=yes` enables debug output.
@@ -218,9 +220,11 @@ Settings used to calculate pkgProblemResolver::Scores::
   AddProtected => 10000
   AddEssential => 5000
 ```
-All packages get a score, which matches how important they are: The more packages depends on it, the higher their score is.
+All packages get a score, which matches how important they are:
+The more packages depends on it, the higher their score is.
 Packages are also boosted by their `Importance` and `Essential` status.
-As one package is to be installed via the command line they get the `AddProtected` boost; otherwise the resolver would resolve the conflict by not installing them in the first place.
+As one package is to be installed via the command line they get the `AddProtected` boost;
+otherwise the resolver would resolve the conflict by not installing them in the first place.
 
 ```
 Show Scores
@@ -246,7 +250,8 @@ Investigating (0) samba-dsdb-modules:amd64 < 2:4.16.2-1A~5.0.0.202206271026 -> 2
 ```
 - The package `univention-samba4` depends on `samba-dsdb-modules`, which APT claims to be unresolved.
 - Actually version `2:4.16.2-1A~5.0.0.202206271026` is installed but `2:4.16.2-1A~5.0.0.202207191731` is to be installed.
-  the `->` indicates a schedules action to update it; `|` would be used to *inform* you instead that the package is either currently already installed or to be installed.
+  the `->` indicates a schedules action to update it;
+  `|` would be used to *inform* you instead that the package is either currently already installed or to be installed.
 - The package should be installed and actually is installed (`@ii`).
 - The package is upgradable `u`, marked `m` and currently scheduled for upgrade `U`.
 - The installation status us currently broken `Ib`.
@@ -272,9 +277,11 @@ The resolver decides to schedule upgrades for these two packages as it declares 
 ```
 Investigating (1) python3-ldb:amd64 < 2:2.5.1-1A~5.0.0.202206171844 | 2:2.5.2-1A~5.0.0.202207191717 @ii umH Ib >
 ```
-Upgrading `libdb2` alone violates the constraint of `python3-ldb`, which depends on the exact same version: `python3-ldb: Depends: libdb2 (= ${binary:Version})`.
+Upgrading `libdb2` alone violates the constraint of `python3-ldb`, which depends on the exact same version:
+`python3-ldb: Depends: libdb2 (= ${binary:Version})`.
 - Currently version `2:2.5.1-1A~5.0.0.202206171844` is installed.
-- Version `2:2.5.2-1A~5.0.0.202207191717` is available, but (currently) **not** scheduled for installation: notice the `|` here instead of `->`!
+- Version `2:2.5.2-1A~5.0.0.202207191717` is available, but (currently) **not** scheduled for installation:
+  notice the `|` here instead of `->`!
 - The package should be installed and actually is installed (`@ii`).
 - The package is upgradable `u`, marked `m` but currently held `H`.
 - The package is in the *install broken state*, which needs fixing next.
@@ -307,11 +314,13 @@ There are multiple *fixes*, to get the installation working.
 3. Add a `libldb2: Breaks: python3-ldb (<< ${binary:Version})`.
    When upgrading `libldb2` is considered, this will also schedule an upgrade of `python3-ldb`, which will then will be in lock-step again.
 
-According to my gut feeling I think 3 is the most correct one, but if you know better: please mail me.
+According to my gut feeling I think 3 is the most correct one, but if you know better:
+please mail me.
 
 # Post Script
 
-After publishing this and also asking the [APT Team](https://lists.debian.org/deity/2022/07/msg00033.html) _Andre Wagner_ mailed me this link: [An Ubuntu 22.04 LTS Fix Is Coming For A Very Annoying & Serious APT Problem](https://www.phoronix.com/news/Ubuntu-22.04-APT-Breaks-Things)
+After publishing this and also asking the [APT Team](https://lists.debian.org/deity/2022/07/msg00033.html) _Andre Wagner_ mailed me this link:
+[An Ubuntu 22.04 LTS Fix Is Coming For A Very Annoying & Serious APT Problem](https://www.phoronix.com/news/Ubuntu-22.04-APT-Breaks-Things)
 It points to an [Ubuntu bug report](https://www.phoronix.com/news/Ubuntu-22.04-APT-Breaks-Things) and includes [a patch](https://salsa.debian.org/apt-team/apt/-/merge_requests/248), which was [merged](https://salsa.debian.org/apt-team/apt/-/merge_requests/248) 2 weeks ago into [apt](https://salsa.debian.org/apt-team/apt/-/merge_requests/248).
 
 # Disclaimer
@@ -320,6 +329,7 @@ Please note that there are different tools, which might use different resolvers:
 - `apt-get` is the stable command line tool, which should be used from scripts.
 - `aptitude` provides an interactive text user interface, but can also be used from scripts.
   It can be used interactively to resolve conflicts, but requires some extra knowledge.
-- `apt` is a new tool for interactive usage: It combines functions from other tools like `apt-cache` and `apt-mark`, but is not yet considered stable and should not be used in scripts.
+- `apt` is a new tool for interactive usage:
+  It combines functions from other tools like `apt-cache` and `apt-mark`, but is not yet considered stable and should not be used in scripts.
 
 {% include abbreviations.md %}

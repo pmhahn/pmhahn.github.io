@@ -14,12 +14,18 @@ Reverting will fail afterwards.
 
 For **inactive** VM you can fix it manually like this:
 
-1. Get the name of your QCOW2 files: `virsh domblklist "$VM"`
-2. Get the list of snapshots: `virsh snapshot-list "$VM"`
-3. Compare them to the names stored in the QCOW2 file: `qemu-img snapshot -l "$PATH"`
+1. Get the name of your QCOW2 files:
+   `virsh domblklist "$VM"`
+2. Get the list of snapshots:
+   `virsh snapshot-list "$VM"`
+3. Compare them to the names stored in the QCOW2 file:
+   `qemu-img snapshot -l "$PATH"`
 4. For every mismatching snapshot, re-create the snapshot with the new name and delete the old one:
-    1. Revert to old snapshot: `qemu-img snapshot -a "$OLD" "$PATH"`
-    2. Create new snapshot: `qemu-img snapshot -c "$NEW" "$PATH"`
-    3. Delete old snapshot: `qemu-img snapshot -d "$OLD" "$PATH"`
+    1. Revert to old snapshot:
+       `qemu-img snapshot -a "$OLD" "$PATH"`
+    2. Create new snapshot:
+       `qemu-img snapshot -c "$NEW" "$PATH"`
+    3. Delete old snapshot:
+       `qemu-img snapshot -d "$OLD" "$PATH"`
 
 {% include abbreviations.md %}

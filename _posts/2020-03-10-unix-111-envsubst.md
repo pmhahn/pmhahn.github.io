@@ -5,7 +5,8 @@ layout: post
 categories: shell UCS
 ---
 
-UCR implementiert einen Template-Mechanismus: Er ersetzt Platzhalter in der Vorlage durch die konfigurierten Werte (oder führt passenden Python-Code aus).
+UCR implementiert einen Template-Mechanismus:
+Er ersetzt Platzhalter in der Vorlage durch die konfigurierten Werte (oder führt passenden Python-Code aus).
 ```bash
 echo '@%@hostname@%@' | ucr filter
 ```

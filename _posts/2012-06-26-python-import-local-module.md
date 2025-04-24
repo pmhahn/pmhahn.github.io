@@ -6,7 +6,9 @@ layout: post
 categories: python
 ---
 
-Beim schreiben von Unit-Tests für Python-Module hatte ich bisher immer das Problem, daß das zu testende Modul zum Zeitpunkt, wo das Module gebaut ist, natürlich noch nicht in dieser Version installiert ist; im ungünstigen Fall ist gar eine alte Version der Python-Module installiert, gegen die die Tests dann laufen. Dummerweise liegen viele Pakete innerhalb des `univention`-Pakets, so daß es dann auch gerne Probleme damit gibt, daß entweder das eigene Paket `univention.foo` oder solche globalen Pakete wie `univention.config_registry` nicht gefunden werden.
+Beim schreiben von Unit-Tests für Python-Module hatte ich bisher immer das Problem, daß das zu testende Modul zum Zeitpunkt, wo das Module gebaut ist, natürlich noch nicht in dieser Version installiert ist;
+im ungünstigen Fall ist gar eine alte Version der Python-Module installiert, gegen die die Tests dann laufen.
+Dummerweise liegen viele Pakete innerhalb des `univention`-Pakets, so daß es dann auch gerne Probleme damit gibt, daß entweder das eigene Paket `univention.foo` oder solche globalen Pakete wie `univention.config_registry` nicht gefunden werden.
 
 Die Lösung ist in der [`__path__`-Variable](http://docs.python.org/tutorial/modules.html#packages-in-multiple-directories) versteckt:
 ```python

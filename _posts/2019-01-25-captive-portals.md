@@ -5,7 +5,8 @@ layout: post
 categories: linux
 ---
 
-Wer wie ich öfters mit der Bahn unterwegs ist weiß, dass in einigen Zügen die Bahn inzwischen WLAN anbietet: [WIFI@DB](https://www.dbregio.de/db_regio/view/zukunft/wlan.shtml).
+Wer wie ich öfters mit der Bahn unterwegs ist weiß, dass in einigen Zügen die Bahn inzwischen WLAN anbietet:
+[WIFI@DB](https://www.dbregio.de/db_regio/view/zukunft/wlan.shtml).
 Die Bahn greift dabei auf die Technologie des Unternehmens [Hotsplots](https://www.hotsplots.de/) zu:
 Nachdem man eine IP-Adresse per DHCP bekommen hat kann man noch nicht direkt los legen, sondern muss auf einer Portalseite zunächst die AGB akzeptieren.
 Dazu braucht man einen Browser.
@@ -27,7 +28,8 @@ Das explizite Anmelden per Browser ist mühsam.
 Zumindest kann man unter Linux dem [NetworkManager](https://wiki.gnome.org/Projects/NetworkManager) (NM) beibringen, das zu vereinfachen:
 Mann kann dort eine [URL konfigurieren](https://jlk.fjfi.cvut.cz/arch/manpages/man/NetworkManager.conf.5#CONNECTIVITY_SECTION), die der NM probiert zu erreichen.
 Falls das nicht gelingt zeigt er direkt ein Popup-Dialog an, über den man den Browser starten kann.
-(Leider wird die Meldung viel zu kurz angezeigt, so dass ich selten schnell genug bin, den Knopf zu drücken; ggf. aber auch nur mein 43+ Problem 😉 )
+(Leider wird die Meldung viel zu kurz angezeigt, so dass ich selten schnell genug bin, den Knopf zu drücken;
+ggf. aber auch nur mein 43+ Problem 😉 )
 
 Dazu legt man z.B. folgende Konfigurationsdatei `/etc/NetworkManager/conf.d/10-connectivity.conf` an:
 ```ini

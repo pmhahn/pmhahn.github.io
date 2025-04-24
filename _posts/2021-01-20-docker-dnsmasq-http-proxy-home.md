@@ -8,24 +8,24 @@ categories: virt
 I'm using docker on my notebook for development.
 An mentioned in _UNIX 113: DocBook Docker images_ we already have several UCS images in docker-registry of many UCS releases and for different tasks:
 
-`phahn/minbase[:$major$minor$patch]`
-: Minimal image with as few Debian binary packages pre-installed
-`phahn/aptbase[:$major$minor$patch]`
-: minbase with UCS unmaintained enabled
-`phahn/devbase[:$major$minor$patch]`
-: aptbase With Build-essentials tools pre-installed
-`phahn/debbase[:$major$minor$patch]`
-: devbase With debhelper pre-installed
-`docbook`
-: DocBook toolchain
-`docspell`
-: Univention spell checker
-`ucs-ec2-tools`
-: KVM and EC2 tools
-`univention-sphinx`
-: Python Spinx documentation generator with Univention theme
-`knut/ssh`
-: SSH client with SSH host keys of important KNUT hosts
+- `phahn/minbase[:$major$minor$patch]`
+  Minimal image with as few Debian binary packages pre-installed
+- `phahn/aptbase[:$major$minor$patch]`
+  minbase with UCS unmaintained enabled
+- `phahn/devbase[:$major$minor$patch]`
+  aptbase With Build-essentials tools pre-installed
+- `phahn/debbase[:$major$minor$patch]`
+  devbase With debhelper pre-installed
+- `docbook`
+  DocBook toolchain
+- `docspell`
+  Univention spell checker
+- `ucs-ec2-tools`
+  KVM and EC2 tools
+- `univention-sphinx`
+  Python Spinx documentation generator with Univention theme
+- `knut/ssh`
+  SSH client with SSH host keys of important KNUT hosts
 
 he base images use `omar.knut.univention.de` and `updates.knut.univention.de` as their APT repository sources, so they only work when you're connected to KNUT.
 But this may be not enough as you also need working DNS resolution and routing must work.
