@@ -25,7 +25,7 @@ There also is a limit on the maximum path length, with is `UNIX_PATH_MAX = 108` 
 Some operating systems other then Linux do not check the file permissions on the socket Inode itself.
 Therefor it is good practice for portable applications to put the socket in a separate directory with only read- and search-permission for the desired user or group.
 
-More details are described in the manual page <man:unix(7)>, which also includes an example C program.
+More details are described in the manual page [unix](man:unix(7)), which also includes an example C program.
 Python also provides support and includes server code in [socketserver](https://docs.python.org/3/library/socketserver.html).
 
 # The problem
@@ -170,7 +170,7 @@ The `Num` column really is a kernel address, which can be linked to a [struct un
 
 # Using `ss`
 
-The Linux kernel implements the <man:sock_diag(7)> extension since 4.2, which provides additional information to diagnose socket issues.
+The Linux kernel implements the [sock_diag](man:sock_diag(7)) extension since 4.2, which provides additional information to diagnose socket issues.
 Using `ss` from [iproute2](https://wiki.linuxfoundation.org/networking/iproute2) starting with version [v4.19.0~55](https://git.kernel.org/pub/scm/network/iproute2/iproute2.git/commit/?id=0bab7630e38863d3d2a5ddaeabf8745c4258a1a9) does show the VFS information:
 
 ```console

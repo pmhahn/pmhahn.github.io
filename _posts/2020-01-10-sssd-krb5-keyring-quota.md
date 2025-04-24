@@ -41,7 +41,7 @@ Und genau der hat zugeschlagen, weil der Kerberos-Keyring im Laufe der Zeit zu g
  2260:    28 28/28 28/200 18733/20000
  ```
 
-(Die Bedeutung der Werte ist genauer in <man:keyrings(7)> beschrieben.)
+(Die Bedeutung der Werte ist genauer in [keyrings](man:keyrings(7)) beschrieben.)
 Beim Versuch mich zu authentifizieren hat der SSSD nun ein neues Ticket bekommen und wollte dieses an meinen Keyring anhängen.
 Die ist aber wegen der Quota-Limitierung gescheitert.
 
