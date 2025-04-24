@@ -10,7 +10,7 @@ Man sollte mit `__del__()`-Methoden in Python sehr aufpassen:
 Der [Garbage Collector](https://docs.python.org/3/library/gc.html) (GC) von Python räumt im Gegensatz zu anderen Sprachen auch zyklische Strukturen auf, jedoch ist das deutlich komplizierter.
 Normalerweise werden Objekt über die Referenzzählung freigegebenen:
 
-> root ->; a[1] -> b[1]
+> root -> a[1] -> b[1]
 
 Nach einem `del a` sinkt der Referenzzähler von "a" auf 0, was dazu führt, das "a" freigegeben wird. Das führt rekursiv dazu, das auch "b" freigegeben wird, weil durch das implizite `del b` auch dessen Referenzzähler auf 0 sinkt.
 
