@@ -1,5 +1,5 @@
 ---
-title: 'UNIX 114 &#8211; ldapsearch'
+title: 'UNIX 114: ldapsearch'
 date: '2020-06-09T10:37:14+02:00'
 layout: post
 categories: shell

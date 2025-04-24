@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "UNIX domain socket"
+title: "UNIX 110: domain socket"
 date: 2019-08-28 09:00:00  +0200
 categories: linux
 excerpt_separator: <!--more-->

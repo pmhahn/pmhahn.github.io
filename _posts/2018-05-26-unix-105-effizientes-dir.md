@@ -1,5 +1,5 @@
 ---
-title: 'UNIX 103: Effizientes dir'
+title: 'UNIX 105: Effizientes dir'
 date: '2018-05-26T07:01:24+02:00'
 layout: post
 categories: filesystem
