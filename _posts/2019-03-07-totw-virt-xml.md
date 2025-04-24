@@ -3,6 +3,7 @@ title: 'TotW: virt-xml'
 date: '2019-03-07T17:23:13+01:00'
 layout: post
 categories: virt
+tags: totw
 ---
 
 Q: Wie kann ich XML-Definition von VMs anpassen?

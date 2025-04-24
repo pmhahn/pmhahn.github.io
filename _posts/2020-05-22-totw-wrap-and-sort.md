@@ -3,6 +3,7 @@ title: 'TotW: wrap-and-sort'
 date: '2020-05-22T11:03:18+02:00'
 layout: post
 categories: debian
+tags: totw
 ---
 
 Q: Gibt es eine empfohlene Schreibweise für die Einträge in `debian/*`-Dateien?

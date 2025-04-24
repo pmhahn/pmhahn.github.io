@@ -3,6 +3,7 @@ title: 'TotW: qemu-guest-agent'
 date: '2018-03-23T14:20:26+01:00'
 layout: post
 categories: virt
+tags: totw
 ---
 
 Wer kennt das Problem nicht: Die VM wurde über Nacht auf die Festplatte suspendiert und am nächste Morgen geht die Uhr der VM falsch.

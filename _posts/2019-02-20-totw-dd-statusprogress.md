@@ -3,6 +3,7 @@ title: 'TotW: dd status=progress'
 date: '2019-02-20T10:44:27+01:00'
 layout: post
 categories: shell
+tags: totw
 ---
 
 Q: Wie sieht man den Fortschritt von `dd`?
