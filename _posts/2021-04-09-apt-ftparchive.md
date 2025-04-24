@@ -23,7 +23,7 @@ For multiple packages you have to iterate that for each package.
 
 ## `dpkg-scanpackages`
 
-There even is [dpkg-scanpackages](man:dpkg-scanpackages), which does this by scanning the given directory recursively.
+There even is [dpkg-scanpackages](man:dpkg-scanpackages(1)), which does this by scanning the given directory recursively.
 
 In addition it supports the so called *override* files:
 They are needed to overwrite the meta data of packages **after** a package has already been built.
@@ -34,7 +34,7 @@ For source packages there is `dpkg-scansources`, which is used to generates the 
 
 ## `apt-ftparchive`
 
-[apt-ftparchive](man:apt-ftparchive) is an improved version, which can do much more.
+[apt-ftparchive](man:apt-ftparchive(1)) is an improved version, which can do much more.
 In combines `dpkg-scanpackages` with `dpkg-scansources`, but also can generate the `Releases` file.
 In addition to all those `Packages` and `Sources` files it may also list other files, for example translation or icon files.
 The file is often associated wit a `Releases.gpg` file containing the GnuPG signature required for checking the security chain.
@@ -86,7 +86,7 @@ Everything else only requires looking up the returned file names in the cache, w
 
 Actually you will notice that `apt-ftparchive` performs abyssal in the cold-cache case.
 It still does `stat()` calls for all files even when `AlwayStat` is disabled.
-The culprit here is [ftw()](man:ftw(3)], the C-library used to implement the *File Tree Walk*:
+The culprit here is [ftw()](man:ftw(3)), the C-library used to implement the *File Tree Walk*:
 
 To **walk** the directory recursively it must check the type of the returned directory entry:
 * For a *directory* it must recurs.

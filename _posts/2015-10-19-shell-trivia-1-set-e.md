@@ -30,7 +30,7 @@ if f; then echo 11; else echo 12; fi
 
 <!--more-->
 
-Hinweise aus [`man 1 bash`](man:bash):
+Hinweise aus [`man 1 bash`](man:bash(1)):
 
 ## `-e`
 > Exit immediately if a **simple command** (see SHELL GRAMMAR above) exits with a non-zero status.
@@ -58,7 +58,7 @@ Hinweise aus [`man 1 bash`](man:bash):
 > command2 is executed if and only if command1 returns a non-zero exit status.
 > The return status of AND and OR lists is the exit status of the last command executed in the list.
 
-`man 1 sh` drückt es etwas präziser aus:
+[`man 1 sh`](man:sh(1)) drückt es etwas präziser aus:
 
 ## `-e errexit`
 > If not interactive, exit immediately if any **untested** command fails.
