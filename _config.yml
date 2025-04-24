@@ -26,11 +26,11 @@ footer-links:
   instagram:
   linkedin:
   pinterest:
-  rss: # just type anything here for a working RSS icon
+  rss:  # just type anything here for a working RSS icon
   twitter:
-  stackoverflow: users/907658/pmhahn # your stackoverflow profile, e.g. "users/50476/bart-kiers"
-  youtube: # channel/<your_long_string> or user/<user-name>
-  googleplus: 110059045397851960899 # anything in your profile username that comes after plus.google.com/
+  stackoverflow: users/907658/pmhahn  # your stackoverflow profile, e.g. "users/50476/bart-kiers"
+  youtube:  # channel/<your_long_string> or user/<user-name>
+  googleplus: 110059045397851960899  # anything in your profile username that comes after plus.google.com/
 
 
 # Enter your Disqus shortname (not your username) to enable commenting on posts
@@ -72,8 +72,8 @@ kramdown:
 
 # Use the following plug-ins
 plugins:
-  - jekyll-sitemap # Create a sitemap using the official Jekyll sitemap gem
-  - jekyll-feed # Create an Atom feed using the official Jekyll feed gem
+  - jekyll-sitemap  # Create a sitemap using the official Jekyll sitemap gem
+  - jekyll-feed  # Create an Atom feed using the official Jekyll feed gem
   - jekyll-paginate-v2
   - classifier-reborn
 
@@ -103,3 +103,7 @@ pagination:
   enabled: true
   debug: false
   per_page: 10
+
+# Install: sudo apt install jekyll ruby-jekyll-paginate-v2 ruby-jekyll-sitemap ruby-jekyll-feed ruby-classifier-reborn
+# Build: jekyll b
+# Serve: jekyll s
