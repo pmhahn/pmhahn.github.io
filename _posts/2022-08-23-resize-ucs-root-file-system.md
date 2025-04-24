@@ -56,11 +56,5 @@ Afterwards create another new partition (can also be a primary, no need to creat
 Make sure to use partition type `82`. Run `mkswap /dev/vda2` to initialize it.
 Afterwards update `/etc/fstab` to use `/dev/vda2` or lookup the UUID from `/dev/disk/by-uuid/`.
 
-*[MBR]: Master Boot Record
+{% include abbreviations.md %}
 *[GPT]: Global Partitioning Table
-*[LVM]: Logical Volume Manager
-*[LV]: Logical Volume
-*[PV]: Physical Volume
-*[VM]: Virtual Machine
-*[VG]: Volume Group
-*[UCS]: Univention Corporate Server

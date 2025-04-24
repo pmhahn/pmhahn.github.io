@@ -12,3 +12,5 @@ Als Workaround kann man das Cache-Verhalten ändern, was zwar Performance bringt
 Aufpassen muß man auch bei vorhandenen Sicherungspunkten, denn beim Wiederherstellen dieser wird auch die alte Konfiguration mit der alten Cache-Strategie wiederhergestellt. Alternativ kann man die Dateien unter `/var/lib/libvirt/qemu/snapshot/$VM/*.xml` auch entsprechen anpassen, allerdings muß danach `libvirtd` per `systemd restart libvirtd` neu gestartet werden, weil diese Dateien nur einmalig bei dessen Start eingelesen werden.
 
 Eine bessere Lösung liefert der Patch an [Bug #22231](https://forge.univention.org/bugzilla/show_bug.cgi?id=22231) für **Qemu**, der nur für das Schreiben der Sicherungspunktinformationen das Cache-Verhalten innerhalb von **qemu** anpasst und damit Sicherheit und Schnelligkeit kombiniert.
+
+{% include abbreviations.md %}

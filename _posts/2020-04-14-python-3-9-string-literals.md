@@ -61,3 +61,5 @@ Das der Backlash sehr häufig in [regulären Ausdrücken](https://docs.python.or
 PS: Ich habe ein Skript, was ich noch in `ucslint` integrieren will. [flake8](https://flake8.pycqa.org/en/latest/index.html) liefert dafür eigentlich auch schon [Invalid escape sequence ‚x‘ (W605)](https://www.flake8rules.com/rules/W605.html), aber wenn es bei einer ungültigen Sequenz abstürzt, hilft einem das auch nicht viel weiter. Eine [Korrektur von ucs-test](https://github.com/univention/univention-corporate-server/commit/00e37d83c7750e4eefec3d63beac1dbc2abc545f) habe ich bereits.
 
 PPS: Und als Vorfreude auf UCS-5 basierend auf Debian 10 Buster mit Python 3.7 haben wir dann auch irgendwann mal _Python 3.6 f-Strings_.
+
+{% include abbreviations.md %}

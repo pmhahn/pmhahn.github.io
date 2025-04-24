@@ -12,3 +12,5 @@ Bei einem Upgrade eines Pakets bleiben alte conffiles bestehen, selbst wenn dies
 Für Templates sollte man daran denken, das neben der eigentlichen Datei `/etc/$path. auch noch weitere Dateien wie die Template-Datei `/etc/univention/templates/files/etc/$path` unterhalb von `/etc/` liegen können, die ebenfalls behandelt werden sollten.
 
 Bisher gibt es dafür weder einen Helper, noch eine Vorlage, aber ggf. motiviert dieses Posting ja den Einen oder Anderen dazu 😉
+
+{% include abbreviations.md %}

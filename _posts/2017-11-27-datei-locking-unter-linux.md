@@ -20,3 +20,5 @@ Literatur zum nach-/weiterlesen:
 - [Advisory File Locking – My take on POSIX and BSD locks](https://loonytek.com/2015/01/15/advisory-file-locking-differences-between-posix-and-bsd-locks/)
 - [On the Brokenness of File Locking](http://0pointer.de/blog/projects/locking.html)
 - [File-private POSIX locks](https://lwn.net/Articles/586904/)
+
+{% include abbreviations.md %}

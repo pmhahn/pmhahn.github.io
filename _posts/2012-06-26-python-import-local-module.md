@@ -20,3 +20,5 @@ print(univention.updater.tools.__file__)
 print(univention.config_registry.__file__)
 # /usr/lib/pymodules/python2.6/univention/config_registry.pyc
 ```
+
+{% include abbreviations.md %}

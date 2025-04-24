@@ -322,5 +322,4 @@ Please note that there are different tools, which might use different resolvers:
   It can be used interactively to resolve conflicts, but requires some extra knowledge.
 - `apt` is a new tool for interactive usage: It combines functions from other tools like `apt-cache` and `apt-mark`, but is not yet considered stable and should not be used in scripts.
 
-*[LTS]: Long Term Stable
-*[APT]: Advanced Packaging Tool
+{% include abbreviations.md %}

@@ -50,3 +50,5 @@ Um die Sicherheit zu erhöhen gibt es noch 2 Features:
 Aktueller Stand ist, das wir (Debian) nun alle notwendige Infrastruktur haben (DAK, signing-code).
 Auch wurde schon alle wichtigen Pakete (Linux Kernel, Shim, GRUB, fwupdate) angepasst, um die signing-templates zu erzeugen.
 Was noch fehlt ist der vollautomatische Betrieb und das hochladen der angepassten Pakete.
+
+{% include abbreviations.md %}

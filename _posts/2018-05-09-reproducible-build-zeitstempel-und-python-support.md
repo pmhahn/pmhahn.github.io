@@ -15,3 +15,5 @@ Debian verwendet den Zeitstempel des letzten Eintrags aus `debian/changelog`.
 Dass kann zu Problemen führen, wenn man ein Paket mehrfach neu baut und immer wieder installiert.
 Z.B. vergleicht `update-python-modules` die Zeitstempel der Python-Module `*.py` mit den kompilierten Dateien `*.pyc` und kompiliert diese dann nicht neu, weil das Kompilat vom letzten mal ja schon neuer ist als die scheinbar immer noch unveränderten Python-Dateien.
 In diesem Fall hilft ein `sudo update-python-modules -f`, was eine Neukompilierung **aller** Python-Module erzwingt.
+
+{% include abbreviations.md %}

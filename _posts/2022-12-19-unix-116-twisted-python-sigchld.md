@@ -235,4 +235,4 @@ For `vnc-automate` I will move the code calling `tesseract` move out of the asyn
 
 Hopefully you enjoyed the ride with me and have learned something new for you next debugging session.
 
-*[BSD]: Berkeley Software Distribution
+{% include abbreviations.md %}

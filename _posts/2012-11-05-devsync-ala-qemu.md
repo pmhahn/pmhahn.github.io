@@ -25,3 +25,5 @@ mount -t 9p -o ro,trans=virtio,version=9p2000.L ucs-3.1 /mnt
 ```
 
 Daneben kann QEmu auch noch so ein paar andere ähnliche Dinge wie z.B. on-the-fly aus einem lokalen Verzeichnis ein virtuelles VFAT-Dateisystem zu machen, daß die VM über ein reguläres Blockdevice ansprechen kann.
+
+{% include abbreviations.md %}

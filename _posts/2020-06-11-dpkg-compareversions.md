@@ -66,3 +66,5 @@ PS: Bitte vermeidet `test … -a …` und `test … -o …` für logische Verkn�
 <!--
 PPS: Hier mein [Vortrag zu den Maintainer-Scripten](https://phahn.gitpages.knut.univention.de/talks/dpkg-maint.html) von damals.
 -->
+
+{% include abbreviations.md %}

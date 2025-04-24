@@ -105,3 +105,5 @@ esac
 
 But `prerm` is a different beast and you should spend some time on thinking about the difference between *removal* and *upgrade*: For a long time it was Debians policy to stop all services before an upgrade and only restart them afterwards. For some services this is still needed as program files cannot be upgraded if a process executing them is still running (a binary executable file is write-protected while a process is executing it). This has lead to long down times especially during upgrades. The rule is relaxed by know and many [debhelper](man:dh_systemd_start(1)) scripts by know support the option `--restart-after-upgrade` respectively `--no-stop-on-upgrade` which delays the required restart until the `postinst` phase.
 So please take some time and fix you `postinst` script to stop doing unnecessary work.
+
+{% include abbreviations.md %}

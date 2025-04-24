@@ -23,4 +23,4 @@ auth    optional        pam_ecryptfs.so unwrap
 
 This skips the call to `pam_ecryptfs` if the service is either `sudo` or `PolicyKit-1`, which is used by the update service.
 
-*[PAM]: Pluggable Authentication Modules
+{% include abbreviations.md %}

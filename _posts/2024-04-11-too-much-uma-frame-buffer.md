@@ -18,9 +18,4 @@ As I neither run games on the notebook nor do any graphic heavy work nor use the
 
 I also added more swap space, so that Linux has the option to use the NVMe to swap out some unused memory instead of being forced to kill some processes, if memory pressure gets too high.
 
-*[AMDGPU]: Graphics Processing Unit
-*[GPU]: Graphics Processing Unit
-*[NVMe]: Nonvolatile Memory Express
-*[ML]: Machine Learning
-*[UMA]: Unified Memory Architecture
-*[UEFI]: Unified Extensible Firmware Interface
+{% include abbreviations.md %}

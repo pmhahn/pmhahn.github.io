@@ -19,3 +19,5 @@ Um wieder Ordnung in die Dateien zu bringen gibt es [wrap-and-sort](man:wrap-and
 Die einheitliche Schreibweise mit `--wrap-always --short-indent --trailing-comma` sorgt zudem dafür, das Änderungen dann häufig nur jeweils eine Zeile betreffen, was die `git`-Diffs entsprechend klein und übersichtlich hält.
 
 Außer man schafft es so wie ich und macht sich selbst zum Opfer seiner eigenen [Cleverness](https://github.com/univention/univention-corporate-server/commit/d76f9059ef755b50ad3d90cafffd3739d4a72313) 😉
+
+{% include abbreviations.md %}

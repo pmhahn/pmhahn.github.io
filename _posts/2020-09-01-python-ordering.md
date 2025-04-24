@@ -190,3 +190,5 @@ x, y = foo(0, "x"), foo(0, "y")
 ```
 
 This works with both Python 2 and 3.
+
+{% include abbreviations.md %}

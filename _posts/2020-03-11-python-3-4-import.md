@@ -71,3 +71,5 @@ Befindet man sich also im Wurzelverzeichnis eines Quellpakets, würden die Pytho
 Das ist nicht immer sinnvoll und führt unfreiwillig zu Problemen.
 Deswegen lautet die Empfehlung, alles unterhalb eines Unterverzeichnisses `src/` abzulegen;
 man kann dann dieses Verzeichnis entweder explizit über `PYTHONPATH=src` aufnehmen oder wechselt explizit in das `src/`-Verzeichnis, damit dieses dann über den `.`-Mechanismus aufgenommen wird.
+
+{% include abbreviations.md %}

@@ -65,3 +65,5 @@ They use the following [tricks to shrink](https://github.com/debuerreotype/debue
   * All documentation below `/usr/share/doc/` except the `copyright` files.
   * All locale related files below `/usr/share/locale/` except for `C.UTF-8`.
   * The unpacked `Packages`, `Sources`, `Release` files below `/var/lib/apt/`.
+
+{% include abbreviations.md %}

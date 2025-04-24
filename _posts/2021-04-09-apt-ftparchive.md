@@ -279,4 +279,4 @@ Their *key* is build by appending a `:` and a two-letter code depending on the t
     Debian source package control data `.dsc`.
     This is used to build the `Sources` files.
 
-*[APT]: Advanced Packaging Tool
+{% include abbreviations.md %}

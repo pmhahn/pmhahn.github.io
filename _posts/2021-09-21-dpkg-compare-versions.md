@@ -126,3 +126,5 @@ Actually no:
 
 *   The greedy version `[0-9-]+-[0-9]+` would **mistakenly** capture everything as _upstream-version_ as it does **not stop** before the last hyphen.
 *   The minimal version `[0-9-]+?-[0-9]+` leaves the last part to _debian-revision_ while capturing only the remaining prefix correctly as _upstream-version_.
+
+{% include abbreviations.md %}

@@ -15,3 +15,5 @@ Natürlich könnte ich auch weiterhin die [benötigten Pakete](https://www.debia
 Oder ihr verwendet wenigstens `dpkg-checkbuilddeps` für das heraussuchen der fehlenden Pakete.
 
 Damit braucht man auch kein `/usr/lib/pbuilder/pbuilder-satisfydepends` mehr, wovon es 5 Varianten gibt.
+
+{% include abbreviations.md %}

@@ -248,8 +248,4 @@ Check `kubelet_checksums` around `roles/download/defaults/main.yml:186` which ve
 
 * [DNS horizontal auto-scaling](https://kubernetes.io/docs/tasks/administer-cluster/dns-horizontal-autoscaling/)
 
-*[WIP]: Work in Progress
-*[k8s]: Kubernetes
-*[API]: Application Programming Interface
-*[URL]: Uniform Ressource Location
-*[CA]: Certificate Authority
+{% include abbreviations.md %}

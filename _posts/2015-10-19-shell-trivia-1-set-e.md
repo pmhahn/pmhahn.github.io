@@ -63,3 +63,5 @@ Hinweise aus [`man 1 bash`](man:bash(1)):
 ## `-e errexit`
 > If not interactive, exit immediately if any **untested** command fails.
 > The exit status of a command is considered to be explicitly tested if the command is used to control an if, elif, while, or until; or if the command is the **left hand operand** of an `&&` or `||` operator.
+
+{% include abbreviations.md %}

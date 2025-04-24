@@ -34,3 +34,5 @@ Wenn man dann noch statt `open(filename, mode)` besser nachfolgenden Code verwen
 import codecs
 codecs.open(filename, mode, encoding=ENCODING)
 ```
+
+{% include abbreviations.md %}

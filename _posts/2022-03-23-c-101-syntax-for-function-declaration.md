@@ -51,4 +51,4 @@ So watch out if you for example look at [CrudeSAML](https://github.com/univentio
 
 PS: It you ask yourself what values are passed if they are not specified: random data respectively whatever is currently on your stack; so this is a security vulnerability as it discloses the content of your stack, which might contain confidential data.
 
-*[gcc]: GNU Compiler Collection
+{% include abbreviations.md %}

@@ -128,3 +128,5 @@ Every use breaks as soon as any container tries to access out infrastructure sec
 
 Sönke and I already talked about this for some time and we have the idea to acquire certificates from [Let's encrypt](https://letsencrypt.org/de/) for those **internal** systems, which would greatly simplify the usage.
 For now I can not yet recommend using the Gitlab registry, because — simply spoken — there are too many pitfalls and requires deep technical knowledge to use it.
+
+{% include abbreviations.md %}

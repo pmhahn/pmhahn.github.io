@@ -47,3 +47,5 @@ Neben der CPU-Zeit-Begrenzung gibt es noch weitere Kategorien, so z.B. auch für
 Das Interessante an cgroups ist, das Kind-Prozesse zunächst immer der gleichen cgroup angehören, wie ihr Vaterprozeß (außer sie werden eben explizit in eine andere Partition verschoben). Während es durch double-*fork*s möglich ist, seinen Eltern zu entkommen (was z.B. Daemon-Prozesse machen), ist das bei cgroups nicht so. Da nutzt z.B. auch [systemd](http://freedesktop.org/wiki/Software/systemd) dazu, beim Beenden von Diensten auch alle von diesen geforkten Kindprozesse mit zu beenden.
 
 PS: Das Verzeichnis `/sys/fs/cgroup/` ist hier willkürlich gewählt, man kann auch jedes andere Verzeichnis verwenden. Bei Debian ist es z.B. `/mnt/cgroups/`, bei RedHat `/dev/cgroups/`, … Es lebe der Standard!
+
+{% include abbreviations.md %}

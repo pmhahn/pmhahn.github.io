@@ -24,3 +24,5 @@ Möchte man nur einige ersetzte, so kann man die zu ersetzenden Variablen auch e
 ```bash
 printf '$A\n${B}\n' | env A=aaa B=bbb envsubst '$B'
 ```
+
+{% include abbreviations.md %}

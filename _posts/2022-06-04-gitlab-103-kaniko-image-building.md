@@ -148,3 +148,5 @@ use my docker image:
 
 - Dockerfile must be inside context directory.
 - Handling of special files is broken [Kaniko#960](https://github.com/GoogleContainerTools/kaniko/issues/960)
+
+{% include abbreviations.md %}

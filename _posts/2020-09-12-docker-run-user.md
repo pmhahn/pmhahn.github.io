@@ -6,7 +6,7 @@ categories: virt
 ---
 
 `docker` is nice to run application commands as you can put them into a container, which also includes the required dependencies.
-This saves you from cluttering your notebook with a multitude of strange packages from Debian, PIP, golang, … We're already using this for running our DocBook toolchain or `ucslint` and are in the process to convert `ucs-ec2-tools` to this.
+This saves you from cluttering your notebook with a multitude of strange packages from Debian, PyPI, golang, … We're already using this for running our DocBook toolchain or `ucslint` and are in the process to convert `ucs-ec2-tools` to this.
 
 Most of these images require access to your files:
 `ucslint` for checking your code, `ucs-ec2-tools` for your `.cfg` and associated files, `DocBook` to your documentation.
@@ -71,3 +71,5 @@ This script is then used as the [ENTRYPOINT](https://docs.docker.com/engine/refe
 For completeness you can also re-configure your `dockerd` to allow the usage of [userns-remap](https://docs.docker.com/engine/security/userns-remap/#enable-userns-remap-on-the-daemon).
 This allows you to map users within the container to user IDs outside the container on your host.
 As this requires changing the daemon configuration on probably many hosts, I did not pursue this path.
+
+{% include abbreviations.md %}

@@ -247,9 +247,4 @@ More low-level information is available in [/proc/vmstat](https://medium.com/@da
 	htlb_buddy_alloc_fail 0
 	...
 
-*[VM]: Virtual Machine
-*[XML]: Extensible Markup Language
-*[OS]: Operating System
-*[GRUB]: Grand Unified Bootloader
-*[IO]: Input Output
-*[JSON]: JavaScript Object Notation
+{% include abbreviations.md %}

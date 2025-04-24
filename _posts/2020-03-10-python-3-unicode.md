@@ -121,3 +121,5 @@ Und ab hier unterschieden sich Python 2 und Python 3 dann in den Details, was da
 
     Über die Option `-b` bzw. `-bb` kann man den Python-Interpreter dazu veranlassen, für solche Vergleiche eine Warnung oder Exception auszulösen.
 - Das `from __future__ import unicode_literals` ist umstritten und es gibt durchaus die Empfehlung, jeweils explizit ein `u""` oder `b""` zu verwenden.
+
+{% include abbreviations.md %}

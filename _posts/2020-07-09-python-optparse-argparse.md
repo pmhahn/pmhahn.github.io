@@ -14,3 +14,5 @@ Even more alternatives for parsing command line arguments:
 - [docopt](http://docopt.org/)
 
 PS: Our former college "Janek" would call `argparse` an "atrocity" anyway and you should stay with `optparse`.
+
+{% include abbreviations.md %}

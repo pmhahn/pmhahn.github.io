@@ -219,10 +219,4 @@ Usually it performs additional checks before it passes its opened file on to the
 See `SCM_RIGHTS` in the manual page.
 Python only supports this natively since Python-3.3.
 
-*[VFS]: Virtual File System
-*[PID]: Process Identifier
-*[UID]: User Identifier
-*[GID]: Group Identifier
-*[ID]: Identifier
-*[TCP]: Transmission Control Protocol
-*[UDP]: User Datagram Protocol
+{% include abbreviations.md %}

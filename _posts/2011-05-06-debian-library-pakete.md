@@ -9,3 +9,5 @@ Weil ich es immer wieder selber nachgucken muß, wie man am besten Bibliotheken 
 
 - [binNMU](http://wiki.debian.org/binNMU) für korrekte Abhängigkeiten zwischen Binärpaketen aus dem selben Quellpaket
 - [libpkg-guide](http://www.netfort.gr.jp/~dancer/column/libpkg-guide/libpkg-guide.html) für allgemeine Informationen zum Paketieren von Bibliotheken
+
+{% include abbreviations.md %}

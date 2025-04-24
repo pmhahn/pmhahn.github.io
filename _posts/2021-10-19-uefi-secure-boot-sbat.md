@@ -93,3 +93,5 @@ As the certificate is only data compared to code, this would greatly improve and
 - [SUSE](https://www.suse.com/support/kb/doc/?id=000019892)
 - [RedHat](https://access.redhat.com/security/vulnerabilities/RHSB-2021-003)
 - [Eclypsium](https://eclypsium.com/2021/04/14/boothole-how-it-started-how-its-going/)
+
+{% include abbreviations.md %}

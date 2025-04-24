@@ -48,3 +48,5 @@ except ImportError:
  from urllib import urlencode
  from urllib2 import urlopen, Request, HTTPError
 ```
+
+{% include abbreviations.md %}

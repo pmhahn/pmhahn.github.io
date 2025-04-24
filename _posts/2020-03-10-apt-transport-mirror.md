@@ -55,3 +55,5 @@ Components: main contrib non-free
 ```
 
 Diese Schreibweise ist deutlich kompakter, vor allem wenn man viele *Suites* und *Componenten* einbinden will, doppelt wenn man auch die Quellen benötigt.
+
+{% include abbreviations.md %}

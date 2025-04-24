@@ -97,3 +97,5 @@ Beim Auflösen eines Pfads wir jede Verzeichniskomponente direkt nachgeschlagen.
 Das geht z.B. beim Dateisystem **ext4** deutlich schneller als das Auflisten aller Einträge, weil das Dateisystem intern einen [HTree](https://en.wikipedia.org/wiki/HTree) verwendet.
 Anhand des Hash-Wertes der Pfadkomponente kann schnell überprüft werden, ob es ein solchen Eintrag gibt.
 Ältere Dateisysteme müssen dafür tatsächlich noch über alle Verzeichniseinträge iterieren, um erst im ungünstigsten Fall am Ende zu erkennen, dass es den gewünschten Eintrag nicht gibt.
+
+{% include abbreviations.md %}

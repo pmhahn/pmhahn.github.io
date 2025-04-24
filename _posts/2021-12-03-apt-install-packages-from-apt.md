@@ -79,3 +79,5 @@ See [`apt_preferences(5)`](man:apt_preferences(5)) for more details.
 Be warned that using `APT::Default-Release` is considered problematic and using `preferences` is preferred.
 Especially with Debian using just the release name will break installing security updates as they have a different name.
 Make sure to use something like `APT::Default-Release "/^bullseye(|-security|-updates)$/";`.
+
+{% include abbreviations.md %}

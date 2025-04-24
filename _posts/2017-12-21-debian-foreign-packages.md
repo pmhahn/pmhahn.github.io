@@ -27,4 +27,4 @@ How does it work:
     * collect all belonging to one package in the *hold* buffer
     * print out that buffer if the current version (marked by `***`) being known in `/var/lib/dpkg/status` only.
 
-*[APT]: Advanced Packaging Tool
+{% include abbreviations.md %}

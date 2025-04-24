@@ -73,6 +73,4 @@ sudo efibootmgr -B -b 0001
 sudo rm -rf /boot/efi/FLASH /boot/efi/EFI/lenovo
 ```
 
-*[CPU]: Central Processing Unit
-*[USB]: Universal Serial Bus
-*[DVD]: Digital Versatile Disc
+{% include abbreviations.md %}

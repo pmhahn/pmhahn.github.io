@@ -123,3 +123,5 @@ def slugify(str)
  .gsub(/(\A-+|-+\z)/, '')
 end
 ```
+
+{% include abbreviations.md %}

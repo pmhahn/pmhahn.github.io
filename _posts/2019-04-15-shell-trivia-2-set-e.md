@@ -40,3 +40,5 @@ Merke also:
 `set -e` führt **nicht** zum Abbruch von eines Compound Commands, sobald dieses bedingt (durch `if`, `while`, `until`, `&&`, `||`, etc.) ausgeführt wird.
 
 PS: Der Rückgabewert eines Funktionsaufrufs ergibt sich aus dem Exit-Status des letzten Befehls im Coumpound Command, d.h. oben `:`, was ähnlich wie `true` immer gelingt und `0` zurück liefert.
+
+{% include abbreviations.md %}

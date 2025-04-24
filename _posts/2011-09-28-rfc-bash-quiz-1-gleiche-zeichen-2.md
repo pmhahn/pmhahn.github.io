@@ -55,3 +55,5 @@ ruler () {  # count char
 Kennt ihr ggf. einfachere/bessere/effizientere Varianten?
 
 PS: RFC steht hier für „Request for Competition“, um mal für zwischendurch oder beim Radfahren eine kleine Herausforderung für das eigene Hirn zu haben 😉
+
+{% include abbreviations.md %}

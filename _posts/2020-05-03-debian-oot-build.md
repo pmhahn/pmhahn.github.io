@@ -67,6 +67,4 @@ This *mostly* works but **fails** for the following reasons at the moment:
 
 TBC…
 
-*[VM]: Virtual Machine
-*[TBC]: To be continued
-*[CI]: Continuous Integration
+{% include abbreviations.md %}

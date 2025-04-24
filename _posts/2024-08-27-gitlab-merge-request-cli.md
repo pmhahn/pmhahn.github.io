@@ -42,3 +42,5 @@ $ git mwp origin
 
 The last command will push my local branch `feature/foo` to the remote named `origin` as a new branch with the same name .
 It will also create a merge request (using the first commit as description), which will target `main`.
+
+{% include abbreviations.md %}

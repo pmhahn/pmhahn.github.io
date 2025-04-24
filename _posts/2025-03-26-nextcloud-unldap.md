@@ -70,3 +70,5 @@ $ mysql --user owncloud --password owncloud
 $ ./occ app:disable user_ldap
 $ ./occ maintenance:mode --off
 ```
+
+{% include abbreviations.md %}

@@ -43,4 +43,4 @@ mkdir firmware
 tar xfC firmware.tar.gz firmware/
 ```
 
-*[USB]: Universal Serial Bus
+{% include abbreviations.md %}

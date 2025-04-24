@@ -82,3 +82,5 @@ group.add_argument(
 This becomes tricky as soon as you have *global* options and options per *sub-command*, as they cannot be intermixed: The later must come after the sub-command name! This for example prevents the migration of `ucr` from `getopt` to `argparse` as the former allows this intermixing.
 
 Be aware that Python 3.7 introduced a backward incompatible change in behavior: Previously when `argparse.ArgumentParser.add_subparsers()` was used and no sub-command was specified, the parser terminated the process with showing the `--help` output. Python 3.7 introduced the option `required`, which defaults to `False`. To get the old behavior you have to explicitly specify `required=True`.
+
+{% include abbreviations.md %}

@@ -18,3 +18,5 @@ Siehe auch [man:slapd.conf(5)](https://www.openldap.org/doc/admin24/slapdconfig.
 
 Man beacht übrigens dass `none` nicht gleich `0` ist: letzteres loggt gar nichts mehr!
 Arvid hat mir mal gegenüber gesagt, dass alleine minimales Logging OpenLDAP (stark) verlangsamt, aber das habe ich jetzt selber nicht recherchiert.
+
+{% include abbreviations.md %}

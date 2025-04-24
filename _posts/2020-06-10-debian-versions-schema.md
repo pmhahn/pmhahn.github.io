@@ -196,3 +196,5 @@ Bringe folgende Versionsnummer in die richtige Reihenfolge:
 - 1-1A~4.4.4.202006110951
 
 Für die Auflösung: `~phahn/bin/deb-ver-comp 1 0:2 0.9 1:1 1-1 1alpha-0.1 1~beta-1 1~rc1-1 2+really1-1 1-1+b1 1+deb10u1-1 1-1.42.202006110951 1-1A~4.4.4.202006110951`
+
+{% include abbreviations.md %}

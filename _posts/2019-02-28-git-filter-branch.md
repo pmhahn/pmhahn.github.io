@@ -89,5 +89,4 @@ If for example you only do the filtering for `c'`, but not `d'`, then the diff f
 
 TBC...
 
-*[SSD]: Solid State Disk
-*[TBC]: To be continues
+{% include abbreviations.md %}

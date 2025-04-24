@@ -60,3 +60,5 @@ echo $?
 Wer dazu sachdienliche Hinweise hat oder Verbesserungsvorschläge für das Skript hat, darf mich gerne kontaktieren.
 
 Disclaimer: Wahrscheinlich steht in dern AGB irgendwo drin, dass man das nicht automatisieren darf, also "use at your own risk".
+
+{% include abbreviations.md %}

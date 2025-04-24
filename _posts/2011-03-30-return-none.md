@@ -23,3 +23,5 @@ class ProxyConfigurationError(ConfigurationError):
 Dadurch kann man dann an anderer Stelle leicht unterscheiden, ob ich Fehlkonfigurationen bei den Proxy-Einstellungen anders behandeln will, oder ob ich alle Fehlkonfigurationen über einen Kamm scheren will, weil eine Unterscheidung bei der Fehlerbehandlung an dieser Stelle keinen Sinn macht.
 
 Mir ist bekannt, dass es zu diesem Thema durchaus sehr unterschiedliche Meinungen gibt, von daher freue ich mich schon auf eine Erfahrungen mit dem Thema und eure Kommentare dazu.
+
+{% include abbreviations.md %}

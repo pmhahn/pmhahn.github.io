@@ -63,6 +63,4 @@ The DevOps philosophy is to *do it right once*, so that everyone can participate
 Similar to that we discovered a problem with the [caching approach used by kaniko](https://cloud.google.com/build/docs/kaniko-cache), which should not be used with `docker-registry.knut` because it does not support automatic image expiry and lead to the file system getting filled very fast. Fixing that in `kaniko.yml` once was easy, but all other pipelines have not been reviewed yet and might still result in extra work to be done.
 So please contribute to improving these fragments and use them instead of implementing your own solution.
 
-*[TLD]: Top Level Domain
-*[SAN]: Subject Alternative Names
-*[DinD]: Docker in Docker
+{% include abbreviations.md %}

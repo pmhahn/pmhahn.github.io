@@ -21,3 +21,5 @@ For **inactive** VM you can fix it manually like this:
     1. Revert to old snapshot: `qemu-img snapshot -a "$OLD" "$PATH"`
     2. Create new snapshot: `qemu-img snapshot -c "$NEW" "$PATH"`
     3. Delete old snapshot: `qemu-img snapshot -d "$OLD" "$PATH"`
+
+{% include abbreviations.md %}

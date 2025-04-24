@@ -31,3 +31,5 @@ Anschließend installiert man innerhalb der VM den Agent mit `apt install qemu-g
 Dann kann man per `virsh domtime --now "$VM"` z.B. die Uhr stellen.
 
 Schade nur, dass UVMM und UCS das nicht out-of-the-box können.
+
+{% include abbreviations.md %}

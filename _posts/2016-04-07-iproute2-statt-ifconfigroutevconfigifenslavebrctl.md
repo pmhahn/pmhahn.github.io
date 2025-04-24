@@ -93,3 +93,5 @@ Netzwerk-Interfaces können einen beliebigen Namen haben:
 - maximal 15 Zeichen
 - keine Leerzeichen, Tabs, Zeilenumbrüche, Slashes
 - nicht `.` oder `..`
+
+{% include abbreviations.md %}

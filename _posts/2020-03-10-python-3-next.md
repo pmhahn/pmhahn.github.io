@@ -16,3 +16,5 @@ Früher musste man die Methode `next()` implementieren, mit Python 3 statt desse
 Für für Rückwärtskompatibilität für Python 2 kann man dann einfach `next = __next__` ergänzen (und das in Zukunft dann irgendwann entfernen).
 
 Siehe [Iterators](https://portingguide.readthedocs.io/en/latest/iterators.html#new-iteration-protocol-next) für genauere Details.
+
+{% include abbreviations.md %}

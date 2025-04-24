@@ -45,3 +45,5 @@ Wenn nun die Datei geschlossen wird, wird auch die zugehörige Locking-Informati
 Würde man das nur am Dateinamen festmachen, dann hätte man später beim Freigeben der Ressourcen das Problem festzustellen, wann diese nicht mehr benötig wird.
 Oder noch Schlimmer: böse User könnten auf die Idee kommen und alle Dateien zu locken, auf die sie Schreibzugriff haben. Das würde unbegrenzt viel Speicherplatz **im Kern** verlangen; so ist das ganze beschränkt auf die Anzahl der Dateien, die ein Benutzer maximal gleichzeitig geöffnet haben kann (`ulimit -m` bzw. `ulimit -x`).
 Oder noch Schlimmer: die Informationen würden persistent im Dateisystem gespeichert werden und sogar einen Neustart überleben …
+
+{% include abbreviations.md %}

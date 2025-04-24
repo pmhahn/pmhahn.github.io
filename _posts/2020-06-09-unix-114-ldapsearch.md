@@ -67,3 +67,5 @@ ldapsearch -LLLo ldif-wrap=no \
  '(&(uid=*)(!(cn:dn:=external))(!(cn:dn:=searchuser))(!(cn:dn:=disabled))(!(cn:dn:=otrs))(!(cn:dn:=mail))(!(cn:dn:=ressourcen)))' \
  1.1
 ```
+
+{% include abbreviations.md %}

@@ -57,3 +57,5 @@ Those packages may be older than the latest version in PyPI, but at least they a
 
 PS: If there is demand for building more *wheels* it makes sense to create a separate group for that and move all projects there.
 That way a single group Package repository can be shared by all these projects, which simplifies and unifies the URL for this registry.
+
+{% include abbreviations.md %}

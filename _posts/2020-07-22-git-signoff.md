@@ -26,3 +26,5 @@ Only to find out that is as simple as
 ```bash
 git rebase --signoff @~89
 ```
+
+{% include abbreviations.md %}

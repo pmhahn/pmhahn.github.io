@@ -269,18 +269,4 @@ But the EFI file system is too late for storing the SecureBoot related keys:
 After each reboot they will be gone again.
 So make sure to use the right version of OVMF with the right flash setting!
 
-*[OVMF]: Open Virtual Machine Firmware
-*[SMM]: System Management Mode
-*[UEFI]: Unified Extensible Firmware Interface
-*[EFI]: Extensible Firmware Interface
-*[MOK]: Machine Owner Keys
-*[PK]: Platform Key
-*[EDK2]: EFI Development KIT
-*[GRUB]: Grand Unified Bootloader
-*[GPL3]: General Public Licence version 3
-*[KEK]: Key Exchange Key
-*[DB]: (signature) Database
-*[GUID]: Globally Unique Identifier
-*[DER]: Distinguished Encoding Rules
-*[PEM]: Privacy Enhanced Mail
-*[FAT32]: File Allocation Table 32 bit
+{% include abbreviations.md %}

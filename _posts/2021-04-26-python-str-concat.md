@@ -83,3 +83,5 @@ Links
 
 * [An Optimization Anecdote](https://www.python.org/doc/essays/list2str/)
 * [Stackoverflow: What is the most efficient string concatenation method in Python](https://stackoverflow.com/questions/1316887/what-is-the-most-efficient-string-concatenation-method-in-python)
+
+{% include abbreviations.md %}

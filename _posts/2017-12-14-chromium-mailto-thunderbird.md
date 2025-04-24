@@ -117,9 +117,4 @@ Further reading
 [Arch Linux](https://bbs.archlinux.org/viewtopic.php?id=154031) has a good article about this issue, too.
 It was the one with prompted me to write this blog.
 
-*[RFC]: Request for Comment
-*[KDE]: K Desktop Environment
-*[XDG]: X Desktop Group
-*[URL]: Uniform Resource Location
-*[UTF]: Unicode Transformation Format
-*[XFCE]: XForms Common Environment
+{% include abbreviations.md %}

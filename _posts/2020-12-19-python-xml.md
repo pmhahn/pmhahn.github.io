@@ -28,7 +28,7 @@ Solving this with Python is not easy for obscure reasons.
 
 If you find a solution, please tell me.
 
-My old solution was to use `libxml2` with the above mentioned PIP drawback like this:
+My old solution was to use `libxml2` with the above mentioned PyPI drawback like this:
 
 ```python
 from os import environ
@@ -52,6 +52,4 @@ resolver = DocBookResolver()
 parser.setEntityResolver(resolver)
 ```
 
-*[DTD]: Document Type Definition
-*[XML]: Extensible Markup Language
-*[PyPI]: Python Package Index
+{% include abbreviations.md %}

@@ -76,3 +76,5 @@ Ein paar Probleme sollen nicht verheimlicht werden:
 - `sudo virsh blockpull` und `blockjob` sind leider auch nicht freigeschaltet — "ceterum censeo sudo virsh …"
 
 Interessant ist NBD vor allem deswegen auch, weil das genau der gleiche Mechanismus ist, der für die Migration von Storage-Volumes bei einer Live-Migration genutzt wird, wenn man kein Shared-Storage hat: Der Qemu-Prozess startet intern einfach einen NBD-Server und nutzt dann genau den eben beschriebenen Mechanismus… Ein bisschen wissen darüber wird also auch in der Zukunft nicht schaden.
+
+{% include abbreviations.md %}

@@ -17,3 +17,5 @@ Genau deswegen gibt es die TCP-Socket-Option `TCP_KEEPALIVE`: Dadurch werden reg
 Das Problem dabei ist nur, das diese Funktion explizit aktiviert werden muß: Vergisst man das, dann erkennen ggf. langlaufende Prozesse nicht das Verschwinden ihrer Kommunikationspartner und blockieren so ggf. wertvolle Ressourcen.
 
 Von daher bitte immer daran denken, sich darüber bei eigenen Diensten Gedanken zu machen. Wie das mit Python geht, ist u.a. in diesem [Mailinglisten-Posting](http://mail.python.org/pipermail/python-dev/2010-April/099235.html) beschrieben.
+
+{% include abbreviations.md %}

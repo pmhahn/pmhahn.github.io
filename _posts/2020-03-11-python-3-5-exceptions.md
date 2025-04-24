@@ -76,3 +76,5 @@ Ersatz bietet [six.reraise](https://six.readthedocs.io/#six.reraise).
 Ein einfaches `raise` zu weiterreichen der letzten Ausnahme funktioniert aber weiterhin.
 
 Alternativ kann man eine neue Exception werfen und die alte als Ursache anhängen: `raise NewException() from ex`.
+
+{% include abbreviations.md %}

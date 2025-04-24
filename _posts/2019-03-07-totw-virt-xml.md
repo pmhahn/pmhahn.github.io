@@ -37,3 +37,5 @@ vxml --edit type=scsi --controller type="scsi",model="virtio-scsi"
 ```
 
 PS: Zumindest bei mit hat das Anlegen eines neues Storage Volumes über einen Storage Pool zu einem Traceback geführt.
+
+{% include abbreviations.md %}

@@ -44,3 +44,5 @@ while children:
 ```
 
 Zombie-Prozesse sind an sich nichts schlimmes und belegen nur noch wenige Ressourcen im Betriebssystemkern. Sie zeugen allerdings von einem unsauberen Vaterprozeß, denn dessen Aufgabe ist es, auch für seine Kinder bis zum bitteren Ende zu sorgen. Ein schlechtes Beispiel ist hier die `run()`-Methode des "UCS Listener", die nämlich nur einen Kindprozeß forked, diesen dann aber vergisst, was dann zu solchen Dingen wie in [Bug #21363](https://forge.univention.org/bugzilla/show_bug.cgi?id=21363 "Zombie Prozesse wenn Listner UCR Script triggert durch das Setzen von UCR Variablen") führt.
+
+{% include abbreviations.md %}

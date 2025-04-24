@@ -15,3 +15,5 @@ Entweder muß man über UVMM das Medium im CD-ROM-Laufwerk wechseln (aus- und wi
 ```bash
 eject /dev/sr0 && eject -t /dev/sr0
 ```
+
+{% include abbreviations.md %}

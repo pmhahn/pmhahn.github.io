@@ -65,3 +65,5 @@ Bekannte Probleme:
 - Nicht alle VMDK-Formate können von qemu-1.1 geschrieben werden: **VMDK: can’t write to allocated cluster for streamOptimized**. Als Work-Around muß man die Datei in ein anderes Format (qcow2, qed, raw) mit `qemu-img convert -f vmdk -O qcow2 "$DISK.vmdk" "$DISK.qcow2"` konvertieren oder einfach eine qcow2-Datei über die vmdk-Datei legen `qemu-img create -f qcow2 -b "$DISK.vmdk" "$DISK.qcow2"`. Entspechend muß in der libvirt-XML-Datei dann auch `vmdk` durch `qcow2` ersetzt werden.
 - Das Booten von SCSI erfodert mit qemu-1.x zwingend das LSI-BIOS.
 - Wenn kein DHCP-Server konfiguriert ist, kann man das Interface `virbr0` statt `eth0` verwenden, was einem lokalen Netz mit NAT und DHCP entspricht. Das muß ggf. noch mit `virsh net-start default` gestartet werden.
+
+{% include abbreviations.md %}

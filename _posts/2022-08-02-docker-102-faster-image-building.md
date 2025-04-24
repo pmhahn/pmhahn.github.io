@@ -81,7 +81,7 @@ bfbec70f8488   3 months ago     /bin/sh -c #(nop)  CMD ["bash"]                 
 
 Therefore it is important to write efficient and correct `Dockefiles`:
 
-1. Put steps which change infrequently first like installing base packages from Debian or PIP: If you dependency do not change often these layers stay unchanged for a long time and can be re-used many time speeding up many builds.
+1. Put steps which change infrequently first like installing base packages from Debian or PyPI: If you dependency do not change often these layers stay unchanged for a long time and can be re-used many time speeding up many builds.
 2. Add your ever changing code as late as possible: That way only the last few layers need to be re-build each time.
 3. Be careful with volatile data and when the current time is important: Your `apt-get update &amp;&amp; apt-get install` command may not pick up the latest package versions as `docker` decides to re-use the layer from a previous build.
 4. Minimize the number of `RUN` commands: each command adds an additional layer to your image, which must be downloaded. It also may lead to strange caching issues and may increase the net image size unnecessarily due to temporary data: For example `apt-get update` will downloaded the Debian package index files and store them below `/var/lib/apt/lists/`. Your final image probably will not need them as you don't expect your users to do a `apt-get install` within your image. On the other hand you will get into trouble yourself, when you re-build the image and do that `apt-get install` yourself in a later step as your index files might be out-of-date by than and do no longer match what is on the ever changing Debian repository servers.
@@ -108,5 +108,4 @@ It is already documented in `kaniko.md`.
 
 See [univention/ucs>ucslint](https://github.com/univention/univention-corporate-server/blob/release-5.0-4/.gitlab-ci.yml#L87) for a real-world example.
 
-*[OCI]: Open Container Initiative
-*[PIP]: Python Package Index
+{% include abbreviations.md %}

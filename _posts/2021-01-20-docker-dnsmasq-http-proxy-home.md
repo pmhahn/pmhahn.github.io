@@ -79,3 +79,5 @@ Previously I always used `--dns 192.168.0.124 --dns-search knut.univention.de` o
 
 Another alternative is to run the container with `docker run --network host …`.
 In that case the container does not get its own separate network configuration, but uses the network configuration of the host when then also allows accessing KNUT via OpenVPN.
+
+{% include abbreviations.md %}

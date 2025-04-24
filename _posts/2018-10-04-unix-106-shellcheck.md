@@ -13,3 +13,5 @@ Man sollte allerdings nicht alles auf die Goldwaage legen, was es anmeckert, den
 Aber es hilft dabei, typische Fehler in Shell-Skripten zu vermeiden, insbesondere bei Quoting.
 
 Und aus aktuellem Anlass: [checkbashisms](man:checkbashisms(1)) aus dem Debian-Paket `devscripts` leistet auch hilfreiche Dienste.
+
+{% include abbreviations.md %}

@@ -216,5 +216,4 @@ cmdline = '/usr/bin/python2.7\x00/usr/sbin/univention-management-console-server\
 pid = 61
 ```
 
-*[UMC]: Univenntion Management Console
-*[CAPP]: Controlled Access Protection Profile
+{% include abbreviations.md %}

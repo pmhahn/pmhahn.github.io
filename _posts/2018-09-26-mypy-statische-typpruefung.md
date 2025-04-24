@@ -27,3 +27,5 @@ Deswegen kann man die Umgebubgsvariable `MYPY_CACHE_DIR` z.B. in `~/.bashrc` set
 export MYPY_CACHE_DIR="$HOME/.cache/mypy_cache"
 export RUFF_CACHE_DIR="$HOME/.cache/ruff_cache"
 ```
+
+{% include abbreviations.md %}

@@ -14,3 +14,5 @@ Das Feature gibt es seit [v8.24~209](https://git.savannah.gnu.org/cgit/coreutils
 Sag "Tschüss!" zu [pv](http://www.ivarch.com/programs/pv.shtml).
 
 Der Dank geht an Jürn für den Hinweis.
+
+{% include abbreviations.md %}

@@ -195,3 +195,5 @@ vm
     inet6 fe80::5254:00ff:febc:b96/64 scope link
        valid_lft forever preferred_lft forever
 ```
+
+{% include abbreviations.md %}

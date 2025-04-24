@@ -35,3 +35,5 @@ Das macht Python 3.4 nun auch standardmäßig, was ggf. zu einem geänderten Ver
 
 - Bisher musste man `close_fds=True` explizit nutzen, seit Python 3.2 es standardmäßig aktiviert
 - Bewusst weiterzureichende Datei-Deskriptoren können und müssen per `pass_fds` durchgereicht werden
+
+{% include abbreviations.md %}

@@ -115,12 +115,4 @@ Wie bekommt man nun mehr Geschwindigkeit bzw. was habe ich heute Nacht geändert
 
 Ich bin gespannt auf eure Rückmeldungen, ob es geholfen hat.
 
-*[VPN]: Virtual Private Network
-*[VPC]: Virtual Private Clound
-*[EC2]: Elastic Compute Cloud
-*[AWS]: Amazon Web Services
-*[NAT]: Network Address Translation
-*[DHCP]: Dynamic Host Configuration Protocol
-*[MAC]: Media Access Control
-*[DMZ]: Demilitarized Zone
-*[UDP]: User Datagram Protocol
+{% include abbreviations.md %}

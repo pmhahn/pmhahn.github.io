@@ -31,3 +31,5 @@ Instead of `git grep` you also can use `grep -r` itself, but as I have many git 
 # Issues
 
 This will not find _shell libraries_, e.g. _shell scripts_ not starting with a hash-bang line.
+
+{% include abbreviations.md %}

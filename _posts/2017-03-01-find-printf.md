@@ -27,3 +27,5 @@ And the classic to find broken links:
 ```sh
 find /etc -xtype l -printf '%p -> %l\n
 ```
+
+{% include abbreviations.md %}

@@ -62,8 +62,4 @@ In der Statistik konnte ich danach aus sehen, dass der Speicherplatz nicht ausge
 
 Persistent machen kann man diese Anpassung z.B. über eine Datei wie `/etc/sysctl.d/sssd.conf`, wo man diese Änderung bei jedem Start durchführt.
 
-*[SSSD]: System Security Services Daemon
-*[UCS]: Univention Corporate Server
-*[KRBTGT]: Kerberos Ticket Granting Ticket
-*[NFS]: Network File System
-*[DoS]: Denial of Service
+{% include abbreviations.md %}

@@ -79,3 +79,5 @@ code(ex_for_later)
 ```
 
 Damit riskiert man aber wieder das Problem bzgl. zyklischer Referenzierung wir oben beschrieben, von daher sollte man nach Möglichkeit das nur sehr sparsam einsetzen.
+
+{% include abbreviations.md %}

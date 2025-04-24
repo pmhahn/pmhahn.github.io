@@ -31,3 +31,5 @@ ldapsearch -xLLLo ldif-wrap=no -b cn=Subschema -s base \
 ```
 
 Zum Nachlesen [RFC 3876](https://datatracker.ietf.org/doc/html/rfc3876 "Returning Matched Values with the Lightweight Directory Access Protocol version 3 (LDAPv3)").
+
+{% include abbreviations.md %}

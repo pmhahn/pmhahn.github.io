@@ -33,7 +33,4 @@ To me this looks like FOP or Java does some kind of busy-waiting.o
 I tries to add support for `SOURCE_DATE_EPOCH` into the source, but so far have failed.
 I need to find some time to continue that.
 
-*[BSD]: Berkeley Software Distribution
-*[FOP]: Formatting Object Processor
-*[XML]: Extensible Markup Language
-*[PDF]: Portable Document Format
+{% include abbreviations.md %}
