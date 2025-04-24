@@ -3,6 +3,7 @@ title: 'Datei-Locking unter Linux'
 date: '2017-11-27T12:04:14+01:00'
 layout: post
 categories: linux filesystem
+---
 
 Ich musste wieder einmal zu oft nachlesen, welche Varianten von Datei-Locking es unter Linux gibt und was die Stolperfallen sind.
 
