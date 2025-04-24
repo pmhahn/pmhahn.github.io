@@ -9,10 +9,10 @@ Ich könnte diese Folge auch „Schlaflos in Oldenburg“ nennen, aber hier ein 
 
 ```python
 class Source(object):
-  def lock(self):
+  def lock(self, retry=3):
     fd = open(filename, "w")
     try:
-      while retry:
+      while retry > 0:
         try:
           fcntl.lockf(fd, fcntl.LOCK_EX | fcntl.LOCK_NB)
           break
