@@ -5,7 +5,7 @@ layout: post
 categories: python
 ---
 
-[argparse](https://docs.python.org/3/library/argparse.html) has superseded [optparse](https://docs.python.org/3/library/optparse.html), which is deprecated since Python 3.2 and might get removed in the future. Many of our scripts have already been [migrated](https://docs.python.org/3/library/argparse.html#upgrading-optparse-code), but `argparse` and the migration has several pitfalls. This was already mentioned in one of my previous posts [Python: optparse vs. argparse](https://hutten.knut.univention.de/blog/python-optparse-%e2%86%92-argparse/).
+[argparse](https://docs.python.org/3/library/argparse.html) has superseded [optparse](https://docs.python.org/3/library/optparse.html), which is deprecated since Python 3.2 and might get removed in the future. Many of our scripts have already been [migrated](https://docs.python.org/3/library/argparse.html#upgrading-optparse-code), but `argparse` and the migration has several pitfalls. This was already mentioned in one of my previous posts [Python: optparse vs. argparse]({% post_url 2020-07-09-python-optparse-argparse %}).
 
 Alternatives:
 
@@ -49,19 +49,19 @@ This becomes a problem when you have multiple options, which store their values 
 ```python
 from argparse import ArgumentParser
 parser = ArgumentParser()
-parser.add_argument("–foo", action="store_true", dest="var")
-parser.add_argument("–bar", action="store_false", dest="var")
+parser.add_argument("--foo", action="store_true", dest="var")
+parser.add_argument("--bar", action="store_false", dest="var")
 args = parser.parse_args()
 ```
 
 The trick is to also add `default=argparse.SUPPRESS` to both calls, which leaves `args.val` undefined when neither option is given. This can be extended with `parser.set_defaults(var=None)` to at least define the variable and to prevent an `AttributeError`.
 
-This has proven to be useful for handling the optional `-c` for [ucs-kvm-create](https://git.knut.univention.de/univention/dist/ucs-ec2-tools/-/blob/master/univention/ec2/cli/kvm_create.py#L109-120): Both `ucs-kvm-create CONF.cfg` and `ucs-kvm-create -c CONF.cfg` can be used to specify the configuration file. Here’s the code:
+This has proven to be useful for handling the optional `-c` for `ucs-kvm-create`: Both `ucs-kvm-create CONF.cfg` and `ucs-kvm-create -c CONF.cfg` can be used to specify the configuration file. Here’s the code:
 
 ```python
 group = parser.add_mutually_exclusive_group(required=True)
 group.add_argument(
-    "-c", "–conf",
+    "-c", "--conf",
     default=SUPPRESS,
     help="Config file",
 )
@@ -78,7 +78,7 @@ group.add_argument(
 
 ## Sub-commands
 
-[argparse.ArgumentParser.add\_subparsers()](https://docs.python.org/3/library/argparse.html#sub-commands) can be used to group several commands into one super-command, which is probably best known from `svn` or `git`.
+[`argparse.ArgumentParser.add_subparsers()`](https://docs.python.org/3/library/argparse.html#sub-commands) can be used to group several commands into one super-command, which is probably best known from `svn` or `git`.
 This becomes tricky as soon as you have *global* options and options per *sub-command*, as they cannot be intermixed: The later must come after the sub-command name! This for example prevents the migration of `ucr` from `getopt` to `argparse` as the former allows this intermixing.
 
-Be aware that Python 3.7 introduced a backward incompatible change in behavior: Previously when `argparse.ArgumentParser.add_subparsers()` was used and no sub-command was specified, the parser terminated the process with showing the `–help` output. Python 3.7 introduced the option `required`, which defaults to `False`. To get the old behavior you have to explicitly specify `required=True`.
+Be aware that Python 3.7 introduced a backward incompatible change in behavior: Previously when `argparse.ArgumentParser.add_subparsers()` was used and no sub-command was specified, the parser terminated the process with showing the `--help` output. Python 3.7 introduced the option `required`, which defaults to `False`. To get the old behavior you have to explicitly specify `required=True`.

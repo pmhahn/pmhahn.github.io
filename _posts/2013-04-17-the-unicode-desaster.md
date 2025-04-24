@@ -12,7 +12,7 @@ Kaputt deswegen, weil:
 $ python -c 'print unichr(0xfc)'
 ü
 $ python -c 'print unichr(0xfc)' | cat
-UnicodeEncodeError: ‚ascii‘ codec can’t encode character u’\\xfc‘ in position 0: ordinal not in range(128)
+UnicodeEncodeError: 'ascii' codec can't encode character u'\xfc' in position 0: ordinal not in range(128)
 ```
 
 Pyhton erkennt hier, ob stdin, stdout, stderr TTYs sind und verwendet nur dann die `LC_CTYPE`-Locale-Einstellung; ansonsten bleibt es bei 7-Bit-ASCII. Wenn man dann probiert einen Unicode-String auszugeben, weiß Python den nicht zu konvertieren und gibt den TraceBack aus.

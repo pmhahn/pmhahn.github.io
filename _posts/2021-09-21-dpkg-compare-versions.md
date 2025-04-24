@@ -10,7 +10,7 @@ Q: How are Debian package version strings compared?
 
 A: This is mandated by [Debian Policy](https://www.debian.org/doc/debian-policy/ch-controlfields.html#version) and `dpkg` is considered the **single truth** of implementation.
 
-Comparing Debian package version strings is not trivial: many programs implement this themselves and get it wrong for corner cases — me included. Therefor use [dpkg –compare-versions](https://hutten.knut.univention.de/blog/dpkg-compareversions/) or one of its wrappers, for example `apt.apt_pkg.version_compare()` for Python or `debversion` for [PostgreSQL](https://salsa.debian.org/postgresql/postgresql-debversion). Continue reading if you want to understand comparing Debian package version strings yourself, which is important when you increment the version of UCS packages. The format is: [_epoch_`:`]_upstream-version_[`-`_debian-revision_]
+Comparing Debian package version strings is not trivial: many programs implement this themselves and get it wrong for corner cases — me included. Therefor use [dpkg --compare-versions]({% post_url 2020-06-11-dpkg-compareversions %}) or one of its wrappers, for example `apt.apt_pkg.version_compare()` for Python or `debversion` for [PostgreSQL](https://salsa.debian.org/postgresql/postgresql-debversion). Continue reading if you want to understand comparing Debian package version strings yourself, which is important when you increment the version of UCS packages. The format is: [_epoch_`:`]_upstream-version_[`-`_debian-revision_]
 
 <!--more-->
 

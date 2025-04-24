@@ -30,19 +30,19 @@ Die [Debian package maintainer scripts](https://www.debian.org/doc/debian-policy
 | `triggered ` |  | ☒ |  |  |
 | `upgrade ` | ☒ |  | ☒ | ☒ |
 
-Der 2. Parameter `"$2"` enthält meist die Vorgänger bzw. Nachfolger-[Version des Pakets](https://hutten.knut.univention.de/blog/debian-versions-schema/). Letztere ist für Neuinstallationen leer `''`, für Upgrades aber nicht.
+Der 2. Parameter `"$2"` enthält meist die Vorgänger bzw. Nachfolger-[Version des Pakets]({% post_url 2020-06-10-debian-versions-schema %}). Letztere ist für Neuinstallationen leer `''`, für Upgrades aber nicht.
 
-`dpkg --compare-versions` unterstützt extra dafür die `-nl`-Varianten (<q>not less) der Vergleichsoperatoren `lt` (less-than), `le` (less-equal), `eq` (equal), `ne` (not-equal), `ge` (greater-equal), `gt` (greater-than&lt;), die den leeren-Wert bei Neuinstallationen eben anders behandeln: Normal steht die leere Version `''` immer für die kleinste Version, bei den `-nl`-Varianten dagegen als die größte.</q>
+`dpkg --compare-versions` unterstützt extra dafür die `-nl`-Varianten ("not less") der Vergleichsoperatoren `lt` (less-than), `le` (less-equal), `eq` (equal), `ne` (not-equal), `ge` (greater-equal), `gt` (greater-than), die den leeren-Wert bei Neuinstallationen eben anders behandeln: Normal steht die leere Version `''` immer für die kleinste Version, bei den `-nl`-Varianten dagegen als die größte.
 
 Das folgende Fragment findet man z.B. häufiger in `postinst` Skripten:
 
 ```bash
 case "$1" in
   configure)
-    if dpkg –compare-versions "$2" lt-nl "$FIXED_VERSION"
+    if dpkg --compare-versions "$2" lt-nl "$FIXED_VERSION"
     then
       echo "Only on upgrade"
-    elif dpkg –compare-versions "$2" lt "$FIXED_VERSION"
+    elif dpkg --compare-versions "$2" lt "$FIXED_VERSION"
     then
       echo "On new or upgrade"
     fi
@@ -53,12 +53,12 @@ esac
 Das folgende Beispiel zeigt z.B. das unterschiedliche Verhalten, wenn Paketversion 2 installiert wird und ggf. Version 1 vorher installiert war bzw. 2 (oder neuer) bereits installiert ist:
 
 ```bash
-dpkg –compare-versions ''  lt    2 # 0
-dpkg –compare-versions ''  lt-nl 2 # 1
-dpkg –compare-versions '1' lt    2 # 0
-dpkg –compare-versions '1' lt-nl 2 # 0
-dpkg –compare-versions '2' lt    2 # 1
-dpkg –compare-versions '2' lt-nl 2 # 1
+dpkg --compare-versions ''  lt    2 # 0
+dpkg --compare-versions ''  lt-nl 2 # 1
+dpkg --compare-versions '1' lt    2 # 0
+dpkg --compare-versions '1' lt-nl 2 # 0
+dpkg --compare-versions '2' lt    2 # 1
+dpkg --compare-versions '2' lt-nl 2 # 1
 ```
 
 PS: Bitte vermeidet `test … -a …` und `test … -o …` für logische Verknüpfungen, sondern verwendet `[ … ] && [ … ]` bzw. `[ … ] || [ … ]`, da erstere [nicht wohldefiniert sind](https://github.com/koalaman/shellcheck/wiki/SC2166).

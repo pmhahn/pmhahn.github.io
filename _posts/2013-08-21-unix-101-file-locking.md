@@ -42,6 +42,6 @@ Das `fcntl.LOCK_UN` ist für den Fall interessant, wenn man einzelne Bereiche ei
 
 Und um noch die Frage zu beantworten, warum UNIX sich die Locking-Information nur für geöffnete Dateien merkt: Ganze einfach, um die Ressourcen wieder freigeben zu können. Solange die Datei sowieso geöffnet ist, müssen dazu im Kern sowieso verschiedene Datenstrukturen gehalten werden, wie Inode-Information, Dateipositionen, etc. Dort wird auch die Locking-Information abgelegt (siehe `/proc/locks`).
 Wenn nun die Datei geschlossen wird, wird auch die zugehörige Locking-Information aus dem Hauptspeicher gelöscht.
-Würde man das nur am Dateinamen festmachen, dann hätte man später beim Freigeben der Ressourcen das Problem festzustellen, wann diese nicht mehr benötig wird.  
+Würde man das nur am Dateinamen festmachen, dann hätte man später beim Freigeben der Ressourcen das Problem festzustellen, wann diese nicht mehr benötig wird.
 Oder noch Schlimmer: böse User könnten auf die Idee kommen und alle Dateien zu locken, auf die sie Schreibzugriff haben. Das würde unbegrenzt viel Speicherplatz **im Kern** verlangen; so ist das ganze beschränkt auf die Anzahl der Dateien, die ein Benutzer maximal gleichzeitig geöffnet haben kann (`ulimit -m` bzw. `ulimit -x`).
 Oder noch Schlimmer: die Informationen würden persistent im Dateisystem gespeichert werden und sogar einen Neustart überleben …
