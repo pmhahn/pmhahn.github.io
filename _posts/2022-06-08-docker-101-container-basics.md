@@ -66,7 +66,9 @@ If you want [reproducible build](https://reproducible-builds.org/) you should do
 The configuration describes the image locally, listing all its layers, environment variables, pre-configured commands, and the history, how the image was created.
 Docker stores it locally below `/var/lib/docker/image/overlay2/imagedb/content/sha256/` using the sha256 as the filename.
 
-<details><summary>Example configuration</summary>`/var/lib/docker/image/overlay2/imagedb/content/sha256/4cd7d90bcd3800618661bc93f9a8d298a2dcffa7bf179a990c6be9f0b3da3a60`
+<details><summary>Example configuration</summary>
+
+`/var/lib/docker/image/overlay2/imagedb/content/sha256/4cd7d90bcd3800618661bc93f9a8d298a2dcffa7bf179a990c6be9f0b3da3a60`
 
 ```json
 {
@@ -127,10 +129,10 @@ Docker stores it locally below `/var/lib/docker/image/overlay2/imagedb/content/s
  ],
  "os": "linux",
  "rootfs": {
- "type": "layers",
- "diff_ids": [
-  "sha256:9d1e415268eb1a4f5ac75d7f42983be65f92d94d0d5f5648bb1489acaa35e329"
- ]
+  "type": "layers",
+  "diff_ids": [
+   "sha256:9d1e415268eb1a4f5ac75d7f42983be65f92d94d0d5f5648bb1489acaa35e329"
+  ]
  }
 }
 ```
@@ -141,11 +143,11 @@ Additional metadata is stored in a second location below `/var/lib/docker/image/
 At the end it lists the layers of the image:
 ```json
  "rootfs": {
- "type": "layers",
- "diff_ids": \[
- "sha256:9d1e415268eb1a4f5ac75d7f42983be65f92d94d0d5f5648bb1489acaa35e329"
- \]
- }
+  "type": "layers",
+  "diff_ids": [
+   "sha256:9d1e415268eb1a4f5ac75d7f42983be65f92d94d0d5f5648bb1489acaa35e329"
+  ]
+}
 ```
 They are stored below `/var/lib/docker/image/overlay2/layerdb/sha256/` in some compressed JSON format.
 Before it can be used it will get unpacked to `/var/lib/docker/overlay2/`.
@@ -178,7 +180,9 @@ registry               2                   sha256:bedef0f1d248508fe0a16d2cacea1d
 
 Docker keeps track of this mapping in the file `/var/lib/docker/image/overlay2/repositories.json`, which maps global manifest IDs to local image IDs.
 
-<details><summary>Example manifest</summary>The manifest can be fetched from the registry by running `curl http://localhost:5000/v2/empty/manifests/latest`, which returns this:
+<details><summary>Example manifest</summary>
+
+The manifest can be fetched from the registry by running `curl http://localhost:5000/v2/empty/manifests/latest`, which returns this:
 
 ```json
 {
@@ -278,3 +282,5 @@ A followup blog post will take a deeper look at the docker registry itself, whic
 - [Explaining Docker Image IDs](https://windsock.io/explaining-docker-image-ids/)
 - [Dockerfile reference](https://docs.docker.com/engine/reference/builder/#from)
 - [Docker Registry API](https://docs.docker.com/registry/spec/api/)
+
+{% include abbreviations.md %}

@@ -45,7 +45,7 @@ So on each new upstream version those repositories clones must be updated and a 
 Ask the upstream project if they can include [cibuildwheel into their pipeline](https://cibuildwheel.readthedocs.io/en/stable/setup/#configure-a-ci-service) and also upload the wheels.
 As an alternative to using *latest* and to prevent your pipeline form failing when a new upstream version is released, consider pinning the Python package version as the example above already does and use a tool like [Dependabot on GitHub](https://github.com/dependabot/dependabot-core) or [GitLab Renovate](https://docs.renovatebot.com/modules/platform/gitlab/) to get notified of newer upstream versions and/or automatic merge requests to update your dependencies.
 
-An alternative to install Python packages via *pip* is to use Debian (or Alpine) packages, which get be installed via
+An alternative to install Python packages via `pip` is to use Debian (or Alpine) packages, which get be installed via
 
 ```bash
 apt-get -qq update &&

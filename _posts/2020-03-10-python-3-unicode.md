@@ -115,7 +115,7 @@ Und ab hier unterschieden sich Python 2 und Python 3 dann in den Details, was da
     False
     $ python3 -bb -c 'print(b"" == u"")'
     Traceback (most recent call last):
-      File "", line 1, in 
+      File "", line 1, in
     BytesWarning: Comparison between bytes and string
     ```
 

@@ -16,11 +16,11 @@ With Python 2 is was enough to implement a single `__cmp__(self, other)` method,
 * `__gt__(self, other)`
 * `__hash__(self)`
 
-[@functools.total_ordering](https://docs.python.org/3/library/functools.html#functools.total_ordering) helps with this, but this is still painful.
+[`@functools.total_ordering`](https://docs.python.org/3/library/functools.html#functools.total_ordering) helps with this, but this is still painful.
 
 <!--more-->
 
-I often have classes, which work like [namedtuple](https://docs.python.org/3/library/collections.html#collections.namedtuple).
+I often have classes, which work like [`namedtuple`](https://docs.python.org/3/library/collections.html#collections.namedtuple).
 Previously I was done with
 
 ```python
@@ -99,8 +99,8 @@ class StillIncomplete(Base):
     return False
 ```
 
-This still lacks support for [NotImplemented](https://docs.python.org/3/library/constants.html?highlight=notimplemented#NotImplemented), which is required for handling the case, where a sub-class wants to implement special handling when an instance of that class is compared to a super- (or distinct) class.
-(Do not confuse this with [NotImplementedError](https://docs.python.org/3/library/exceptions.html#NotImplementedError), which is an exception for **abstract** methods.)
+This still lacks support for [`NotImplemented`](https://docs.python.org/3/library/constants.html?highlight=notimplemented#NotImplemented), which is required for handling the case, where a sub-class wants to implement special handling when an instance of that class is compared to a super- (or distinct) class.
+(Do not confuse this with [`NotImplementedError`](https://docs.python.org/3/library/exceptions.html#NotImplementedError), which is an exception for **abstract** methods.)
 
 You can write it more compact like
 

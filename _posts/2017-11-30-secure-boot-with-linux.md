@@ -249,7 +249,7 @@ NvVars
 ------
 UEFI requires a writable flash device.
 `qemu -bios` will only provide one big read-only ROM.
-In that case "OVMS" stores the EFI variables in `/boot/EFI/NvVars`.
+In that case "OVMF" stores the EFI variables in `/boot/EFI/NvVars`.
 The correct way for QEMU is
 ```
 -drive file=/usr/share/OVMF/OVMF_CODE.fd,if=pflash,format=raw,unit=0,readonly=on

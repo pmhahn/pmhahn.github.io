@@ -137,7 +137,7 @@ Das wird erreicht durch Anhängen von `~bpo${release}+${update}`.
 
 Normalerweise haben alle Binärpakete, die aus einem Quellpaket gebaut werden, die selbe Versionsnummer wie das Quellpaket aus `debian/changelog`.
 Das ist aber nicht immer so und es tritt z.B. immer bei [binNMU](#binNMU)s auf.
-Daneben gibt es viele weitere Ausnahmen, z.B. die Pakete des Linux-Kernels, von GCC, Firefox oder Thunderbird in Debian:
+Daneben gibt es viele weitere Ausnahmen, z.B. die Pakete des Linux-Kernels, von gcc, Firefox oder Thunderbird in Debian:
 
 ```console
 # grep-dctrl -s Package,Version,Source -F Source ' ' ./Packages

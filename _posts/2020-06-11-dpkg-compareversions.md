@@ -14,21 +14,21 @@ A: `dpkg --compare-versions "$2" lt-nl "…"`
 
 Die [Debian package maintainer scripts](https://www.debian.org/doc/debian-policy/ch-maintainerscripts.html) erhalten mehrere Parameter beim Aufruf: `"$1"` enthält die Aktion:
 
-| action | preinst | postinst | prerm | postrm |
-|---|---|---|---|---|
-| `abort-deconfigure` |  | ☒ |  |  |
-| `abort-install ` |  |  |  | ☒ |
-| `abort-remove ` |  | ☒ |  |  |
-| `abort-upgrade ` | ☒ | ☒ |  | ☒ |
-| `configure ` |  | ☒ |  |  |
-| `deconfigure ` |  |  | ☒ |  |
-| `disappear ` |  |  |  | ☒ |
-| `failed-upgrade ` |  |  | ☒ | ☒ |
-| `install ` | ☒ |  |  |  |
-| `purge ` |  |  |  | ☒ |
-| `remove ` |  |  | ☒ | ☒ |
-| `triggered ` |  | ☒ |  |  |
-| `upgrade ` | ☒ |  | ☒ | ☒ |
+| action              | preinst | postinst | prerm | postrm |
+| ------------------- | ------- | -------- | ----- | ------ |
+| `abort-deconfigure` |         | ☒        |       |        |
+| `abort-install`     |         |          |       | ☒      |
+| `abort-remove`      |         | ☒        |       |        |
+| `abort-upgrade`     | ☒       | ☒        |       | ☒      |
+| `configure`         |         | ☒        |       |        |
+| `deconfigure`       |         |          | ☒     |        |
+| `disappear`         |         |          |       | ☒      |
+| `failed-upgrade`    |         |          | ☒     | ☒      |
+| `install`           | ☒       |          |       |        |
+| `purge`             |         |          |       | ☒      |
+| `remove`            |         |          | ☒     | ☒      |
+| `triggered`         |         | ☒        |       |        |
+| `upgrade`           | ☒       |          | ☒     | ☒      |
 
 Der 2. Parameter `"$2"` enthält meist die Vorgänger bzw. Nachfolger-[Version des Pakets]({% post_url 2020-06-10-debian-versions-schema %}). Letztere ist für Neuinstallationen leer `''`, für Upgrades aber nicht.
 

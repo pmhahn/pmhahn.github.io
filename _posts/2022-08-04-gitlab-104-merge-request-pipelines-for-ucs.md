@@ -7,14 +7,17 @@ categories: git
 
 GitLab [pipeline](https://docs.gitlab.com/ee/ci/pipelines/) can run for many reasons, which are indicated via the [CI/CD variable](https://docs.gitlab.com/ee/ci/variables/predefined_variables.html) [`CI_PIPELINE_SOURCE`](https://docs.gitlab.com/ee/ci/jobs/job_control.html#common-if-clauses-for-rules):
 
-`push`
-: when new branch is pushed or an existing branch is updated. These are called *branch pipelines*.
-`merge_request_event`
-: when a merge-request ist created or updated. These are called [merge-request pipelines](https://docs.gitlab.com/ee/ci/pipelines/merge_request_pipelines.html).
-`schedule`
-: when triggered via the cron like schedule. These are called [scheduled pipelines](https://docs.gitlab.com/ee/ci/pipelines/schedules.html).
-`web`
-: via the Web user interface<
+- `push`
+  when new branch is pushed or an existing branch is updated.
+  These are called *branch pipelines*.
+- `merge_request_event`
+  when a merge-request ist created or updated.
+  These are called [merge-request pipelines](https://docs.gitlab.com/ee/ci/pipelines/merge_request_pipelines.html).
+- `schedule`
+  when triggered via the cron like schedule.
+  These are called [scheduled pipelines](https://docs.gitlab.com/ee/ci/pipelines/schedules.html).
+- `web`
+  via the Web user interface.
 
 Previously UCS was using *Branch pipelines*, but [switched to merge-request pipelines](https://github.com/univention/univention-corporate-server/commit/4a51c61c6af9d641b8bb72b2a70a424192fb8bcd) this week and [improved](https://github.com/univention/univention-corporate-server/commit/e6ea0f59b6e6c336cf6ad049a688e7e3ae13528e) later on.
 This was done to get automatic UCS package builds per branch, which is part of our ongoing work to get Jenkins branch test jobs.
