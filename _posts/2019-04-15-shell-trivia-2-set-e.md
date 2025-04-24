@@ -5,7 +5,7 @@ layout: post
 categories: shell
 ---
 
-Es gab bereits einen Blog-Eintrag [Shell-trivia #1: set -e]({% post_url 2019-04-15-shell-trivia-2-set-e %}), aus gegebenem Anlass hier die Fortsetzung:
+Es gab bereits einen Blog-Eintrag [Shell-trivia #1: set -e]({% post_url 2015-10-19-shell-trivia-1-set-e %}), aus gegebenem Anlass hier die Fortsetzung:
 
 Per `set -e` kann man die Shell veranlassen, ein Skript abzubrechen, sobald eins der Kommandos fehlschlägt. Leider steckt der Teufel hier im Detail.
 
