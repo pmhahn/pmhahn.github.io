@@ -357,3 +357,29 @@ table th[class*="col-"] {
 table tr td {
     hyphens: auto;
 }
+
+.post-categories::before {
+  content: "Categories: ";
+}
+
+.post-categories {
+  // @include relative-font-size(.75);
+  border: 1px solid $gray;
+  border-radius: 5px;
+  display: inline-block;
+  padding: 0px 3px;
+  margin-right: 4px;
+}
+
+.post-tag::before {
+  content: "#";
+}
+
+.post-tag {
+  // @include relative-font-size(.75);
+  border: 1px solid $gray;
+  border-radius: 5px;
+  display: inline-block;
+  padding: 0px 3px;
+  margin-right: 4px;
+}
