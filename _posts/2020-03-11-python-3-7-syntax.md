@@ -2,7 +2,7 @@
 layout: post
 title: 'Python 3.7: Syntax'
 date: '2020-03-11T11:07:11+01:00'
-categories: Python
+categories: python
 excerpt: "Mit Python 3 ist `print()` eine Funktion und andere Funktionen sind verschoben oder haben eine semantische Änderung erfahren."
 ---
 

@@ -2,7 +2,7 @@
 layout: post
 title: "Lenovo ThinkPad L470 Firmware update with Linux"
 date: 2018-10-04 09:01:00  +0200
-categories: thinkpad UEFI linux firmware update
+categories: linux
 ---
 
 My company notebook (A Lenovo ThinkPad L470) sometimes crashed when I put it into the docking station:
