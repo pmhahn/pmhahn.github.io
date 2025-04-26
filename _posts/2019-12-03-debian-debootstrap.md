@@ -2,7 +2,7 @@
 layout: post
 title: "Minimal Debian images"
 date: 2019-12-03 09:30:00  +0200
-categories: linux debian filesystem
+categories: debian container
 excerpt_separator: <!--more-->
 ---
 

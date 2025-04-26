@@ -3,7 +3,7 @@ title: 'TCP Keep Alive'
 date: '2011-04-19T18:03:12+02:00'
 excerpt: 'TCP Keepalive ist standardmäßig nicht aktiv.'
 layout: post
-categories: linux
+categories: network
 ---
 
 Privat hatte ich neulich auf einem Server das Problem, daß dort massenhaft `imapd`-Prozesse liefen, die sich selbst nach Tagen nicht beendet haben, wie ein `ps u` mit gezeigt hat.

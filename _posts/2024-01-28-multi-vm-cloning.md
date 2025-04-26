@@ -2,7 +2,7 @@
 layout: post
 title: "Cloning multiple virtual machines"
 date: 2024-01-28 16:20:00  +0100
-categories: linux virt
+categories: network linux virt
 excerpt_separator: <!--more-->
 ---
 

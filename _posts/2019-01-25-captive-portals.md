@@ -2,7 +2,7 @@
 title: 'Automagischer Login an Captive Portals'
 date: '2019-01-25T17:16:04+01:00'
 layout: post
-categories: linux
+categories: network
 ---
 
 Wer wie ich öfters mit der Bahn unterwegs ist weiß, dass in einigen Zügen die Bahn inzwischen WLAN anbietet:

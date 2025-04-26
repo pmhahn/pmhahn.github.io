@@ -15,8 +15,8 @@ Here is some handy shell command, to find those packages, which are
 
 ```bash
 dpkg-query -W -f '${Package}\n' |
-xargs apt-cache policy |
-sed -ne '/^ /{H;$!b};x;/\*\*\* [^\n]*\n[^\n]*\/var\/lib\/dpkg\/status/p'
+ xargs apt-cache policy |
+ sed -ne '/^ /{H;$!b};x;/\*\*\* [^\n]*\n[^\n]*\/var\/lib\/dpkg\/status/p'
 ```
 
 How does it work:

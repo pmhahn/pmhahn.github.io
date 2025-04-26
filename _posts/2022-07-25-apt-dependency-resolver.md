@@ -3,6 +3,7 @@ layout: post
 title: "Debian APT dependency resolver"
 date: 2022-07-25 12:53:00  +0200
 categories: debian
+tags: apt
 excerpt_separator: <!--more-->
 ---
 

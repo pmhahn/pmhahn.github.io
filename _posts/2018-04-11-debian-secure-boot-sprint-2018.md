@@ -2,7 +2,7 @@
 title: 'Debian Secure-Boot Sprint 2018'
 date: '2018-04-11T11:14:47+02:00'
 layout: post
-categories: debian
+categories: debian security
 ---
 
 Letzte(s) Woche(nende) war ich in Fulda auf dem [Debian Secure-Boot Sprint](https://wiki.debian.org/Sprints/2018/SecureBootSprint).

@@ -1,8 +1,9 @@
 ---
 layout: post
-title: Prevent eCryptfs from asking for passphrase
+title: "Prevent eCryptfs from asking for passphrase"
 date: 2020-08-27 16:20:00  +0200
 categories: linux debian security
+tags: pam
 ---
 
 For historical reasons I have been using [eCryptfs](https://www.ecryptfs.org/), a file system layer for encrypted files.

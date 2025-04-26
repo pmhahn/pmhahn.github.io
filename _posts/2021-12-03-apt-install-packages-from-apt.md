@@ -3,6 +3,7 @@ title: 'APT: Install packages from apt/'
 date: '2021-12-03T17:15:30+01:00'
 layout: post
 categories: debian
+tags: apt
 ---
 
 Q: How can I install UCS packages from apt/ (on demand)?

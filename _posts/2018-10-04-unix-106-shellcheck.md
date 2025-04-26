@@ -3,6 +3,7 @@ title: 'UNIX 106: shellcheck'
 date: '2018-10-04T11:25:27+02:00'
 layout: post
 categories: shell
+tags: totw
 ---
 
 Kennt ihr schon [shellcheck](https://github.com/koalaman/shellcheck)?

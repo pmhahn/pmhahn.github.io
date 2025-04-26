@@ -3,6 +3,7 @@ layout: post
 title: "Faster Debian packages indexing"
 date: 2021-04-09 13:59:00  +0200
 categories: debian
+tags: apt
 excerpt_separator: <!--more-->
 ---
 

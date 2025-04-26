@@ -3,6 +3,7 @@ title: apt-transport-mirror
 date: '2020-03-10T15:51:06+01:00'
 layout: post
 categories: debian
+tags: apt
 ---
 
 Q: Kennt ihr `apt-transport-mirror`?

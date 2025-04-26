@@ -2,7 +2,7 @@
 title: 'GitLab 105: Beware global variables'
 date: '2022-10-13T12:59:59+02:00'
 layout: post
-categories: virt git
+categories: gitlab
 ---
 
 Today UCS@school had an interesting issue, where the Kelvin REST API pipeline failed, specifically the build job building a Docker image using [Kaniko]({% post_url 2022-06-04-gitlab-103-kaniko-image-building %}).

@@ -3,6 +3,7 @@ title: 'UNIX 114: ldapsearch'
 date: '2020-06-09T10:37:14+02:00'
 layout: post
 categories: shell
+tags: ldap
 ---
 
 `ldapsearch` hat einige nützliche Parameter:

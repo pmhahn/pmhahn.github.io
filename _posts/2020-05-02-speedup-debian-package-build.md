@@ -2,7 +2,7 @@
 layout: post
 title: "Speedup Debian package building"
 date: 2020-05-02 11:00:00  +0200
-categories: debian filesystem virt UCS
+categories: debian filesystem container UCS
 excerpt_separator: <!--more-->
 ---
 

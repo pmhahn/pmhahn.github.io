@@ -3,6 +3,7 @@ title: 'Debian Versions Schema'
 date: '2020-06-10T18:03:32+02:00'
 layout: post
 categories: debian
+tags: version
 ---
 
 Die [Versionsnummer](man:deb-version(7)) von Debian-Paketen baut sich nach folgendem [Schema](https://www.debian.org/doc/debian-policy/ch-controlfields.html#version) auf:

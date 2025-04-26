@@ -2,7 +2,8 @@
 title: 'Debug 101: Linux audit framework'
 date: '2021-01-15T18:28:11+01:00'
 layout: post
-categories: linux
+categories: linux security
+tags: auditd
 ---
 
 In the [UMC-server vs. python-notifier pullcord](https://forge.univention.org/bugzilla/show_bug.cgi?id=52518) we had the situation, that an **unknown** process kept killing **other** processes from time to time and we had **no idea, which process** it was.

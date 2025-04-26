@@ -3,6 +3,7 @@ layout: post
 title: "dpkg --compare-versions"
 date: 2021-09-21 12:00:00  +0100
 categories: linux debian
+tags: version
 excerpt_separator: <!--more-->
 ---
 

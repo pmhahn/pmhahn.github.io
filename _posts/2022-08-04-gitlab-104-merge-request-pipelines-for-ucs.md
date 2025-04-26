@@ -2,7 +2,7 @@
 title: 'GitLab 104: Merge Request Pipelines for UCS'
 date: '2022-08-04T17:39:17+02:00'
 layout: post
-categories: git
+categories: gitlab UCS
 ---
 
 GitLab [pipeline](https://docs.gitlab.com/ee/ci/pipelines/) can run for many reasons, which are indicated via the [CI/CD variable](https://docs.gitlab.com/ee/ci/variables/predefined_variables.html) [`CI_PIPELINE_SOURCE`](https://docs.gitlab.com/ee/ci/jobs/job_control.html#common-if-clauses-for-rules):

@@ -2,7 +2,7 @@
 title: 'Ressourcen-Begrenzung mit Linux'
 date: '2011-05-13T08:41:30+02:00'
 layout: post
-categories: linux virt
+categories: linux container
 excerpt_separator: <!--more-->
 ---
 

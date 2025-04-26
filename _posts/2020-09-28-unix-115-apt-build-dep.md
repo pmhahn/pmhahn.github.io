@@ -3,6 +3,7 @@ title: 'UNIX 115: apt build-dep .'
 date: '2020-09-28T06:46:22+02:00'
 layout: post
 categories: debian
+tags: apt
 ---
 
 Q: Wie installiere ich die für den Bau des Debian-Pakets im aktuellen Arbeitsverzeichnis notwendigen Pakete?
@@ -15,5 +16,7 @@ Natürlich könnte ich auch weiterhin die [benötigten Pakete](https://www.debia
 Oder ihr verwendet wenigstens `dpkg-checkbuilddeps` für das heraussuchen der fehlenden Pakete.
 
 Damit braucht man auch kein `/usr/lib/pbuilder/pbuilder-satisfydepends` mehr, wovon es 5 Varianten gibt.
+
+Siehe auch [TofW: apt-get build-dep .]({% post_url 2018-05-30-build-dep %}).
 
 {% include abbreviations.md %}

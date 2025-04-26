@@ -3,6 +3,7 @@ title: 'UNIX 108: ldapsearch'
 date: '2018-10-25T14:37:27+02:00'
 layout: post
 categories: shell
+tags: ldap
 ---
 
 Q: Wie war noch mal die Definition von **inetOrgPerson** im LDAP Schema?

@@ -2,7 +2,7 @@
 title: 'Docker 101: Container basics'
 date: '2022-06-08T11:33:56+02:00'
 layout: post
-categories: virt
+categories: container
 ---
 
 Following [Gitlab 101: Container usage]({% post_url 2022-03-10-gitlab-101-container-usage %}) and [Gitlab 102: container followup]({% post_url 2022-05-24-gitlab-102-container-followup %}) let's have a look at *Docker images* itself, also known as [OCI](https://www.opencontainers.org/ "Open Container Initative") Images.

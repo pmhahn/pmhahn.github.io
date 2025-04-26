@@ -3,6 +3,7 @@ layout: post
 title: "Python rich comparisons revisited"
 date: 2023-12-18 11:46:00  +0100
 categories: python
+tags: compare
 excerpt_separator: <!--more-->
 ---
 

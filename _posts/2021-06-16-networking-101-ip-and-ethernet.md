@@ -2,7 +2,7 @@
 title: 'Networking 101: IP and Ethernet'
 date: '2021-06-16T08:33:24+02:00'
 layout: post
-categories: linux
+categories: network linux
 ---
 
 Aus gegebenen Anlass, weil scheinbar die Basics fehlen:

@@ -3,6 +3,7 @@ title: 'dpkg --compare-versions'
 date: '2020-06-11T11:26:58+02:00'
 layout: post
 categories: debian
+tags: version
 excerpt_separator: <!--more-->
 ---
 

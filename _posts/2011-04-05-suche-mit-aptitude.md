@@ -2,7 +2,8 @@
 title: 'Suche mit aptitude'
 date: '2011-04-05T16:40:05+02:00'
 layout: post
-categories: linux debian
+categories: debian
+tags: apt
 ---
 
 Sönke suchte eine einfache Möglichkeit, alle veralteten Kernel von einem System zu löschen.

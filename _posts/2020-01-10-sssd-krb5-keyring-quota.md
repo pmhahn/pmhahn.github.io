@@ -2,7 +2,7 @@
 layout: post
 title: "Linux Kernel Keyring Quota exceeded"
 date: 2020-01-10 12:00:00  +0100
-categories: linux debian filesystem security
+categories: linux security
 excerpt_separator: <!--more-->
 ---
 

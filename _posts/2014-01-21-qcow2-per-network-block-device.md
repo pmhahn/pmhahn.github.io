@@ -2,7 +2,7 @@
 title: 'Qcow2 per Network-Block-Device'
 date: '2014-01-21T09:23:18+01:00'
 layout: post
-categories: virt
+categories: virt network
 excerpt_separator: <!--more-->
 ---
 

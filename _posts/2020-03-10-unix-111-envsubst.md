@@ -3,6 +3,7 @@ title: 'UNIX 111: envsubst'
 date: '2020-03-10T14:55:35+01:00'
 layout: post
 categories: shell UCS
+tags: totw
 ---
 
 UCR implementiert einen Template-Mechanismus:

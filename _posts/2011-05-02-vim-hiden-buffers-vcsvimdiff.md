@@ -2,7 +2,7 @@
 title: 'vim hiden buffers & VCSVimDiff'
 date: '2011-05-02T10:29:23+02:00'
 layout: post
-categories: linux vim
+categories: vim
 ---
 
 Nach dem Pizza-Abend-Vortrag von Jan-Christoph ist irgendwann mal das `set hidden` in meine `~/.vimrc` gewandert, mit dem Dateien durch ein `:q` nicht sofort geschlossen werden, sondern in den Hintergrund wandern, so daß man ggf. schnell dort weitermachen kann, wenn man die Datei dann doch nochmal öffnen und weiter bearbeiten will.

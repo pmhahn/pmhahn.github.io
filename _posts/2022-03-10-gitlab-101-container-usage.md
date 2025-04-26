@@ -2,7 +2,7 @@
 title: 'Gitlab 101: Container usage'
 date: '2022-03-10T09:07:26+01:00'
 layout: post
-categories: virt git
+categories: gitlab container
 ---
 
 Gitlab consists of multiple parts:

@@ -2,7 +2,8 @@
 layout: post
 title: "GitLab merge requests from CLI"
 date: 2024-08-27 17:40:00  +0200
-categories: git
+categories: gitlab git
+tags: totw
 excerpt_separator: <!--more-->
 ---
 

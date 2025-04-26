@@ -3,6 +3,7 @@ title: 'UNIX 112: cn=config'
 date: '2020-04-08T17:42:26+02:00'
 layout: post
 categories: UCS
+tags: ldap
 ---
 
 Q: Der OpenLDAP-Server liefert mir zu wenig Daten und ich kann oder will ihn aber im moment nicht neu starten.

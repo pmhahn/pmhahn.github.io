@@ -2,7 +2,7 @@
 title: 'EC2: AWS-VPC erklärt'
 date: '2018-03-24T08:54:20+01:00'
 layout: post
-categories: virt
+categories: network virt
 ---
 
 Oder: Warum `ucs-test` in EC2 so langsam ist – Folge 1

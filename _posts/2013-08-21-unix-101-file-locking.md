@@ -3,6 +3,7 @@ title: 'UNIX 101: file locking'
 date: '2013-08-21T05:51:15+02:00'
 layout: post
 categories: filesystem
+tags: locking
 ---
 
 Ich könnte diese Folge auch „Schlaflos in Oldenburg“ nennen, aber hier ein Beispiel, wie man es nicht macht (in Auszügen):

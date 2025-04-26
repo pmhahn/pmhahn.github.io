@@ -2,7 +2,7 @@
 title: '"iproute2" statt "ifconfig,route,vconfig,ifenslave,brctl"'
 date: '2016-04-07T17:00:58+02:00'
 layout: post
-categories: linux
+categories: network linux
 ---
 
 Mit `iproute2` hat Linux schon lange einen Nachfolger für die althergebrachten Tools wie `ifconfig` und `route`.

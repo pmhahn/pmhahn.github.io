@@ -2,7 +2,7 @@
 layout: post
 title: "Chromium and mailto: URLs"
 date: 2017-12-14 11:49:00  +0100
-categories: linux
+categories: linux network
 ---
 
 [RFC 2368](https://tools.ietf.org/html/rfc2368) specified the `mailto:` syntax.

@@ -2,7 +2,7 @@
 layout: post
 title: "Secure Boot with Linux"
 date: 2017-11-30 13:07:00  +0100
-categories: linux
+categories: linux security
 ---
 
 Why

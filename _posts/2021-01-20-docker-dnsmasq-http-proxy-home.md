@@ -2,7 +2,7 @@
 title: 'docker, dnsmasq, http Proxy @ home'
 date: '2021-01-20T07:59:31+01:00'
 layout: post
-categories: virt
+categories: container network
 ---
 
 I'm using docker on my notebook for development.

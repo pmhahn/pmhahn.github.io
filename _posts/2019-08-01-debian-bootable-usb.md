@@ -2,7 +2,7 @@
 layout: post
 title: "Bootable Debian Bookworm on USB stick"
 date: 2019-08-01 14:02:00  +0200
-categories: linux debian filesystem
+categories: debian filesystem
 excerpt_separator: <!--more-->
 ---
 

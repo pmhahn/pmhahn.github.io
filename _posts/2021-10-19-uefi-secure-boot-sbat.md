@@ -2,7 +2,7 @@
 title: 'UEFI Secure Boot SBAT'
 date: '2021-10-19T11:43:02+02:00'
 layout: post
-categories: debian
+categories: debian security
 ---
 
 Several flaws were found in GRUB, the [GRand Unified Boot-Loader](https://www.gnu.org/software/grub/) in 2020 and 2021.

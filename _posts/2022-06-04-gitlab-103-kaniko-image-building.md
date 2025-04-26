@@ -2,7 +2,7 @@
 title: 'Gitlab 103: Kaniko image building'
 date: '2022-06-04T11:37:35+02:00'
 layout: post
-categories: virt git
+categories: gitlab container
 ---
 
 [Gitlab 102: container followup]({% post_url 2022-05-24-gitlab-102-container-followup %}) briefly describes building Docker images with [Kaniko](https://github.com/GoogleContainerTools/kaniko) instead of _Docker in docker_.

@@ -3,6 +3,7 @@ title: 'UNIX 116: Twisted Python SIGCHLD'
 date: '2022-12-19T16:52:27+01:00'
 layout: post
 categories: python
+tags: auditd pipe
 ---
 
 Univention Corporate Server (UCS) is a Debian GNU/Linux based enterprise operating system.

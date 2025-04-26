@@ -2,7 +2,7 @@
 layout: post
 title: "Ceph-Jewel RBD libvirt storage pool"
 date: 2019-11-09 11:03:00  +0200
-categories: linux UCS filesystem virt
+categories: UCS filesystem virt
 excerpt_separator: <!--more-->
 ---
 

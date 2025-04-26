@@ -3,6 +3,7 @@ layout: post
 title: "Getting rid of LDAP from NextCloud"
 date: 2025-03-26 07:15:00  +0100
 categories: linux
+tags: ldap
 excerpt_separator: <!--more-->
 ---
 

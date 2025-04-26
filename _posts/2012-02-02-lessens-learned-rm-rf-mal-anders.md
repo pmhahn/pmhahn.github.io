@@ -1,8 +1,8 @@
 ---
-title: 'Lessons learned: &#8222;rm -rf /&#8220; mal anders'
+title: 'Lessons learned: `rm -rf /` mal anders'
 date: '2012-02-02T08:48:14+01:00'
 layout: post
-categories: linux filesystem shell
+categories: filesystem shell security
 ---
 
 Der Ein oder Andere wird es vielleicht mitbekommen haben, aber einer unserer Kunden hat Ende Januar die Gefährlichkeit eines `rm -rf /` als Benutzer *root* erfahren (für die nicht-Techniker:

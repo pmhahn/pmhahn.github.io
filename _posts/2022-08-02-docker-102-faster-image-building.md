@@ -2,7 +2,7 @@
 title: 'Docker 102: Faster image building'
 date: '2022-08-02T08:09:16+02:00'
 layout: post
-categories: virt git
+categories: container
 ---
 
 [Gitlab 103: Kaniko image building]({% post_url 2022-06-04-gitlab-103-kaniko-image-building %}) described, how to build Docker respective OCI images using [Kaniko](https://github.com/GoogleContainerTools/kaniko).

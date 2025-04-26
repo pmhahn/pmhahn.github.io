@@ -2,7 +2,7 @@
 title: 'Gitlab 102: container followup'
 date: '2022-05-24T08:41:47+02:00'
 layout: post
-categories: virt git
+categories: gitlab container
 ---
 
 Continuing [Gitlab 101: Container usage]({% post_url 2022-03-10-gitlab-101-container-usage %}) there are some news:

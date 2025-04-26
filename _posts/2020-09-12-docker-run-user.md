@@ -2,7 +2,7 @@
 title: 'docker run user'
 date: '2020-09-12T14:57:28+02:00'
 layout: post
-categories: virt
+categories: container
 ---
 
 `docker` is nice to run application commands as you can put them into a container, which also includes the required dependencies.
