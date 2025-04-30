@@ -7,6 +7,7 @@
 *[APT]: Advanced Packaging Tool
 *[ARP]: Address Resolution Protocol
 *[AVC]: Address Vector Cache
+*[AVM]: Audio-Visuelles Marketing
 *[AWS]: Amazon Web Services
 *[binNMU]: binary Non-Maintainer Upload
 *[BIOS]: Basic Input Output System
@@ -22,6 +23,7 @@
 *[CP]: Captive Portal
 *[CPU]: Central Processing Unit
 *[CPUs]: Central Processing Units
+*[CSV]: Comma Separated Values
 *[DAC]: Discretionary Access Control
 *[DAK]: Debian Archive Kit
 *[DAV]: Distributed Authoring and Versioning
@@ -59,6 +61,7 @@
 *[gcc]: GNU Compiler Collection
 *[GID]: Group Identifier
 *[GIMP]: GUN Image Manipulation Program
+*[GmbH]: Gesellschaft mit beschränkter Haftung
 *[GPL3]: General Public Licence version 3
 *[GPL]: General Public Licence
 <!-- *[GPT]: Generative Pre-trained Transformer -->
@@ -73,6 +76,7 @@
 *[HTML]: Hypertext Markup Language
 *[HTTP]: Hypertext Transfer Protocol
 *[ID]: Identifier
+*[IMAP]: Internet Message Access Protocol
 *[IO]: Input Output
 *[IPC]: Inter Process Communication
 *[IP]: Internet Protocol
@@ -124,6 +128,7 @@
 *[PFD]: Portable Document Format
 *[PID]: Process Identifier
 *[PK]: Platform Key
+*[POP3]: Post Office Protocol version 3
 *[PPA]: Personal Package Archibe
 *[PTS]: Presentation Time Stamp
 *[PV]: Physical Volume
