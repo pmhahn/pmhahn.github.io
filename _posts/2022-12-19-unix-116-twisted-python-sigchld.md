@@ -26,12 +26,14 @@ Before that we already experimented with different solution:
 The initial solution just compared the screen to screenshots taken from the previous run.
 This was easy to implement but hard to maintain as each changed text required the screenshot to be re-done.
 
-<!-- ![UCS 3.2 Installer](https://hutten.knut.univention.de/blog/wp-content/uploads/2022/12/language-300x225.png) -->
+![UCS 3.2 Installer]({{site.url}}/images/language-300x225.png)
+
 UCS-3 only had a text-based installer, where the graphical representation could be easily mapped back to the text.
 That was done by comparing each fixed size block with glyphs from the chosen font.
 That way we could search for text, which made things a lot easier.
 
-<!-- ![UCS 4.0 Installer](https://hutten.knut.univention.de/blog/wp-content/uploads/2022/12/installer-language-300x225.png) -->
+![UCS 4.0 Installer]({{site.url}}/images/installer-language-300x225.png)
+
 With UCS-4 we dropped our own *curses* based installer and [switched](https://forge.univention.org/bugzilla/show_bug.cgi?id=30547) to the [Debian-Installer](https://www.debian.org/devel/debian-installer/).
 It provides both a textual and graphical variant, where the later is the default for our users.
 As such that should be tested.

@@ -26,7 +26,8 @@ There’s a setting in the [UEFI firmware](https://download.lenovo.com/bsco/inde
 The only recommendation is *screen-width × screen-height × bytes-per-pixel × factor*, but even for 4K with double-buffering that is only 128 MiB.
 4 GiB looks way too much.
 
-[![Lenovo P14s UEFI configuration](p14suefi-300x193.png)](p14suefi.png)
+[![Lenovo P14s UEFI configuration]({{site.url}}/images/p14suefi-300x193.png)]({{site.url}}/images/p14suefi.png)
+
 As I neither run games on the notebook nor do any graphic heavy work nor use the GPU for ML, I changed the value from *Auto* (obviously *4 GiB*) to *1 GiB* and now have 3 GiB more memory available for Linux to use for running processes.
 
 I also added more swap space, so that Linux has the option to use the NVMe to swap out some unused memory instead of being forced to kill some processes, if memory pressure gets too high.

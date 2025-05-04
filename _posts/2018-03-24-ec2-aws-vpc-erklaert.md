@@ -86,7 +86,7 @@ iptables -t nat -A POSTROUTING -s 10.211.0.0/24 -o eth0 -j MASQUERADE
 Das wir gemacht, damit die Antwort auf jeden Fall an die NAT-Instanz zurück gesendet wird, auch wenn die VM die NAT-Instanz nicht als Gateway konfiguriert hat.
 Das ist zum Beispiel der Fall, **bevor** der obige Hack mit `dhclient.conf.local` ausgeführt worden ist.
 
-<!-- [![EC2-VPN](https://hutten.knut.univention.de/blog/wp-content/uploads/2018/03/AWS-EC2-VPN.svg)](https://hutten.knut.univention.de/blog/wp-content/uploads/2018/03/AWS-EC2-VPN.svg) -->
+<!-- [![EC2-VPN]({{site.url}}/images/AWS-EC2-VPN.svg)]({{site.url}}/AWS-EC2-VPN.svg) -->
 
 Greif man nun aus dem internen Netz **192.168.0.0/24** auf meine VM 10.200.7.14 in EC2 zu, passiert folgendes:
 
