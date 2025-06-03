@@ -165,7 +165,8 @@ Ohne Kontextwissen sind diese Zeitstempeln nicht zu interpretieren:
 3. Das `jetzt` erfordert eine weitere Sonderbehandlung.
 
 Es bleibt unklar, ob die Uhrzeit sich auf den _Beginn_ oder das _Ende_ der Erfassungsperiode bezieht.
-Vermutlich das **Ende**, zumindest ergibt das für `jetzt` den meisten Sinn.
+Von `jetzt` könnte man auf das Ende schließen, aber scheinbar ist es jeweils der **Anfang**.
+Von daher ist die Bezeichnung `jetzt` doppelt falsch.
 
 Bitte immer einen kompletten Zeitstempel bestehend aus Datum und Uhrzeit angeben.  
 Bitte dokumentieren, ob es sich um den _Beginn_ oder das _Ende_ der Erfassungsperiode handelt.
@@ -234,6 +235,14 @@ Im Detail bleibt aber auch hier unklar, ob intern nicht auch einfach immer mit 3
 Bei der Umwandung in einen Zeitstempel muß auch hier darauf geachtet werden, ob mit dem ersten oder letzten Tag des Monats gearbeitet wird und welche Uhrzeit verwendet wird.
 
 Bitte Datums-Angaben nicht lokalisieren.
+
+## Kritik 11: Daten nicht konstant
+
+Exportiert man die Daten mehrfach hintereinander, stellt man fest, das diese für identische Zeiträume nicht identisch sind:
+Sie unterscheiden sich zwar nur um wenige Watt, aber dennoch ist das unschön.
+Vermutlich ist das der [Round-Robin-Datenbank](https://oss.oetiker.ch/rrdtool/) geschuldet, die intern _Sampling_ verwendet, um (fehlende) Werte zu interpolieren.
+
+Bitte eine Datenbank verwenden, die reproduzierbar die selben Daten liefert.
 
 ------
 
