@@ -165,7 +165,7 @@ Ohne Kontextwissen sind diese Zeitstempeln nicht zu interpretieren:
 3. Das `jetzt` erfordert eine weitere Sonderbehandlung.
 
 Es bleibt unklar, ob die Uhrzeit sich auf den _Beginn_ oder das _Ende_ der Erfassungsperiode bezieht.
-Von `jetzt` könnte man auf das Ende schließen, aber scheinbar ist es jeweils der **Anfang**.
+Von `jetzt` könnte man auf _Ende_ schließen, aber scheinbar ist es jeweils der **Beginn**.
 Von daher ist die Bezeichnung `jetzt` doppelt falsch.
 
 Bitte immer einen kompletten Zeitstempel bestehend aus Datum und Uhrzeit angeben.  
@@ -192,7 +192,7 @@ Ohne Kontextwissen sind diese Zeitstempeln nicht zu interpretieren:
    Sie dürfen auf keinen Fall umsortiert werden, weil die Zeile _Stunden_ ansonsten nicht mehr eindeutig einem Wochentag zugeordnet werden können.
 
 Es bleibt unklar, ob die Uhrzeit sich auf den _Beginn_ oder das _Ende_ der Erfassungsperiode bezieht.
-Vermutlich das **Ende**.
+Vermutlich der **Beginn**.
 
 Bitte immer einen kompletten Zeitstempel bestehend aus Datum und Uhrzeit angeben.  
 Bitte dokumentieren, ob es sich um den _Beginn_ oder das _Ende_ der Erfassungsperiode handelt.
@@ -214,7 +214,7 @@ Ohne Kontextwissen sind diese Datumsangaben nicht zu interpretieren:
    Aggregiert man mehrere Dateien, so muss man auf die Überlappung der Tage achten und diese ggf. extra behandeln.
 
 Die Angabe bezieht sich vermutlich auf einen kompletten Tag, also von 00:00 Uhr bis 00:00 Uhr des Folgetags.
-Bei der Umwandung in einen Zeitstempel muß man also `00:00:00` bzw. `23:59:59` als Uhrzeit ergänzen, je nach dem ob man mit dem _Anfang_ oder _Ende_ rechnet.
+Bei der Umwandung in einen Zeitstempel muß man also `00:00:00` bzw. `23:59:59` als Uhrzeit ergänzen, je nach dem ob man mit dem _Beginn_ oder _Ende_ rechnet.
 
 Bitte immer einen komplettes Datum inklusive Jahreszahl angeben.
 
@@ -235,6 +235,7 @@ Im Detail bleibt aber auch hier unklar, ob intern nicht auch einfach immer mit 3
 Bei der Umwandung in einen Zeitstempel muß auch hier darauf geachtet werden, ob mit dem ersten oder letzten Tag des Monats gearbeitet wird und welche Uhrzeit verwendet wird.
 
 Bitte Datums-Angaben nicht lokalisieren.
+Bitte ein exaktes Datum für _Begin_ und _Ende_ angeben.
 
 ## Kritik 11: Daten nicht konstant
 
