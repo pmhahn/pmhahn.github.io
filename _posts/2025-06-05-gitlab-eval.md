@@ -63,7 +63,7 @@ set -x -e -o pipefail +o noclobber
 2. It sets up the environment to fail on error.
 3. It executes the 'script' code as part of a _shell pipeline_ using `eval`.
 
-## Some experiments
+## Several experiments
 
 The last part is the relevant thing here and shows very some strange behaviour.
 Modifying the command only slightly changes the return value:
@@ -74,6 +74,10 @@ $ bash -e -c ':|eval "sh -e -c \"exit 12\""'; echo $?
 $ bash --posix -e -c ':|eval "sh -e -c \"exit 12\""'; echo $?
 1
 $ sh -e -c ':|eval "sh -e -c \"exit 12\""'; echo $?
+12
+$ bash -e -c 'eval "exec sh -e -c \"exit 12\""'; echo $?
+12
+$ bash -e -c 'eval "sh -e -c \"exit 12\" || exit \$?"'; echo $?
 12
 $ bash -e -c 'eval "sh -e -c \"exit 12\""'; echo $?
 12
@@ -86,6 +90,7 @@ $ bash -e -c ' : |(eval "sh -e -c \"exit 12\"")'; echo $?
 ```
 
 So this is some strange behaviour when `|` is combined with `eval` in `bash`.
+Looks like to be [bash bug 109840](https://savannah.gnu.org/support/index.php?109840).
 
 ## The fix
 
@@ -106,9 +111,11 @@ fixed:
 
 ## Closing words
 
-So be careful when using `allow_failure` with `exit_codes`.
+So be careful when using `allow_failure` with `exit_codes` and calling _external_ programs.
+Make sure to either enable the feature flag or use `exec …` or `… || exit $?` to really **exit** the shell.
 
-Sadly the [Feature flag is still not enables][2], so please vote for it.
+The original [GitLab issue 27668](https://gitlab.com/gitlab-org/gitlab-runner/-/issues/27668) has some more details.
+Sadly the feature flag is still not enabled by default as of today, so please vote for [issue 27909][2]
 
 [1]: https://gitlab.com/gitlab-org/gitlab-runner/-/blob/main/shells/bash.go?ref_type=heads#L394-398
 [2]: https://gitlab.com/gitlab-org/gitlab-runner/-/issues/27909
