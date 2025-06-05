@@ -73,6 +73,10 @@ $ bash -e -c ':|eval "sh -e -c \"exit 12\""'; echo $?
 1
 $ bash --posix -e -c ':|eval "sh -e -c \"exit 12\""'; echo $?
 1
+$ busybox sh -e -c ':|eval "sh -e -c \"exit 12\""'; echo $?
+12
+$ dash -e -c ':|eval "sh -e -c \"exit 12\""'; echo $?
+12
 $ sh -e -c ':|eval "sh -e -c \"exit 12\""'; echo $?
 12
 $ bash -e -c 'eval "exec sh -e -c \"exit 12\""'; echo $?
