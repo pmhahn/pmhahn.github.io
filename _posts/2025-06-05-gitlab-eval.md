@@ -2,11 +2,11 @@
 layout: post
 title: "Stange GitLab shell eval behaviour"
 date: 2025-06-05 13:35:00  +0200
-categories: gitlab
+categories: gitlab shell
 excerpt_separator: <!--more-->
 ---
 
-Two colleges my mine contacted me this week with a strange GitLab runner behaviour.
+Two colleges of mine contacted me this week with a strange GitLab runner behaviour.
 The following pipeline did not succeed:
 
 ```yaml
@@ -23,10 +23,10 @@ original:
 The `sh -c 'exit 42'` launches a sub-process, which exits with return value `42`.
 In my case I was launching some linter, which indicated a special condition by returning that code.
 
-GitLab executed commands within a shell, where `set -e` is used.
+GitLab executes commands within a shell, where `set -e` is used.
 This terminates the sequence of commands as soon as a command does **not** succeed, e.g. returns `0`.
-But instead of getting `42` as the result, GitLab reported `1` as an exit status for the job.
-As that code is not listed in `exit_codes`, the jobs failed with an error instead of `okay with warnings`.
+But instead of getting `42` as the result, GitLab reportes `1` as the exit status for the job.
+As that code is not listed in `exit_codes`, the job failes with an error instead of _okay with warnings_.
 
 ## Working alternatives
 
@@ -56,7 +56,7 @@ Downloading that artifact shows the following (abbreviated) content:
 runner_script_trap() { exit_code=$?; echo JSON… }
 trap runner_script_trap EXIT
 set -x -e -o pipefail +o noclobber
-: | eval $'export=CI… CODE'
+: | eval $'export=CI… CODE…'
 ```
 
 1. It sets up a trap handler to record the exit status as JSON.
@@ -101,11 +101,11 @@ Looks like to be [bash bug 109840](https://savannah.gnu.org/support/index.php?10
 We fixed this strange GitLab behaviour by enabling the [Runner Feature Flag](https://docs.gitlab.com/runner/configuration/feature-flags/#available-feature-flags) `FF_USE_NEW_BASH_EVAL_STRATEGY`.
 This puts one level of parenthesis around the `eval` command to run it in a sub-shell – see last example from above.
 
-This can be done in the pipeline itself by setting the variable to `true` or some other value:
+This can be done in the pipeline itself by setting the variable to `true` or `1`:
 ```yaml
 fixed:
   variables:
-    FF_USE_NEW_BASH_EVAL_STRATEGY: true
+    FF_USE_NEW_BASH_EVAL_STRATEGY: "true"
   script:
     - "sh -c 'exit 42'"
   allow_failure:
@@ -119,7 +119,7 @@ So be careful when using `allow_failure` with `exit_codes` and calling _external
 Make sure to either enable the feature flag or use `exec …` or `… || exit $?` to really **exit** the shell.
 
 The original [GitLab issue 27668](https://gitlab.com/gitlab-org/gitlab-runner/-/issues/27668) has some more details.
-Sadly the feature flag is still not enabled by default as of today, so please vote for [issue 27909][2]
+Sadly the feature flag is still not enabled by default as of today, so please vote for [issue 27909][2].
 
 [1]: https://gitlab.com/gitlab-org/gitlab-runner/-/blob/main/shells/bash.go?ref_type=heads#L394-398
 [2]: https://gitlab.com/gitlab-org/gitlab-runner/-/issues/27909
