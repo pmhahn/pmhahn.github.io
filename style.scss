@@ -18,7 +18,7 @@ html {
 }
 
 body {
-	background: $white;
+  background: $white;
   font: 18px/1.4 $helvetica;
   color: $darkGray;
 }
@@ -71,7 +71,7 @@ p {
 a {
   color: $blue;
   text-decoration: none;
-	cursor: pointer;
+  cursor: pointer;
   &:hover, &:active {
     color: $blue;
   }
@@ -118,16 +118,6 @@ img {
 .date {
   font-style: italic;
   color: $gray;
-}
-
-// Specify the color of the selection
-::-moz-selection {
-  color: $black;
-  background: $lightGray;
-}
-::selection {
-  color: $black;
-  background: $lightGray;
 }
 
 // Nicolas Gallagher's micro clearfix hack
@@ -284,7 +274,7 @@ footer {
 }
 
 .categories li {
-	display: inline;
+  display: inline;
 }
 
 // Settled on moving the import of syntax highlighting to the bottom of the CSS
