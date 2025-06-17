@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "AVM FRITZ!Smart Energy 200 CSV Desaster"
+title: "AVM FRITZ!Smart Energy 200 CSV issues"
 date: 2025-04-30 14:24:00  +0200
 categories: linux
 excerpt_separator: <!--more-->
