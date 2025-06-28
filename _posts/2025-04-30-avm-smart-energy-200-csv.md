@@ -47,6 +47,8 @@ Den Download von der Web-Oberfläche kann man auch nicht von extern aufrufen.
 Bitte schafft eine API, über die man sich die Informationen ohne viel Aufwand herunterladen kann.
 Für die Authentifizierung sollte einen standardisierten Mechanismus wie Benutzername-Passwort, HTTP-Header-Token, oder ähnliches verwendet werden.
 
+PS: Ich habe inzwischen meine Kollegen gefragt und sie haben mich auf das [AVM Home Automation Interface](https://fritz.com/fileadmin/user_upload/Global/Service/Schnittstellen/AHA-HTTP-Interface.pdf) hingewiesen. Danke.
+
 ## Kritik 4: Dateinamen
 
 Die Dateinamen der CSV-Dateien folgen 2 Schemata, je nach dem ob man sich die Datei per Push-Service zuschicken lässt oder sie von der Web-Oberfläche herunterlädt:
