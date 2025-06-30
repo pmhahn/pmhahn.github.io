@@ -70,15 +70,16 @@ cleanup () {
     *) trap - "$sig"; kill "-$sig" "$$";;
     esac
 }
-trap 'cleanup  0' EXIT
-trap 'cleanup  1'  1  # SIGHUP
-trap 'cleanup  2'  2  # SIGINT
-trap 'cleanup  3'  3  # SIGQUIT
-trap 'cleanup 15' 15  # SIGTERM
+trap 'cleanup 0' EXIT
+trap 'cleanup 1' HUP
+trap 'cleanup 2' INT
+trap 'cleanup 3' QUIT
+trap 'cleanup 15' TERM
 
 [ -n "${1:-}" ] && kill "-$1" "$$"
 ```
 
+### bash
 ```console
 $ bash ./trap.sh 0  # EXIT
 Process 499218 received signal 0 after rv=0
@@ -100,37 +101,41 @@ Terminated
 ```
 
 As you can see [`bash`](https://www.gnu.org/software/bash/) **always** calls the trap handler for `EXIT`!
+
+### dash
 Let's repeat this with [`dash`](http://gondor.apana.org.au/~herbert/dash/):
 ```console
-$ dash ./trap.sh 0
+$ dash ./trap.sh 0  # EXIT
 Process 502873 received signal 0 after rv=1
-$ dash trap.sh 1
+$ dash ./trap.sh 1  # SIGHUP
 Process 501892 received signal 1 after rv=0
 Hangup
-$ dash trap.sh 2
+$ dash ./trap.sh 2  # SIGINT
 Process 501912 received signal 2 after rv=0
 
-$ dash trap.sh 3
+$ dash ./trap.sh 3  # SIGQUIT
 Process 501929 received signal 3 after rv=0
 Verlassen (Speicherabzug geschrieben)
-$ dash trap.sh 15
+$ dash ./trap.sh 15  # SIGQUIT
 Process 501971 received signal 15 after rv=0
 Terminated
 ```
+
+### busybox
 And once more with [`busybox`](https://busybox.net/):
 ```console
-$ busybox sh trap.sh 0
+$ busybox sh ./trap.sh 0  # EXIT
 Process 502338 received signal 0 after rv=0
-$ busybox sh trap.sh 1
+$ busybox sh ./trap.sh 1  # SIGHUP
 Process 502366 received signal 1 after rv=0
 Hangup
-$ busybox sh trap.sh 2
+$ busybox sh ./trap.sh 2  # SIGINT
 Process 502402 received signal 2 after rv=0
 
-$ busybox sh trap.sh 3
+$ busybox sh ./trap.sh 3  # SIGQUIT
 Process 502439 received signal 3 after rv=0
 Process 502439 received signal 0 after rv=0
-$ busybox sh trap.sh 15
+$ busybox sh ./trap.sh 15  # SIGTERM
 Process 502269 received signal 15 after rv=0
 Terminated
 ```
