@@ -92,6 +92,7 @@ So lets look at the following variant:
 ```sh
 tmp=$(mktemp -d)
 trap "rm -r $tmp" EXIT
+tmp+="/subdir"
 ```
 
 _Double quotes_ are now use when the trap is setup:
@@ -105,6 +106,7 @@ trap "rm -r $tmp" EXIT
 ```
 Personally I think [SC2064](https://www.shellcheck.net/wiki/SC2064) is a bad advise here as we want to evaluate "$tmp" now and not later.
 I want to delete the file `$tmp` is pointing to right now, not where it might point to in the future.
+I'm not alone with that opinion and [issue 1945](https://github.com/koalaman/shellcheck/issues/1945) calls SC2064 questionable.
 
 But there is a bigger problem again:
 But what will happen, when the trap fires?
