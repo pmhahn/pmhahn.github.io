@@ -19,7 +19,7 @@ I'm still using _Postfix_ with _Cryus IMAPd_ and never switched to _Dovecot_.
 
 After the upgrade I noticed that no mails were delivered:
 `mailq` shown a growing list of mails stuck in queue.
-Postfix was complainging that its `lmtp` service was no longer able to establish an encrypted connection to `lmtpd` from Cyrus.
+Postfix was complaining that its `lmtp` service was no longer able to establish an encrypted connection to `lmtpd` from Cyrus.
 
 For historic reason my setup is using `STARTTLS`, which is now deprecated and has been disabled by default in Cyrus IMAPd.
 You have to explicitly re-enable it in your `/etc/imapd.conf` by adding some lines:
@@ -53,20 +53,32 @@ PS: On a side node: `/var/run/` is deprecated and should be replaced by just `/r
 For some unknown reason `docker.io` got removed during the upgrade.
 Running `apt autopurge` afterwards was a very bad idea as that purged all images, volumes and containers. 🤦
 
-I have to investigate why that happened.
+I have to investigate why that happened. 🔍
 
-## PHP
+## PHP-8.4
 
 Debian-13-Trixie has PHP-8.4, while Debian-12-Bookworm had PHP-8.2.
-My local NextCloud setup was unhappy about that as it needs several `php8.4-…` packages.
-Luckily just installing the equivalent of the mathcing packages did fix this.
+My local NextCloud (and Wordpress) setup was unhappy about that as it needs several `php8.4-…` packages.
+Luckily just installing the equivalent of the matching packages did fix this.
 
 ## KDE
 
-In the past I did not install `kde-full` as it depends on many optional packages like KMail.
+In the past I did not install `kde-full` as it depends on many optional packages like KMail, KOrganizer, DragonPlayer, and such.
 I don't use may of those and thus and thus don't want them to be installed.
 During the upgrade `plasmashell` got removed so on the next login I did not get back a working KDE session.
 Installing `kde-standard` fixed this.
 As it only `Recommends` most other packages, I was able to get rid of those packages I did not want.
 
 And I got Wayland, which has this annoying bug: Konsole no longer stores the open sessions and starts with only one shell in `$HOME`. 🤔
+
+## Out-of-space `/usr`
+
+My desktop system has many packages.
+Upgrading all those (KDE-)libraries required too much space on `/usr`.
+`dpkg` failed to unpack a package during upgrade.
+
+After some manual `dpkg --configure --pending`, `apt install --fix-broken`, `apt autopurge` and `dpkg -P` I was finally able to continue.
+I would have expected for APT to check for enough disk space, but apparently it does not.
+So double-check manually before doing an upgrade.
+
+PS: Afterwards `systemd` complains about `use-not-merged`, but that is normal and expected.
