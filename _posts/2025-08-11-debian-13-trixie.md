@@ -48,9 +48,9 @@ sasl_saslauthd_path: /var/spool/postfix/var/run/saslauthd/mux
 
 PS: On a side node: `/var/run/` is deprecated and should be replaced by just `/run/`; `systemd` already complains about this every time it sees `/var/run/`.
 
-## `docker.io`
+## `docker.io` and `libvirt`
 
-For some unknown reason `docker.io` got removed during the upgrade.
+For some unknown reason `docker.io` and `libvirt` got removed during the upgrade.
 Running `apt autopurge` afterwards was a very bad idea as that purged all images, volumes and containers. 🤦
 
 I have to investigate why that happened. 🔍
@@ -81,4 +81,18 @@ After some manual `dpkg --configure --pending`, `apt install --fix-broken`, `apt
 I would have expected for APT to check for enough disk space, but apparently it does not.
 So double-check manually before doing an upgrade.
 
-PS: Afterwards `systemd` complains about `use-not-merged`, but that is normal and expected.
+PS: Afterwards `systemd` complains about `use-not-merged`, but that is [normal and expected](https://www.debian.org/releases/trixie/release-notes/issues.html#systemd-message-system-is-tainted-unmerged-bin).
+
+## KeePassXC
+
+I used a self-compiled version of KeePassXC.
+Debian now has two packages `keepassxc` and `keepassxc` – the later has support for browser-integration and more.
+As some file have been move, the upgrade failed and I had to manually remove by self-compiled version.
+
+## Network
+
+Running the upgrade while being logged into KDE is not a good idea:
+During the upgrade NetworkManager got restarted and killed by local network connection.
+Afterward even `ping` did no longer work, as I already had the [new version](https://www.debian.org/releases/trixie/release-notes/issues.de.html#ping-no-longer-runs-with-elevated-privileges) but still the old Linux kernel.
+
+Sadly I still need my `r8168-dkms` and `v4l2loopback-dkms` packages.
