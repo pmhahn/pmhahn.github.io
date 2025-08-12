@@ -96,3 +96,20 @@ During the upgrade NetworkManager got restarted and killed by local network conn
 Afterward even `ping` did no longer work, as I already had the [new version](https://www.debian.org/releases/trixie/release-notes/issues.de.html#ping-no-longer-runs-with-elevated-privileges) but still the old Linux kernel.
 
 Sadly I still need my `r8168-dkms` and `v4l2loopback-dkms` packages.
+
+## Prometheus MySQL/MariaDB exporter
+
+[v0.15.0](https://github.com/prometheus/mysqld_exporter/releases/tag/v0.15.0) has a breaking change, which is neither mentioned in any `NEWS` file nor the [debian/changelog](https://salsa.debian.org/go-team/packages/prometheus-mysqld-exporter/-/blob/debian/sid/debian/changelog?ref_type=heads).
+- `DATA_SOURCE_NAME` is no longer suported and you must pass the credentials via `--mysqld.username=` and via `MYSQLD_EXPORTER_PASSWORD=`.
+- You also [cannot specify the UNIX domain socket](https://github.com/prometheus/mysqld_exporter/issues/754) `/run/mysqld/mysqld.sock`
+
+I'm now using `--config.my-cnf /var/lib/prometheus/mysql.cnf` to configure the credentials via another file.
+
+## Mailman3
+
+`mailman3-web` still runs a CRON job **every minute**, which imports `robot_detection`, which spams you with a ton of `SyntaxWarning`s.
+See [mailman3-web#1082541](https://bugs.debian.org/1082541) and [python3-robot-detection#1078661](https://bugs.debian.org/1078661)
+
+Edit `/etc/cron.d/mailman3-web` and add `2>/dev/null` to each command.
+
+And authenticaion is now broken for me. TBC…
