@@ -81,7 +81,7 @@ After some manual `dpkg --configure --pending`, `apt install --fix-broken`, `apt
 I would have expected for APT to check for enough disk space, but apparently it does not.
 So double-check manually before doing an upgrade.
 
-PS: Afterwards `systemd` complains about `use-not-merged`, but that is [normal and expected](https://www.debian.org/releases/trixie/release-notes/issues.html#systemd-message-system-is-tainted-unmerged-bin).
+PS: Afterwards `systemd` complains about `usr-not-merged`, but that is [normal and expected](https://www.debian.org/releases/trixie/release-notes/issues.html#systemd-message-system-is-tainted-unmerged-bin).
 
 ## KeePassXC
 
@@ -107,9 +107,22 @@ I'm now using `--config.my-cnf /var/lib/prometheus/mysql.cnf` to configure the c
 
 ## Mailman3
 
+### cron
+
 `mailman3-web` still runs a CRON job **every minute**, which imports `robot_detection`, which spams you with a ton of `SyntaxWarning`s.
 See [mailman3-web#1082541](https://bugs.debian.org/1082541) and [python3-robot-detection#1078661](https://bugs.debian.org/1078661)
 
 Edit `/etc/cron.d/mailman3-web` and add `2>/dev/null` to each command.
 
-And authenticaion is now broken for me. TBC…
+### authentication
+
+Authenticaion was now broken for me:
+`/var/log/mailman3/web/mailman-web.log` complains about `Missing column 'socialaccount_socialapp.provider_id'`.
+Run `/usr/bin/mailman-web migrate` as user `root` to fix this.
+
+### template
+
+`/var/log/mailman3/web/mailman-web.log` showed another error:
+> django.template.exceptions.TemplateSyntaxError: 'humanize' is not a registered tag library.
+
+Adding `django.contrib.humanize` TO `INSTALLED_APPS` in `/etc/mailman3/mailman-web.py` fixes this.
