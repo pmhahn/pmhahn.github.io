@@ -13,15 +13,16 @@ Leider steckt der Teufel hier im Detail.
 Betrachten wir folgendes Beispiel:
 ```bash
 #!/bin/sh
+set -e
 my_func () {
  false # fehlschlagendes Kommando
  : # ein nachfolgendes Kommando
 }
 if my_func
 then
- echo „Erfolg“
+ echo "Erfolg"
 else
- echo „Fehlschlag“
+ echo "Fehlschlag"
 fi
 ```
 
