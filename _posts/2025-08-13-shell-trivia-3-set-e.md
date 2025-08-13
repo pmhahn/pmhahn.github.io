@@ -21,7 +21,7 @@ Wie häufig wird `date` ausgeführt?
 
 Wie üblich muss man die [Manual-Page von bash](https://manpages.debian.org/stretch/bash/bash.1.en.html#Shell_Function_Definitions) sehr genau lesen:
 
-> The ERR trap is ***not* executed if the failed command is … part of a command executed in a && or || list except the command **following the final** && or ||.
+> The ERR trap is **not** executed if the failed command is … part of a command executed in a && or || list except the command **following the final** && or ||.
 
 Die korrekte Antwort lautet also: 2
 
