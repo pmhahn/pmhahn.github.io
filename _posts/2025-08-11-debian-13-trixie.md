@@ -40,7 +40,7 @@ PIDFile=/var/spool/postfix/var/run/saslauthd/saslauthd.pid
 ```
 
 Previously I had a shell-hack in `/etc/default/saslauthd` to replace the old location with a symbolic link to the `chroot`-location.
-This no longer works as that file is no sourced by `systemd`, which does not execute that shell code.
+This no longer works as that file is not sourced by `systemd`, which does not execute that shell code.
 Therefore I had to tell Cyrus IMAPd to also use that changed location by putting this into `/etc/imapd.conf`:
 ```
 sasl_saslauthd_path: /var/spool/postfix/var/run/saslauthd/mux
@@ -64,10 +64,10 @@ Luckily just installing the equivalent of the matching packages did fix this.
 ## KDE
 
 In the past I did not install `kde-full` as it depends on many optional packages like KMail, KOrganizer, DragonPlayer, and such.
-I don't use may of those and thus and thus don't want them to be installed.
+I don't use may of those and thus don't want them to be installed.
 During the upgrade `plasmashell` got removed so on the next login I did not get back a working KDE session.
 Installing `kde-standard` fixed this.
-As it only `Recommends` most other packages, I was able to get rid of those packages I did not want.
+As it only `Recommends` most other packages, I was able to get rid of those packages I do not want.
 
 And I got Wayland, which has this annoying bug: Konsole no longer stores the open sessions and starts with only one shell in `$HOME`. 🤔
 
@@ -86,13 +86,13 @@ PS: Afterwards `systemd` complains about `usr-not-merged`, but that is [normal a
 ## KeePassXC
 
 I used a self-compiled version of KeePassXC.
-Debian now has two packages `keepassxc` and `keepassxc` – the later has support for browser-integration and more.
+Debian now has two packages `keepassxc` and `keepassxc-full` – the later has support for browser-integration and more.
 As some file have been move, the upgrade failed and I had to manually remove by self-compiled version.
 
 ## Network
 
 Running the upgrade while being logged into KDE is not a good idea:
-During the upgrade NetworkManager got restarted and killed by local network connection.
+During the upgrade NetworkManager got restarted and killed my local network connection.
 Afterward even `ping` did no longer work, as I already had the [new version](https://www.debian.org/releases/trixie/release-notes/issues.de.html#ping-no-longer-runs-with-elevated-privileges) but still the old Linux kernel.
 
 Sadly I still need my `r8168-dkms` and `v4l2loopback-dkms` packages.
@@ -100,7 +100,7 @@ Sadly I still need my `r8168-dkms` and `v4l2loopback-dkms` packages.
 ## Prometheus MySQL/MariaDB exporter
 
 [v0.15.0](https://github.com/prometheus/mysqld_exporter/releases/tag/v0.15.0) has a breaking change, which is neither mentioned in any `NEWS` file nor the [debian/changelog](https://salsa.debian.org/go-team/packages/prometheus-mysqld-exporter/-/blob/debian/sid/debian/changelog?ref_type=heads).
-- `DATA_SOURCE_NAME` is no longer suported and you must pass the credentials via `--mysqld.username=` and via `MYSQLD_EXPORTER_PASSWORD=`.
+- `DATA_SOURCE_NAME` is no longer supported and you must pass the credentials via `--mysqld.username=` and via `MYSQLD_EXPORTER_PASSWORD=`.
 - You also [cannot specify the UNIX domain socket](https://github.com/prometheus/mysqld_exporter/issues/754) `/run/mysqld/mysqld.sock`
 
 I'm now using `--config.my-cnf /var/lib/prometheus/mysql.cnf` to configure the credentials via another file.
@@ -116,7 +116,7 @@ Edit `/etc/cron.d/mailman3-web` and add `2>/dev/null` to each command.
 
 ### authentication
 
-Authenticaion was now broken for me:
+Authentication was now broken for me:
 `/var/log/mailman3/web/mailman-web.log` complains about `Missing column 'socialaccount_socialapp.provider_id'`.
 Run `/usr/bin/mailman-web migrate` as user `root` to fix this.
 
