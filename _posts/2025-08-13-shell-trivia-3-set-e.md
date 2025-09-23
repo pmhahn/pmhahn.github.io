@@ -36,7 +36,7 @@ Das sollte man bedenken, wenn einem [shellcheck](https://www.shellcheck.net/) fo
 
 Man baut sich dadurch leicht semantische Unterschiede ein.
 
-Oder um es mit den Worten von G. Aschemann zu sagen:
+Oder um es mit den Worten von G. Aschemann aus 1995 zu sagen:
 > Jedes gute Shell-Script fängt mit #!/usr/bin/perl an.
 
-Naja, das war 1995 und ich würde `perl` durch `python` ersetzten 😉
+Naja, das ist 30 Jahre her und ich würde doch `perl` durch `python` ersetzten wollen 😉
