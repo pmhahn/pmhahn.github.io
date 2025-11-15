@@ -6,7 +6,7 @@ categories: shell
 excerpt_separator: <!--more-->
 ---
 
-Es gab bereits zwei Blog-Eintrag [Shell-trivia #1]({% post_url 2015-10-19-shell-trivia-1-set-e %}) und [Shell-trivia #2](% post_url 2019-04-15-shell-trivia-2-set-e %) zum Thema `set -e`.
+Es gab bereits zwei Blog-Eintrag [Shell-trivia #1]({% post_url 2015-10-19-shell-trivia-1-set-e %}) und [Shell-trivia #2]({% post_url 2019-04-15-shell-trivia-2-set-e %}) zum Thema `set -e`.
 Mein Kollege N. Schier hat mich heute Morgen aber mit einer weiteren Shell-Absurdität überrascht:
 
 ```bash
