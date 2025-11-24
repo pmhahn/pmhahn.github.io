@@ -3,11 +3,14 @@ title: 'Debian Package building'
 date: '2025-10-12T14:36:00+02:00'
 layout: post
 categories: debian
+excerpt_separator: <!--more-->
 ---
 
 # How to build Debian packages
 
 I'm a Debian Developer (DD) since 2002.
+
+<!--more-->
 
 ## On host build
 
