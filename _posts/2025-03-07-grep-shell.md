@@ -1,8 +1,8 @@
 ---
-title: Find shell scripts
+title: Find shell (or Python) scripts
 date: '2025-03-07T12:55:00+01:00'
 layout: post
-categories: shell git
+categories: shell git python
 tags: find
 excerpt_separator: <!--more-->
 ---
@@ -32,5 +32,10 @@ Instead of [`git grep`](man:git-grep(1)) you also can use [`grep -r`](man:grep(1
 # Issues
 
 This will not find _shell libraries_, e.g. _shell scripts_ not starting with a hash-bang line.
+
+For Python use this:
+```console
+$ git -c grep.fallbackToNoIndex=yes grep -lPe '\A#!\s*/usr/bin/(env\s+)?python'
+```
 
 {% include abbreviations.md %}
