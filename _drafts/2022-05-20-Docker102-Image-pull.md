@@ -6,7 +6,6 @@ categories: linux virt
 excerpt_separator: <!--more-->
 ---
 
-# Pulling an image
 Here is what happens when you do a `docker pull debian` on the command line.
 First the *repository tag<*is normalized:
 

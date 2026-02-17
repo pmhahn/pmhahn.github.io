@@ -1,14 +1,20 @@
 ---
-title: 'Debian Package building'
+title: 'How to build Debian packages'
 date: '2025-10-12T14:36:00+02:00'
 layout: post
 categories: debian
 excerpt_separator: <!--more-->
 ---
 
-# How to build Debian packages
-
 I'm a Debian Developer (DD) since 2002.
+I have worked for [Univention GmbH](https://univention.de/) as a _Open Source Software Engineer_.
+Building _Debian packages_ was part of my job.
+I have maintained their build system for years and learned many tricks.
+
+Today I work for [FRITZ! Technology GmbH](https://fritz.com/), formerly known as _AVM_.
+I still build Debian packages on a regular basis.
+
+Here's my private list of package builders.
 
 <!--more-->
 
