@@ -4,11 +4,14 @@ date: '2020-05-22T11:03:18+02:00'
 layout: post
 categories: debian
 tags: totw
+excerpt_separator: <!--more-->
 ---
 
 Q: Gibt es eine empfohlene Schreibweise für die Einträge in `debian/*`-Dateien?
 
 A: Ja, `wrap-and-sort -ast debian/control`
+
+<!--more-->
 
 Leider werden neue Einträge meistens hinten an die _Debian Control file_ bzw. sog. _Debian Maintainer Scripte_ und `debhelper`-Konfigurationsdateien angehängt, was es im Lauf der Zeit sehr unübersichtlich macht.
 Um wieder Ordnung in die Dateien zu bringen gibt es [wrap-and-sort](man:wrap-and-sort(1)), das u.a.

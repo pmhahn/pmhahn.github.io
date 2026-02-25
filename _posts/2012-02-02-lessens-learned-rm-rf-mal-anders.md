@@ -3,12 +3,15 @@ title: 'Lessons learned: `rm -rf /` mal anders'
 date: '2012-02-02T08:48:14+01:00'
 layout: post
 categories: filesystem shell security
+excerpt_separator: <!--more-->
 ---
 
 Der Ein oder Andere wird es vielleicht mitbekommen haben, aber einer unserer Kunden hat Ende Januar die Gefährlichkeit eines `rm -rf /` als Benutzer *root* erfahren (für die nicht-Techniker:
 Lösche rekursiv alle Dateien und Verzeichnisse, angefangen beim Wurzelverzeichnis und ohne weiteres nachfragen).
 Zum Glück hatte der Kunde ein 18h altes Backup, aber trotzdem ist viel Arbeit über den Jordan gegangen, weil unter anderem auch die ganzen virtuellen Maschinen per NFS unter /nfs/ gemounted waren… die Betonung liegt hier auf „waren“ 🙁
 Wäre es an der Stelle nur ein `rm` gewesen, wäre die Sache vermutlich auch noch gut ausgegangen, denn ein `rm -rf /` kann man gefahrlos einfach mal so eingeben:
+
+<!--more-->
 
 ```console
 # rm -rf /

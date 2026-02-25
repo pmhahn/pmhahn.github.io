@@ -3,9 +3,10 @@ title: 'Python 3.9: String Literals'
 date: '2020-04-14T13:00:24+02:00'
 layout: post
 categories: python
+excerpt_separator: <!--more-->
 ---
 
-Ein Rätsel:
+Hier ein rätsel Traceback von neulich:
 
 ```console
 $ cd test/ucs-test && ucslint
@@ -13,7 +14,13 @@ Process Process-1:
 Traceback (most recent call last):
 ...
 SyntaxError: (unicode error) 'unicodeescape' codec can't decode bytes in position 32-34: truncated \UXXXXXXXX escape
+```
 
+<!--more-->
+
+Der Traceback geht noch ein bisschen weiter wie folgt:
+
+```console
 During handling of the above exception, another exception occurred:
 
 Traceback (most recent call last):
@@ -55,7 +62,7 @@ Doch warum tritt das nur mit Python 3 auf?
 Nun, mit [Python 3 ist unicode Standard]({% post_url 2020-03-10-python-3-unicode %}).
 Da die beiden Escape-Sequenzen aber eben nur für Unicode-String (und nicht für Byte-Strings) aktiv sind, tritt das Problem erst mit Python 3 auf.
 
-# Merke
+## Merke
 
 Zeichenketten, die den Backslash enthalten, sollten nach Möglichkeit als sog. **Raw-String** `r"…\…"` notiert werden.
 Das der Backlash sehr häufig in [regulären Ausdrücken](https://docs.python.org/3/library/re.html) genutzt wird, ist es dort besonders wichtig.

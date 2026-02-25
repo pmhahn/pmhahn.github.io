@@ -41,11 +41,11 @@ The last two sections require a special algorithm for comparison:
 *   After that follow the upper `A-Z` and lower-case letters `a-z`.
 *   Last comes the _plus_ `+`, _hyphen_ `-` (only in _upstream-version_) and _full stop_ `.`.
 
-# Examples
+## Examples
 
 I have inserted blanks between the three groups to help you parse the version numbers.
 
-## Examples for parsing
+### Examples for parsing
 
 <dl>
 
@@ -76,7 +76,7 @@ I have inserted blanks between the three groups to help you parse the version nu
 
 </dl>
 
-## Examples for comparing
+### Examples for comparing
 
 <dl>
 
@@ -130,7 +130,7 @@ I have inserted blanks between the three groups to help you parse the version nu
 
 </dl>
 
-# Greedy vs. minimal
+## Greedy vs. minimal
 
 What most confuses people is that the _upstream-version_ seems to be _greedy_ in regard to _hyphens_:
 

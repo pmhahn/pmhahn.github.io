@@ -4,11 +4,14 @@ date: '2020-09-28T06:46:22+02:00'
 layout: post
 categories: debian
 tags: apt
+excerpt_separator: <!--more-->
 ---
 
 Q: Wie installiere ich die für den Bau des Debian-Pakets im aktuellen Arbeitsverzeichnis notwendigen Pakete?
 
 A: `apt build-dep .` interaktiv bzw. `apt-get -q --assume-yes build-dep .` in Skripten
+
+<!--more-->
 
 Damit müsst ihr nicht mal mehr das Paket [build-essential](https://packages.debian.org/search?keywords=build-essential&searchon=sourcenames&suite=all&section=all) von Hand vorab installieren, weil das auch automatisch mit installiert wird.
 

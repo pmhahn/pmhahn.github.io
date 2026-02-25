@@ -4,6 +4,7 @@ date: '2020-06-09T10:37:14+02:00'
 layout: post
 categories: shell
 tags: ldap
+excerpt_separator: <!--more-->
 ---
 
 `ldapsearch` hat einige nützliche Parameter:
@@ -16,6 +17,8 @@ tags: ldap
 - `-E sss=cn` Sortiert die Einträge **Server**-seitig nach einem Attribut.
   In OpenLDAP muss dazu `slapo-sssvlv` aktiviert sein.
 - `-E mv='(objectClasses=inetOrgPerson)'` Zeigt nur die Attribute an, auf die der zusätzliche "Matched Value"-Filter passt.
+
+<!--more-->
 
 Weitere nützliche Anfragen:
 

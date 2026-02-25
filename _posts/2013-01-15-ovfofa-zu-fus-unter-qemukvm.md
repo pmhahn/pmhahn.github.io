@@ -3,6 +3,7 @@ title: 'OVF/OFA zu Fuß unter QEMU/KVM'
 date: '2013-01-15T09:29:09+01:00'
 layout: post
 categories: virt
+excerpt_separator: <!--more-->
 ---
 
 Open Virtualization Format (OVF) ist eine Spezifikation, die es ermöglicht, Virtuelle Maschinen leicht in die eigene Virtualisierungslösung wie QEMU, Xen, VirtualBox oder VMWare zu importieren bzw. zwischen diesen auszutauschen.
@@ -11,6 +12,8 @@ In der einfachsten Form besteht so eine VM aus einem Verzeichnis mit 3 Dateien:
 1. Einer Image-Datei, die das Festplattenabbild enthält und i.d.R. das VMDK-Format benutzt.
 2. Ein XML-Datei, die CPU-Anzahl, RAM-Größe und ähnliches festlegt.
 3. Ein Manifest-Datei, die die anderen Dateien referenziert und deren SHA1-Prüfsummen enthält.
+
+<!--more-->
 
 Neben der Unterstützung von Zertifikate für die digitale Signierung kann ein ein OVF-Paket auch mehrere VMs enthalten, so daß komplette Umgebungen bestehend aus mehreren Maschinen ausgetauscht werden können.
 

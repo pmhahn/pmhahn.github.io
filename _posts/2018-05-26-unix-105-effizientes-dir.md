@@ -3,9 +3,12 @@ title: 'UNIX 105: Effizientes dir'
 date: '2018-05-26T07:01:24+02:00'
 layout: post
 categories: filesystem
+excerpt_separator: <!--more-->
 ---
 
 Viele von euch werden schon mal ein `ls` auf **omar** in `/var/univention/buildsystem2/apt/ucs_4.3-0/all/` oder einem ähnlichen Verzeichnis ausgeführt und sich gewundert haben, warum das so lange dauert.
+
+<!--more-->
 
 ## GLIBC
 

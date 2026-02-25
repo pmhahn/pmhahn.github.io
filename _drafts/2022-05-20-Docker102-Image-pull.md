@@ -13,6 +13,8 @@ First the *repository tag<*is normalized:
 2. The tag does not include any slash, `docker` prefixes it automatically with `library/`. This is only done for *Docker Hub<* but not for `registry.example.com/name`.
 3. As no *tag* is specified `:latest` is used by default.
 
+<!--more-->
+
 The canonical image name is thus `docker.io/library/debian:latest`, which results into a request to <tt>https://registry-1.docker.io/v2/<b>library/debian</b>/manifests/<b>latest</b></tt>.
 Navigating there with a web browser will just redirect you to Docker Hub, as you must request the right *content-type* `application/vnd.docker.distribution.manifest.v2+json<` Docker.hub also requires *Bearer authentication*:
 
@@ -161,3 +163,4 @@ Removing intermediate container f8f6371604fd
 <dd>This concludes the build and prints out the <em>image ID</em>. In addition to that it also associates a local <em>image tag</em> with that hash.</dd>
 </dl>
 
+{% include abbreviations.md %}

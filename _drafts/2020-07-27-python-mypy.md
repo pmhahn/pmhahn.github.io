@@ -11,8 +11,10 @@ It adds static typeing to Python, which allows me to avoid stuping mistakes a co
 
 My main tool is [mypy](http://mypy-lang.org/) and its [typeshed](https://github.com/python/typeshed), for which I have by now made several [contributions](https://github.com/python/typeshed/pulls?q=is%3Apr+user%3Apmhahn+author%3Apmhahn).
 
+<!--more-->
+
 ---
-# Why
+## Why
 
 [libvirt-python](https://gitlab.com/libvirt/libvirt-python/-/merge_requests/10/commits)
 ```python
@@ -31,11 +33,11 @@ My main tool is [mypy](http://mypy-lang.org/) and its [typeshed](https://github.
 ```
 
 ---
-# Example
+## Example
 
 * [from typing import ...](https://docs.python.org/3/library/typing.html)
 
-## Dynamic typed
+### Dynamic typed
 ```python
 def concat(a, b):
   return "a=" + a + " b=" + b
@@ -44,32 +46,32 @@ concat("text", 1)
 # TypeError: can only concatenate str (not "int") to str
 ```
 
-## Static typed
-### Python 3.5
+### Static typed
+#### Python 3.5
 ```python
 def concat(a: str, b: str) -> str: ...
 ```
 
-### Python 2.7
+#### Python 2.7
 ```python
 def concat(a, b):  # type: (str, str) -> str
 ```
 
 ---
-# Install
+## Install
 
 ```bash
 python3 -m pip install mypy
 ```
 
-## Running:
+### Running:
 
 ```bash
 mypy program3.py
 mypy --py2 programm2.py
 ```
 
-## Custom Typeshed
+### Custom Typeshed
 
 ```bash
 git clone https://github.com/python/typeshed
@@ -78,32 +80,32 @@ mypy --custom-typeshed-dir "$HOME/REPOS/PYTHON/typeshed" "$@"
 ```
 
 ---
-# Python 2
+## Python 2
 
 * Use `  # type: `
 * `str` (bytes) is promoted to `unicode`
 
-## Python 3.6
+### Python 3.6
 
 * New [syntax for variable declarations](https://www.python.org/dev/peps/pep-0526):
   `var: List[int] = []`
 * [ContextManager](https://docs.python.org/3/library/typing.html#typing.ContextManager)
 
-## Python 3.7
+### Python 3.7
 
 * `from __future__ import annotations`
 
-## Python 3.8
+### Python 3.8
 
 * [Literal](https://docs.python.org/3/library/typing.html#typing.Literal) moved to `typing`
 * [TypedDict](https://docs.python.org/3/library/typing.html#typing.TypedDict) moved to `typing`
 
 ---
-# Protocols
+## Protocols
 
 But I also ways forget, which *Protocol* I need for wich type. So here'e a short presentation.
 
-# [Iteration](https://mypy.readthedocs.io/en/stable/protocols.html#iteration-protocols) and [Collection](https://mypy.readthedocs.io/en/stable/protocols.html#collection-protocols)
+## [Iteration](https://mypy.readthedocs.io/en/stable/protocols.html#iteration-protocols) and [Collection](https://mypy.readthedocs.io/en/stable/protocols.html#collection-protocols)
 
 ```mermaid
 classDiagram
@@ -125,7 +127,7 @@ Iterable <|-- Collection
 Container <|-- Collection
 ```
 
-# [One-off protocols](https://mypy.readthedocs.io/en/stable/protocols.html#one-off-protocols)
+## [One-off protocols](https://mypy.readthedocs.io/en/stable/protocols.html#one-off-protocols)
 
 ```mermaid
 classDiagram
@@ -152,7 +154,7 @@ class SupportsRound~T~ {
 }
 ```
 
-# [Async protocols](https://mypy.readthedocs.io/en/stable/protocols.html#async-protocols)
+## [Async protocols](https://mypy.readthedocs.io/en/stable/protocols.html#async-protocols)
 
 ```mermaid
 classDiagram
@@ -168,7 +170,7 @@ class AsyncIterator~T~ {
 AsyncIterable <|-- AsyncIterator
 ```
 
-# [Context manager protocols](https://mypy.readthedocs.io/en/stable/protocols.html#context-manager-protocols)
+## [Context manager protocols](https://mypy.readthedocs.io/en/stable/protocols.html#context-manager-protocols)
 
 ```mermaid
 classDiagram
@@ -182,7 +184,7 @@ class AsyncContextManager~T~ {
 }
 ```
 
-# [Built-in types](https://mypy.readthedocs.io/en/latest/builtin_types.html)
+## [Built-in types](https://mypy.readthedocs.io/en/latest/builtin_types.html)
 * int
 * float
 * bool
@@ -213,7 +215,7 @@ Mapping <|-- Dict
 <!--more-->
 
 ---
-# Iterable
+## Iterable
 
 Iterable is iterable **once**:
 
@@ -227,7 +229,7 @@ for val in some_iter:
 ```
 
 ---
-# Advanced usages
+## Advanced usages
 
 * Daemon mode `dmypy run -- …`
 * `subgen`
@@ -238,7 +240,7 @@ for val in some_iter:
 * `"FutureType"` or `# type: FutureType`
 
 ---
-# In-/Co-/Contra-Variant
+## In-/Co-/Contra-Variant
 
 ```python
 class A: ...
@@ -250,6 +252,6 @@ old = new  # NOT invariant
 ```
 
 ---
-# Misc
+## Misc
 
-
+{% include abbreviations.md %}

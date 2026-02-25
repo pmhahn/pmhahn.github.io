@@ -3,10 +3,13 @@ title: 'docker, dnsmasq, http Proxy @ home'
 date: '2021-01-20T07:59:31+01:00'
 layout: post
 categories: container network
+excerpt_separator: <!--more-->
 ---
 
 I'm using docker on my notebook for development.
-An mentioned in _UNIX 113: DocBook Docker images_ we already have several UCS images in docker-registry of many UCS releases and for different tasks:
+As mentioned in _UNIX 113: DocBook Docker images_ we already have several UCS images in docker-registry of many UCS releases and for different tasks:
+
+<!--more-->
 
 - `phahn/minbase[:$major$minor$patch]`
   Minimal image with as few Debian binary packages pre-installed
@@ -73,7 +76,7 @@ Next you have to tell the Docker client to [configure a proxy](https://docs.dock
 
 Et voilà, now the images are able to phone home from within the docker container.
 
-# Alternatives
+## Alternatives
 
 Previously I always used `--dns 192.168.0.124 --dns-search knut.univention.de` or `--add-host updates.knut.univention.de:192.168.0.10 --add-host omar.knut.univention.de:192.168.0.10` when running a `docker` command.
 

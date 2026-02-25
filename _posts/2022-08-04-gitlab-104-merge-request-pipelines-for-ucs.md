@@ -3,6 +3,7 @@ title: 'GitLab 104: Merge Request Pipelines for UCS'
 date: '2022-08-04T17:39:17+02:00'
 layout: post
 categories: gitlab UCS
+excerpt_separator: <!--more-->
 ---
 
 GitLab [pipeline](https://docs.gitlab.com/ee/ci/pipelines/) can run for many reasons, which are indicated via the [CI/CD variable](https://docs.gitlab.com/ee/ci/variables/predefined_variables.html) [`CI_PIPELINE_SOURCE`](https://docs.gitlab.com/ee/ci/jobs/job_control.html#common-if-clauses-for-rules):
@@ -21,6 +22,8 @@ GitLab [pipeline](https://docs.gitlab.com/ee/ci/pipelines/) can run for many rea
 
 Previously UCS was using *Branch pipelines*, but [switched to merge-request pipelines](https://github.com/univention/univention-corporate-server/commit/4a51c61c6af9d641b8bb72b2a70a424192fb8bcd) this week and [improved](https://github.com/univention/univention-corporate-server/commit/e6ea0f59b6e6c336cf6ad049a688e7e3ae13528e) later on.
 This was done to get automatic UCS package builds per branch, which is part of our ongoing work to get Jenkins branch test jobs.
+
+<!--more-->
 
 ## Branch pipelines
 

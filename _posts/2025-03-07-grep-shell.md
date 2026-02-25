@@ -17,7 +17,7 @@ $ git -c grep.fallbackToNoIndex=yes grep -lPe '\A#!\s*/bin/([bd]?a)?sh\b'
 
 <!--more-->
 
-# Explanation
+## Explanation
 
 I'm using _Perl Compatible Regular Expressions_ (PCRE) as this gives us `\A` to match _at the beginning of the subject_.
 The circumflex (`^`) would match each line, not only the first line.
@@ -29,7 +29,7 @@ There may be blanks between `#!` and `/bin/sh`.
 
 Instead of [`git grep`](man:git-grep(1)) you also can use [`grep -r`](man:grep(1)) itself, but as I have many git repositories, `git grep` is more efficient as it can use the index.
 
-# Issues
+## Issues
 
 This will not find _shell libraries_, e.g. _shell scripts_ not starting with a hash-bang line.
 

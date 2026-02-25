@@ -40,3 +40,5 @@ Oder um es mit den Worten von G. Aschemann aus 1995 zu sagen:
 > Jedes gute Shell-Script fängt mit #!/usr/bin/perl an.
 
 Naja, das ist 30 Jahre her und ich würde doch `perl` durch `python` ersetzten wollen 😉
+
+{% include abbreviations.md %}

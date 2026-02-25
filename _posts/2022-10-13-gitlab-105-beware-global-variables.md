@@ -3,6 +3,7 @@ title: 'GitLab 105: Beware global variables'
 date: '2022-10-13T12:59:59+02:00'
 layout: post
 categories: gitlab
+excerpt_separator: <!--more-->
 ---
 
 Today UCS@school had an interesting issue, where the Kelvin REST API pipeline failed, specifically the build job building a Docker image using [Kaniko]({% post_url 2022-06-04-gitlab-103-kaniko-image-building %}).
@@ -11,6 +12,8 @@ This gist of the error was a permission error:
 > error checking push permissions …
 > checking push permission for "gitregistry.knut.univention.de/univention/components/ucsschool-kelvin-rest-api:branch-dtroeder-21-kelvin-add-support-for-head-schools-school-name"
 > UNAUTHORIZED: authentication required
+
+<!--more-->
 
 Pushing to a Docker registry hopefully always requires authentication:
 gitregistry.knut.univention.de does, but actually docker-registry.knut.univention.de does not.

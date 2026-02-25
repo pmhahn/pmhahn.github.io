@@ -4,6 +4,7 @@ date: '2020-04-08T17:42:26+02:00'
 layout: post
 categories: UCS
 tags: ldap
+excerpt_separator: <!--more-->
 ---
 
 Q: Der OpenLDAP-Server liefert mir zu wenig Daten und ich kann oder will ihn aber im moment nicht neu starten.
@@ -15,6 +16,8 @@ printf 'dn: cn=config\nchangetype: modify\nreplace: olcLogLevel\nolcLogLevel: %d
  ldapmodify -xH ldapi:///
 ldapsearch -xLLLo ldif-wrap=no -H ldapi:/// -s base -b 'cn=config' olcLogLevel
 ```
+
+<!--more-->
 
 Siehe auch [man:slapd.conf(5)](https://www.openldap.org/doc/admin24/slapdconfig.html#loglevel%20%3Clevel%3E), da man den numerischen Wert angeben muss.
 

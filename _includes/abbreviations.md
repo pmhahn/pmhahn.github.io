@@ -105,6 +105,7 @@
 *[NM]: Network Manager
 *[NMU]: Non-Maintainer Upload
 *[NSS]: Name Service Switch
+*[NTFS]: New Technology File System
 *[NVMe]: Nonvolatile Memory Express
 *[OCI]: Open Container Initiative
 *[OCR]: Optical Character Recognition

@@ -4,12 +4,15 @@ date: '2018-03-23T14:20:26+01:00'
 layout: post
 categories: virt
 tags: totw
+excerpt_separator: <!--more-->
 ---
 
 Wer kennt das Problem nicht:
 Die VM wurde über Nacht auf die Festplatte suspendiert und am nächste Morgen geht die Uhr der VM falsch.
 
 Mit `tinker panic 0` in `/etc/ntpd.conf` korrigiert sich das zwar irgendwann, aber nervig ist es trotzdem.
+
+<!--more-->
 
 libvirt bietet die Möglichkeit, innerhalb der VM den sog. **qemu-guest-agent** zu starten, der es dann libvirt erlaubt, von extern verschiedenen Dinge anzustoßen:
 

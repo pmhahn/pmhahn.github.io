@@ -3,6 +3,7 @@ title: 'Docker 101: Container basics'
 date: '2022-06-08T11:33:56+02:00'
 layout: post
 categories: container
+excerpt_separator: <!--more-->
 ---
 
 Following [Gitlab 101: Container usage]({% post_url 2022-03-10-gitlab-101-container-usage %}) and [Gitlab 102: container followup]({% post_url 2022-05-24-gitlab-102-container-followup %}) let's have a look at *Docker images* itself, also known as [OCI](https://www.opencontainers.org/ "Open Container Initative") Images.
@@ -14,6 +15,8 @@ When working with images multiple parts are involved:
 2. A **configuration** containing instructions to setup the environment for an image
 3. A **manifest** to describe an image
 4. A **directory** to map human usable names to sha256s
+
+<!--more-->
 
 The last two only exist when the image is uploaded to respectively downloaded from a (remote) registry:
 When images are transferred between hosts the layers are transferred as *compressed tape archives* (`.tar.gz`).

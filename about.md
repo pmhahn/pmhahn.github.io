@@ -4,7 +4,7 @@ title: About
 permalink: /about/
 ---
 
-See [pmhahn.de](http://pmhahn.de/) for more information about me.
+See [pmhahn.de](https://pmhahn.de/) for more information about me.
 
 ### Contact me
 

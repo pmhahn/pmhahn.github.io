@@ -3,9 +3,12 @@ title: 'Python subprocess'
 date: '2011-06-07T17:03:06+02:00'
 layout: post
 categories: python
+excerpt_separator: <!--more-->
 ---
 
 Das Python `subprocess` Modul hat so seine Tücken:
+
+<!--more-->
 
 1. Bei Verwendung von `subprocess.PIPE` muss unbedingt darauf geachtet werden, das Pipes unter Linux nur eine endliche Größe (64 KiB) haben.
    Wenn der Kindprozeß als Filter (STDIN und STDOUT bzw. STDERR sind Pipes zum Vaterprozeß) verwendet wird, **muß** unbedingt `subprocess.Popen.communicate(input)` verwendet werden, da die Prozesse ansonsten blockieren:

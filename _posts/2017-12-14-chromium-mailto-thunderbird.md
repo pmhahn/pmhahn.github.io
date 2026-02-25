@@ -3,6 +3,7 @@ layout: post
 title: "Chromium and mailto: URLs"
 date: 2017-12-14 11:49:00  +0100
 categories: linux network
+excerpt_separator: <!--more-->
 ---
 
 [RFC 2368](https://tools.ietf.org/html/rfc2368) specified the `mailto:` syntax.
@@ -11,6 +12,8 @@ It can be used to launch your email client by clicking on some URL.
 
 Chromium uses `xdg` since [Issue 61942](https://bugs.chromium.org/p/chromium/issues/detail?id=61942).
 But getting it to work correctly seems to be hard.
+
+<!--more-->
 
 Overview
 ========

@@ -3,11 +3,14 @@ title: 'Gitlab 101: Container usage'
 date: '2022-03-10T09:07:26+01:00'
 layout: post
 categories: gitlab container
+excerpt_separator: <!--more-->
 ---
 
 Gitlab consists of multiple parts:
 Gitlab runners are the work horses, which execute the jobs of a pipeline.
 Gitlab runners have different [flavors](https://docs.gitlab.com/runner/executors/):
+
+<!--more-->
 
 - [Shell](https://docs.gitlab.com/runner/executors/shell.html) and [ssh](https://docs.gitlab.com/runner/executors/shell.html) execute shell commands on a local or remote system as the logged in user.
   Only commands which are available to that user can be used which puts those runners in the category *kitten*:

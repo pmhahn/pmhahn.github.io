@@ -3,6 +3,7 @@ title: 'Effizientes Kopieren von großen Dateien'
 date: '2011-06-06T11:57:07+02:00'
 layout: post
 categories: linux filesystem
+excerpt_separator: <!--more-->
 ---
 
 Mit Virtualisierung trifft man öfters auf mehrere Gigabyte große Image-Dateien, die von Zeit zu Zeit auch mal kopiert werden müssen.
@@ -12,6 +13,8 @@ Die `dd`-Varianta hat hier den Vorteil, daß man durch Angab der Blockgröße gr
 `cp` verwendet normalerweise 32 KiB-Blöcke, `shutil.copy2()` aus Python nur 16 KiB-Blöcke (und kopiert nicht alle Berechtigungen!)
 
 Das es effizienter geht zeiht **BtrFS** mit der Möglichkeit, Dateien per `cp --reflink` zu klonen:
+
+<!--more-->
 
 ```console
 # ls -li orig.tar.gz

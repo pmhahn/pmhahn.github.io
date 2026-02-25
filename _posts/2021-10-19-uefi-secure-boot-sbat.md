@@ -3,11 +3,14 @@ title: 'UEFI Secure Boot SBAT'
 date: '2021-10-19T11:43:02+02:00'
 layout: post
 categories: debian security
+excerpt_separator: <!--more-->
 ---
 
 Several flaws were found in GRUB, the [GRand Unified Boot-Loader](https://www.gnu.org/software/grub/) in 2020 and 2021.
 These can be used for by-pass [Secure Boot]({% post_url 2018-04-11-debian-secure-boot-sprint-2018 %}), which provides a secure path from booting the PC to running Linux:
 No unauthorized software like a virus should have a chance to get loaded **before** Linux has been loaded and started.
+
+<!--more-->
 
 ## Status quo
 

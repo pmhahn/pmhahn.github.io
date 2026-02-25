@@ -3,6 +3,7 @@ title: 'C 101: syntax for function declaration'
 date: '2022-03-23T11:21:14+01:00'
 layout: post
 categories: c
+excerpt_separator: <!--more-->
 ---
 
 In the early days of [K&R C](https://en.wikipedia.org/wiki/C_(programming_language)#K&R_C) programming the type for functions parameters was optional and declared separately:
@@ -15,6 +16,8 @@ void old(a, b, c)
  printf("a=%i b=%d c=%p\n", a, b, c);
 }
 ```
+
+<!--more-->
 
 For [ANSI C](https://en.wikipedia.org/wiki/ANSI_C) the syntax was changed, which allows the types to be specified directly before the arguments:
 ```c

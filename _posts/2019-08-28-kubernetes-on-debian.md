@@ -50,7 +50,7 @@ kubectl -n kube-system get deployments
 cd ..
 ```
 
-# Configure k8s for GitLab
+## Configure k8s for GitLab
 
 (This is from <https://docs.gitlab.com/ee/user/project/clusters/>):
 
@@ -110,7 +110,7 @@ kubectl -n kube-system describe secret \
 	sed -ne 's/^token: *//p'
 ```
 
-# Setup GitLab runner
+## Setup GitLab runner
 
 Create a customized GitLab runner, which includes our custom SSL certificate used by our internal Docker registry.
 Due to [GitLab Issue 3968](https://gitlab.com/gitlab-org/gitlab-runner/issues/3968) we also have to setup the same certificate for the Runner to be able to access the GitLab master instance.
@@ -157,15 +157,15 @@ helm upgrade -f values.yaml gitlab-runner ~/REPOS/VIRT/gitlab-runner
 cd ..
 ```
 
-# Issues
+## Issues
 
-## Missing Service account
+### Missing Service account
 
 > ERROR: Job failed (system failure): pods is forbidden: User "system:serviceaccount:default:default" cannot create resource "pods" in API group "" in the namespace "default"
 
 Enable `rbac/create=true` in `values.yaml` for `helm` to create the role automatically.
 
-## Docker image not pulled
+### Docker image not pulled
 
 > ERROR: Job failed: image pull failed: Back-off pulling image "docker-registry.knut.univention.de/phahn/ucs-minbase:latest"
 
@@ -180,7 +180,7 @@ update-ca-certificates
 systemctl restart docker.service
 ```
 
-## Dashboard
+### Dashboard
 
 You need a *bearer token*, which you can retrieve via `kubectl`:
 
@@ -198,7 +198,7 @@ kubectl describe secret tiller-token-wshmm -n kube-system
 # token:      ...
 ```
 
-## Load balancer
+### Load balancer
 
 By default k8s does not provide a load balancer implementation:
 Many cloud providers provide that service out-of-the-box.
@@ -213,7 +213,7 @@ ansible-playbook \
 	contrib/metallb/metallb.yml
 ```
 
-## Infinite firewall rule spamming
+### Infinite firewall rule spamming
 
 Because of [Issue 82361](https://github.com/kubernetes/kubernetes/issues/82361) `k8s` adds new firewall rules to the `DROP` table, which slows down the system.
 For Debian Buster the `iptables` program must be switched back to the legacy version:
@@ -223,7 +223,7 @@ update-alternatives --set iptables /usr/sbin/iptables-legacy
 iptables -F DROP
 ```
 
-# Single node cluster and upgrades
+## Single node cluster and upgrades
 
 `kubespray` fails to upgrade a single node cluster as it drains and cordons the single node.
 Essential services like `CoreDNS` are then no longer running and the update fails in `roles/kubernetes/master/tasks/kubeadm-upgrade.yml`.

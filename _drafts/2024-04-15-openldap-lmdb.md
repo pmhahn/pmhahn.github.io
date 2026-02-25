@@ -12,8 +12,8 @@ Read [Howard Chus presentation](http://www.lmdb.tech/media/20130406-LOADays-LMDB
 
 <!--more-->
 
-# Search
-## Filters
+## Search
+### Filters
 * Presence (`pres`): `(objectClass=*)`
 * Equality (`eq`): `(objectClass=dNSRecord)`
 * Greater-or-equal: `(modifyTimestamp>=20230102030405Z)`
@@ -31,20 +31,20 @@ Read [Howard Chus presentation](http://www.lmdb.tech/media/20130406-LOADays-LMDB
   * Custom matching rule `(givenName:caseExactMatch:=John)`
   * Any matching value `(:caseExactMatch:=John)`
 
-## How it works
+### How it works
 * For each part of the filter
   * if there is no index, walk all entries and check the node for matching
   * if there is an index, retrieve the set of matching nodes from the index and modify the bitmap accoringly.
     See [servers/slapd/back-mdb/filterindex.c](https://git.openldap.org/openldap/openldap/-/blob/master/servers/slapd/back-mdb/filterindex.c?ref_type=heads).
 
-# Index
-## Types
+## Index
+### Types
 * `notags`: flag to disable using index for tags, e.g. FIXME
 * `nosubtypes`: flag to disable using index for sub-types, e.g. FIXME
 * `substr` (deprecated)
 * `nolang` (deprecated)
 
-## Configuration
+### Configuration
 Can be configured with attribute [oldDbIndex](https://www.openldap.org/doc/admin24/slapdconf2.html) in `olcDatabase={…}mdb,cn=config`:
 
 ```console
@@ -64,12 +64,12 @@ olcDbIndex: sOARecord pres
 __LDIF__
 ```
 
-# LMDB
+## LMDB
 Instead of mapping the full DN to each entry, LMDB uses a hierarchical structure.
 This allows traversal to sibling, child and parent nodes.
 This is also required as keys are limited to 511 bytes in LMDB.
 
-## Sub-databases
+### Sub-databases
 ```console
 $ mdb_stat -a /var/lib/univention-ldap/ldap/
 Status of ad2i  # Attribute Description → ID
@@ -86,7 +86,7 @@ Status of objectClass  # Index for attribute
 * For each indexed attribute there exists (at least?) one additional sub-database.
   It maps the index key to the entry ID (from `id2e).
 
-## Encoding a tree
+### Encoding a tree
 
 <!-- ~/REPOS/ucs/management/univention-directory-listener/src/README.md -->
 
@@ -102,7 +102,7 @@ First map DN to ID via [servers/slapd/back-mdb/dn2id.c](https://git.openldap.org
 It uses multiple sorted key-value-stored to map the DN to the sequence of records.
 The database contains 2 sub-tables to store the tree hierarchically:
 
-### dn2id
+#### dn2id
 
 ```console
 $ mdb_dump -p /var/lib/univention-ldap/ldap/ -s dn2i
@@ -124,7 +124,7 @@ That structure is used to encode two kind of information in the same tree:
 1. Links from parent to child
 2. Node with link to parent
 
-#### Nodes
+##### Nodes
 Each LDAP entry is mapped to a unique ID which is stored in this sub-database.
 This is necessary because LMDB limits the key size to 511 bytes by default.
 The mapping structure is organized like a tree of RDNs, which improves lookup performance compared to a plain list of DNs.
@@ -138,7 +138,7 @@ The actual attributes and their values are stored in the [id2entry](#id2entry) s
 * 3"ou=C,o=B"
 * 4"cn=D,ou=C,o=B"
 
-#### NODE
+##### NODE
 A node is represented as `type=NODE`.
 For any *non-root-node* (1-5) it includes reference to its parent node as `id`.
 `data` contains the full DN.
@@ -148,7 +148,7 @@ For any *non-root-node* (1-5) it includes reference to its parent node as `id`.
 * 2"o=B" --> 3"ou=C,o=B": 3 → (2, NODE, "o=B")
 * 3"ou=C,o=B" --> 4"cn=D,ou=C,o=B": 4 → (3, NODE, "ou=C,o=B")
 
-#### LINK
+##### LINK
 For any *non-leaf-node* (0,2,3) a value with `type=LINK` will reference the direct child node `id`.
 `data` contains the relative DN of the child.
 
@@ -156,7 +156,7 @@ For any *non-leaf-node* (0,2,3) a value with `type=LINK` will reference the dire
 * 0"" --> 2"o=B": 0 → (2, LINK, "o=B")
 * 2"o=B" --> 3"ou=C,o=B": 2 → (3, LINK, "ou=C")
 
-### id2entry
+#### id2entry
 Each LDAP entry has a unique ID.
 The ID is allocated on insert of a new DN into [dn2id](#dn2id).
 The key is that ID and the value is the data - in our case the serialized LDAP entry.
@@ -165,7 +165,7 @@ The key is that ID and the value is the data - in our case the serialized LDAP e
 $ mdb_dump -p /var/lib/univention-ldap/ldap/ -s id2e
 ```
 
-## Lookup
+### Lookup
 
 A DN lookup starts with the right-most (base) RDN:
 
@@ -180,8 +180,10 @@ A DN lookup starts with the right-most (base) RDN:
 
 4. There the search continues with the next RDN.
 
-# Miscellaneous
+## Miscellaneous
 - How are multi-RDNs handled?
 
-# Further reading
+## Further reading
 - [Symas LMDB Tech Info](https://www.symas.com/symas-lmdb-tech-info)
+
+{% include abbreviations.md %}

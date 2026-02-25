@@ -2,13 +2,16 @@
 title: 'APT: Install packages from apt/'
 date: '2021-12-03T17:15:30+01:00'
 layout: post
-categories: debian
+categories: debian UCS
 tags: apt
+excerpt_separator: <!--more-->
 ---
 
 Q: How can I install UCS packages from apt/ (on demand)?
 
 A: Setup `omar` as an additional APT package repository but with a lower priority than the default UCS package repository.
+
+<!--more-->
 
 In an [old posting]({% post_url 2011-05-23-pakete-aus-verschiedenen-repositories %}) `origin` was used to reduce the priority of the additional repository.
 

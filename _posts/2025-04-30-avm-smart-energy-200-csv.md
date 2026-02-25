@@ -13,11 +13,11 @@ Diesen kann man sich entweder bei Bedarf über die Web-Oberfläche der FRITZ!Box
 
 <!--more-->
 
-# Prozedur
+## Prozedur
 
 Zunächst ein Blick auf die Prozedur, wie man an die Daten kommt.
 
-## Kritik 1: Push-E-Mail
+### Kritik 1: Push-E-Mail
 
 Der Push-Service hat (zumindest bei mir) jahrelang nicht funktioniert.
 Ursache war, dass ich irgendwann meinen Provider gewechselt habe.
@@ -26,7 +26,7 @@ Die hat dann irgendwann nicht mehr funktioniert und von da an landeten alle Mail
 
 Bitte in der Benutzeroberfläche irgendwo anzeigen, wenn es Probleme mit der Push-E-Mail gibt.
 
-## Kritik 2: FRITZ!Box Web-Oberfläche
+### Kritik 2: FRITZ!Box Web-Oberfläche
 
 Die Navigation durch die Web-Oberfläche ist auch alles andere als intuitiv:
 1. Die Konfiguration des globalen Push-Services ist unter _System_ → _Push Service_
@@ -35,7 +35,7 @@ Die Navigation durch die Web-Oberfläche ist auch alles andere als intuitiv:
 
 Bitte verkürzt den Weg, um an die Information zu kommen.
 
-## Kritik 3: API
+### Kritik 3: API
 
 Für die automatische Weiterverarbeitung ist E-Mail suboptimal:
 1. Man muss diese irgendwie per IMAP oder POP3 abholen
@@ -49,7 +49,7 @@ Für die Authentifizierung sollte einen standardisierten Mechanismus wie Benutze
 
 PS: Ich habe inzwischen meine Kollegen gefragt und sie haben mich auf das [AVM Home Automation Interface](https://fritz.com/fileadmin/user_upload/Global/Service/Schnittstellen/AHA-HTTP-Interface.pdf) hingewiesen. Danke.
 
-## Kritik 4: Dateinamen
+### Kritik 4: Dateinamen
 
 Die Dateinamen der CSV-Dateien folgen 2 Schemata, je nach dem ob man sich die Datei per Push-Service zuschicken lässt oder sie von der Web-Oberfläche herunterlädt:
 1. `YYYYmmdd-HHMMSS-idXXXXX_ZEITRAUM.csv` (Push-Service-E-Mail)
@@ -67,7 +67,7 @@ Bitte vereinheitlicht die Dateinamen für den Push-Service und den Download.
 
 ------
 
-# Kopfzeilen
+## Kopfzeilen
 
 Schauen wir uns nun den Inhalt der CSV-Dateien genauer an:
 Diese haben grob folgenden Aufbau:
@@ -77,7 +77,7 @@ Kopfzeile
 Datenzeilen…
 ```
 
-## Kritik 5: CSV Format
+### Kritik 5: CSV Format
 
 [CSV-Dateien](https://de.wikipedia.org/wiki/CSV_(Dateiformat)) sind zwar einfach zu erzeugen, aber deren Weiterverarbeitung ist alles andere als trivial, weil es viele Unterformate gibt:
 - unterschiedliche **Zeichenkodierungen**, e.g. *ASCII*, *UTF-8*, *UTF-16*, *ISO-8859-1*, ̇…
@@ -91,7 +91,7 @@ Datenzeilen…
 
 Bitte stellt die Daten in einem strukturierten Format zur Verfügung, das einfach zu verarbeiten ist und nach Möglichkeit eine eindeutige Semantik hat.
 
-## Kritik 5: CSV Trennzeichen
+### Kritik 5: CSV Trennzeichen
 
 Die Datei beginnt mit einem `sep=;`.
 Es handelt sich um eine Excel-Erweiterung, die von vielen anderen CSV-Parsern nicht verstanden wird.
@@ -103,7 +103,7 @@ Davon wird davon abgeraten, denn es führt gerne zu Problemen:
 
 Bitte diese Zeile entfernen.
 
-## Kritik 6: Kopfzeile uneinheitlich
+### Kritik 6: Kopfzeile uneinheitlich
 
 Als nächstes folgt die Kopfzeile.
 Normalerweise dient dieser der Benennung der Spalten.
@@ -145,12 +145,12 @@ Bitte eine einheitliche und konsistente Kopfzeile erzeugen!
 
 ------
 
-# Datensätze
+## Datensätze
 
 Je nach Zeitraum haben die Datensätze ein unterschiedliches Format für die 1. Spalte mit dem _Datum/[Uhr]zeit_:
 Man benötigt also pro Format einen eigenen Parser.
 
-## Kritik 7: Tag / 24h
+### Kritik 7: Tag / 24h
 
 Die Datei mit den Datensätzen für einen Tag enthält für die letzten 24 Stunden jeweils 4 Datensätze im Abstand von 15 Minuten.
 Die erste Spalte sieht wie folgt aus:
@@ -173,7 +173,7 @@ Von daher ist die Bezeichnung `jetzt` doppelt falsch.
 Bitte immer einen kompletten Zeitstempel bestehend aus Datum und Uhrzeit angeben.  
 Bitte dokumentieren, ob es sich um den _Beginn_ oder das _Ende_ der Erfassungsperiode handelt.
 
-## Kritik 8: Woche
+### Kritik 8: Woche
 
 Die Datei mit den Datensätzen für eine Woche enthält für die letzten 7 Tage jeweils 4 Datensätze im Abstand von 6 Stunden.
 Die erste Spalte sieht wie folgt aus:
@@ -199,7 +199,7 @@ Vermutlich der **Beginn**.
 Bitte immer einen kompletten Zeitstempel bestehend aus Datum und Uhrzeit angeben.  
 Bitte dokumentieren, ob es sich um den _Beginn_ oder das _Ende_ der Erfassungsperiode handelt.
 
-## Kritik 9: Monat
+### Kritik 9: Monat
 
 Die Datei mit den Datensätzen für einen Monat enthält für die letzten 31 Tage jeweils einen Datensatz pro Tag.
 Die erste Spalte sieht wie folgt aus:
@@ -220,7 +220,7 @@ Bei der Umwandung in einen Zeitstempel muß man also `00:00:00` bzw. `23:59:59` 
 
 Bitte immer einen komplettes Datum inklusive Jahreszahl angeben.
 
-## Kritik 10: Jahr
+### Kritik 10: Jahr
 
 Die Datei mit den Datensätzen für die letzten 1-2 Jahre enthält für jeden Monat jeweils einen Datensatz.
 Die erste Spalte sieht wie folgt aus:
@@ -239,7 +239,7 @@ Bei der Umwandung in einen Zeitstempel muß auch hier darauf geachtet werden, ob
 Bitte Datums-Angaben nicht lokalisieren.
 Bitte ein exaktes Datum für _Begin_ und _Ende_ angeben.
 
-## Kritik 11: Daten nicht konstant
+### Kritik 11: Daten nicht konstant
 
 Exportiert man die Daten mehrfach hintereinander, stellt man fest, das diese für identische Zeiträume nicht identisch sind:
 Sie unterscheiden sich zwar nur um wenige Watt, aber dennoch ist das unschön.
@@ -249,7 +249,7 @@ Bitte eine Datenbank verwenden, die reproduzierbar die selben Daten liefert.
 
 ------
 
-# Fazit
+## Fazit
 
 Innerhalb des FRITZ-Ökosystems funktionieren die Produkte ja wunderbar miteinander, aber der Export der Daten für die Weiterverarbeitung in einem anderen System ist eine Katastrophe.
 Insbesondere CSV als Format sehe ich als sehr problematisch, da die Weiterverarbeitung alles andere als einfach ist.

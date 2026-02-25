@@ -3,6 +3,7 @@ title: 'Docker 102: Faster image building'
 date: '2022-08-02T08:09:16+02:00'
 layout: post
 categories: container
+excerpt_separator: <!--more-->
 ---
 
 [Gitlab 103: Kaniko image building]({% post_url 2022-06-04-gitlab-103-kaniko-image-building %}) described, how to build Docker respective OCI images using [Kaniko](https://github.com/GoogleContainerTools/kaniko).
@@ -13,6 +14,8 @@ This was a problem for the UCS pipeline for building `ucslint`:
 downloading and installing the Debian package dependencies took most of the 3:24 minutes, while adding the latest version from git was done under a second.
 
 Here are some tricks on how to improve your image and how to speed up the build process for them.
+
+<!--more-->
 
 ## Previous layer caching
 

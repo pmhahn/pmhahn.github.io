@@ -12,13 +12,13 @@ I tried several tricks to improve the build speed as we have to build many packa
 
 <!--more-->
 
-# Improving pbuilder speed
+## Improving pbuilder speed
 
 So far we have been using *pbuilder*, which in its initial form uses *compressed tape archives* `.tar.gz` to have clean build environments.
 For each build they are extracted to a new location, in which the package build happens.
 This is slow when using slow disk and was my first vector for optimization.
 
-## Using unsafe dpkg
+### Using unsafe dpkg
 
 Newer `dpkg` has an option to disable its synchronization:
 
@@ -29,29 +29,29 @@ echo "force-unsafe-io" > /etc/dpkg/dpkg.cfg.d/force-unsafe-io
 This is already used during the initial setup, but removed after the Debian installer has finished.
 Enabling it in throw-away build environments is a first optimization.
 
-## Using QEMU `cache=unsafe`
+### Using QEMU `cache=unsafe`
 
 When we moved *Repo-NG* from physical servers into *virtual machines*, we gave each VM a *scratch volume* using QEMUs `cache=unsafe` feature.
 This filters our all `sync()` calls to flush the data to disk, which greatly improves the time to setup the required build dependencies as `sync()` is used a lot during `dpkg` installing packages.
 
-## Using Eat-my-data
+### Using Eat-my-data
 
 An alternative it to use [eat-my-data](https://launchpad.net/libeatmydata).
 This works quiet well most of the times, but I remember having problems with some packages, which failed to build.
 My main concern is that I have to install that library into each build environment, which then is no longer minimal.
 
-## Using SECCOMP
+### Using SECCOMP
 
 Another alternative is using [SECCOMP to filter out sync operations](https://bblank.thinkmo.de/using-seccomp-to-filter-sync-operations.html).
 This also works quiet well but some integration tests fail, which notice a discrepancy between requested and actual sync mode.
 This also breaks when doing cross-compiles, but other has the benefit, that I can setup it outside the build environment.
 
-## Using tmpfs
+### Using tmpfs
 
 For our [piuparts](https://wiki.debian.org/piuparts) system I'm using a very large *tmpfs* file-system backed by lots of swap space.
 As long as everything fits into RAM it's ultra-fast as everything happens in RAM only most of the time.
 
-## Using btrfs
+### Using btrfs
 
 On my personal systems I have been using [btrfs](https://btrfs.wiki.kernel.org/index.php/Main_Page) with [btrfsbuilder](https://github.com/koalatux/btrfsbuilder).
 The idea is to use btrfs built-in feature *writeable snapshots* instead of using extracting `tar` files all the time.
@@ -59,7 +59,7 @@ This works well with fast disks, but the work to manage the meta-data costs lots
 As btrfs must be prepared to be consistent in case of crashes, it uses `sync()` a lot, which makes it slow.
 Combining it with one of the other methods to reduce the `sync()`-load improves this.
 
-## Using overlayfs
+### Using overlayfs
 
 [OverlayFS](https://www.kernel.org/doc/Documentation/filesystems/overlayfs.txt) is the successor of [UnionFS](https://unionfs.filesystems.org/) and [auFS](http://aufs.sourceforge.net/).
 It allows to stack multiple file systems over each other so that changes go to the top-level file system, but all unchanged files show through.
@@ -73,7 +73,7 @@ I have not yet investigated this, but it is on my to-do list.
 In the past [btrfs could not be used with overlayfs](https://btrfs.wiki.kernel.org/index.php/Changelog), but this is fixed since Linux Kernel version 4.15.
 My idea would be to create a new snapshot for each build in addition to using unionfs, so that I can update the master version any time even while other builds are still running using an old snapshot.
 
-## Variants of pbuilder
+### Variants of pbuilder
 
 There is [cow-builder](https://wiki.debian.org/cowbuilder), which also uses already extracted build environments.
 It then uses an `LD_PRELOAD` wrapper to implement `Copy-on-write` in user-space, which works quiet well.
@@ -89,7 +89,7 @@ Using QEMU also allows cross-building for other architectures.
 It uses the *snapshot* feature of the *Logical Volume Manager* built into the Linux kernel.
 Each base image is setup as a separate logical volume and each build gets its own writeable snapshot.
 
-# Using docker
+## Using docker
 
 [Docker](https://www.docker.com/) can also be used to build Debian packages.
 There already is [Whalebuilder](https://www.uhoreg.ca/programming/debian/whalebuilder).
@@ -118,7 +118,7 @@ For each UCS release I have multiple docker images:
 Those images need to be re-build each time one of the packages installed in the image gets an update.
 It's on my to-do list to automate this in the future.
 
-## Ad-hoc
+### Ad-hoc
 
 The ad-hoc approach for building packages is like this:
 
@@ -161,7 +161,7 @@ exec su -c 'exec dpkg-buildpackage -uc -us -b -rfakeoot' build
 
 (I need that `--add-host` argument as my Docker images use that host name for our Debian package repository, but I run that image on my Notebook behind a VPN, so default DNS resolution of that name does not work.)
 
-## With Dockerfile
+### With Dockerfile
 
 An alternative is to use something like the following [Dockerfile](https://docs.docker.com/engine/reference/builder/):
 
@@ -197,7 +197,7 @@ This works quiet well as Dockers built-in caching mechanism is used to cache the
 While `debian/control` does not change there is no need to set it up again in most cases.
 What's missing here is again the tracking of changed packages in that image.
 
-# Statistics
+## Statistics
 
 Here's some old performance data collected from compiling Linux Kernel 3.2.39.
 The system had an Intel Core i7 with 8 GiB RAM and a single 500 GiB SATA disk.
@@ -215,7 +215,7 @@ The compile itself performed worse, since running 8 compilers in parallel needs 
 
 This needs more investigation, especially with smaller packages and using less parallelism.
 
-# Replacing pbuilder
+## Replacing pbuilder
 
 `pbuilder` shows its age:
 It's a collection of shell script having multiple issues.
@@ -225,9 +225,9 @@ As soon as you use that you get a new bunch of shell quoting errors, as many mor
 
 Debian's official build system uses [sbuild](https://wiki.debian.org/sbuild), which looks more robust.
 
-# Improving repository services
+## Improving repository services
 
-## Speed up Package indexing
+### Speed up Package indexing
 
 *Repo-NG* uses `apt-ftparchive` internally with lots of trick to get it up to speed.
 Most important is the option `--db` to use an database for caching the extracted package data.
@@ -243,13 +243,13 @@ Another improvement was the use of [Python's os.scandir()](https://www.python.or
 The later does a `stat()` on all files to distinguish files from directories, which added another round of `stat()` calls.
 This is very fast while that data is still cached in the [Linux kernels dentry cache](https://www.kernel.org/doc/Documentation/filesystems/vfs.txt) from the last run, but abyssal slow in the morning after `updatedb` trashed that cache.
 
-## Repository hosting
+### Repository hosting
 
 For previous projects I've used [reprepro](https://salsa.debian.org/brlink/reprepro) both personally but also in my company to host packages built by CI.
 Currently I'm investigating the move to [Aptly](https://www.aptly.info/), which has a very powerful [REST API](https://www.aptly.info/doc/api/).
 This allows it to be used via [cURL](https://curl.haxx.se/) until GitLab implements its own [Debian](https://gitlab.com/gitlab-org/gitlab/issues/5835) [Package Registry](https://docs.gitlab.com/ee/user/packages/).
 
-# Summary
+## Summary
 
 I should repeat the compilation test with the different variants.
 

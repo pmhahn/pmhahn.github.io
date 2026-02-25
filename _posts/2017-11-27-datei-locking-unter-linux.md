@@ -4,6 +4,7 @@ date: '2017-11-27T12:04:14+01:00'
 layout: post
 categories: linux filesystem
 tags: locking
+excerpt_separator: <!--more-->
 ---
 
 Ich musste wieder einmal zu oft nachlesen, welche Varianten von Datei-Locking es unter Linux gibt und was die Stolperfallen sind.
@@ -14,6 +15,8 @@ Ich musste wieder einmal zu oft nachlesen, welche Varianten von Datei-Locking es
 | Owner    | Process    | File     | File                              |
 | Issues   | - not `fork()` save - not thread save - released on first `close()` | - exclusive not `fork()` save - not NFS save - sometimes implemented through `fcntl()` | Linux 3.15+ |
 | C-API    | [`fcntl(fd, F_{GETLK,SETLK,SETLKW}, struct flock *)`](https://www.gnu.org/software/libc/manual/html_node/File-Locks.html), `lockf(fd, F_{LOCK,TLOCK,ULOCK,TEST}, len)` | [`flock(fd, LOCK_{SH,EX,UN}`](https://www.freebsd.org/cgi/man.cgi?query=flock&sektion=2) | [`fcntl(fd, F_OFD_{GETLK,SETLK,SETLKW}, struct flock *)`](https://www.gnu.org/software/libc/manual/html_node/Open-File-Description-Locks.html) |
+
+<!--more-->
 
 Literatur zum nach-/weiterlesen:
 

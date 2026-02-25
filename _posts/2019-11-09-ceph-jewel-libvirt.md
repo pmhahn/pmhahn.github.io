@@ -27,7 +27,7 @@ My setup consists of 3 hosts, which are in the `192.168.0.0/24` network and use 
 
 Commands are executed on `hdmi1`, where I'm logged in as the user `root`:
 
-# Setup SSH for password less login
+## Setup SSH for password less login
 
 ```bash
 ssh-keygen -N '' -t rsa -f /root/.ssh/id_rsa
@@ -36,7 +36,7 @@ ssh-copy-id hdmi2
 ssh-copy-id hdmi3
 ```
 
-# Setup firewall
+## Setup firewall
 
 Port 6789 is used for inter-OSD-communication, port 6800-7100 for clients to connect to the OSD.
 
@@ -49,7 +49,7 @@ do
 done
 ```
 
-# Create initial `ceph.conf`
+## Create initial `ceph.conf`
 
 Following
 [ceph.conf](//docs.ceph.com/docs/jewel/rados/configuration/ceph-conf/) I
@@ -101,7 +101,7 @@ scp /etc/ceph/ceph.conf hdmi2:/etc/ceph/ceph.conf
 scp /etc/ceph/ceph.conf hdmi3:/etc/ceph/ceph.conf
 ```
 
-# Setup Ceph monitor
+## Setup Ceph monitor
 
 ```bash
 ceph-authtool --create-keyring /tmp/ceph.mon.keyring --gen-key -n mon. --cap mon 'allow *'
@@ -122,7 +122,7 @@ sudo -u ceph ceph-mon --mkfs -i hdmi1 --monmap /tmp/monmap --keyring /tmp/ceph.m
 
 The original guide is missing the `chown ceph:` command, which is required, as Debian runs all services using the account `ceph`.
 
-## Start the monitor
+### Start the monitor
 
 ```bash
 systemctl enable ceph-mon@hdmi1.service
@@ -135,7 +135,7 @@ It took me hours to get to this point, as the last command timed out and failed 
 Make sure to use the correct IP addresses everywhere.
 If you still experience problems, use `ceph --admin-daemon /var/run/ceph/ceph-mon.hdmi1.asok mon_status` to directly connect to the daemon to get its status.
 
-# Setup Ceph OSDs
+## Setup Ceph OSDs
 
 ```bash
 for osd in hdmi2 hdmi3
@@ -158,32 +158,32 @@ done
 Again use `ceph -s` to verify the OSDs are setup correctly.
 In my first try I forgot to add the `[osd.X] host = hdmiY` entries in `ceph.conf` and the nodes never left the `booting` state.
 
-# Setup libvirt RBD storage pool
+## Setup libvirt RBD storage pool
 
 Following [RBD](https://docs.ceph.com/docs/jewel/rbd/libvirt/) create the pool:
 
-## Create pool
+### Create pool
 
 ```bash
 ceph osd pool create libvirt-pool 128 128
 ceph osd lspools
 ```
 
-## Create credentials
+### Create credentials
 
 ```bash
 ceph auth get-or-create client.libvirt mon 'allow r' osd 'allow class-read object_prefix rbd_children, allow rwx pool=libvirt-pool'
 ceph auth list
 ```
 
-## Test create an image
+### Test create an image
 
 ```bash
 qemu-img create -f rbd rbd:libvirt-pool/new-libvirt-image 2G
 rbd -p libvirt-pool ls
 ```
 
-## Setup secret for libvirt
+### Setup secret for libvirt
 
 ```bash
 SECRET_UUID=$(uuidgen)
@@ -199,7 +199,7 @@ virsh secret-define --file secret.xml
 virsh secret-set-value --secret "$SECRET_UUID" --base64 "$(ceph auth get-key client.libvirt)"
 ```
 
-## Setup libvirt storage pool
+### Setup libvirt storage pool
 
 ```bash
 cat >pool.xml <<__XML__
@@ -223,7 +223,7 @@ Do not use the fully qualified host name (FQHN) in `host/@name`:
 `libvirtd` resolved it to `localhost` and tried to connect the monitor at `127.0.0.1:6789`, where `ceph-mon` is **not** [listening](https://docs.ceph.com/docs/jewel/rados/configuration/network-config-ref/#bind):
 The monitor is only bound to `192.168.0.15`, but not `127.0.0.1` (or `0.0.0.0`).
 
-# Using the image
+## Using the image
 
 The test image can be used by any VM after adding the volume to the domain description, which can be edited using `virsh edit $VM`:
 

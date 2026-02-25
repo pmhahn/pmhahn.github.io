@@ -3,6 +3,7 @@ title: 'Debian 102: maintainer scripts'
 date: '2021-12-14T09:50:44+01:00'
 layout: post
 categories: debian
+excerpt_separator: <!--more-->
 ---
 
 During Debian package installation, upgrade, downgrade and remove the so called [Debian Package maintainer scripts]({% post_url 2020-06-11-dpkg-compareversions %}) are called before and after certain actions:
@@ -22,6 +23,8 @@ During Debian package installation, upgrade, downgrade and remove the so called 
 
 That’s simplified as the scripts are called with additional parameters.
 These extra arguments allow you to distinguish new installations from upgrades and are also used to handle error cases.
+
+<!--more-->
 
 ## New installation
 

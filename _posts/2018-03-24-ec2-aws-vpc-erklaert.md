@@ -3,9 +3,12 @@ title: 'EC2: AWS-VPC erklärt'
 date: '2018-03-24T08:54:20+01:00'
 layout: post
 categories: network virt
+excerpt_separator: <!--more-->
 ---
 
 Oder: Warum `ucs-test` in EC2 so langsam ist – Folge 1
+
+<!--more-->
 
 Ein VPN ist ein abgeschottetes Netzwerk. Amazon nennt es VPC.
 In EC2 nutzen wir dafür den IPv4-Adressbereich `10.210.0.0/16`.

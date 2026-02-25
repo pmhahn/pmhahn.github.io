@@ -3,11 +3,14 @@ layout: post
 title: "GIT filter-branch"
 date: 2019-02-28 07:59:00  +0100
 categories: git
+excerpt_separator: <!--more-->
 ---
 
 `git-filter-branch` can be used to rewrite the history of one or more branches.
 As a [Debian Developer](https://www.debian.org/) working for [Univention GmbH](https://www.univention.de/) I often have to work with Debian packages.
 Here are some more examples from my daily work.
+
+<!--more-->
 
 Removing files
 ==============

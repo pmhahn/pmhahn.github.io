@@ -162,3 +162,5 @@ So be careful and do it right if your shell script starts  using `trap`.
 1. Use `bash` as it has consistent handling of `trap EXIT`.
 2. If you want to or must use other shells: Do not use the same `cleanup` trap of `EXIT` and other signals.
 3. If you trap signals, make sure to reset the handler and to re-raise the signal to properly propagate them.
+
+{% include abbreviations.md %}

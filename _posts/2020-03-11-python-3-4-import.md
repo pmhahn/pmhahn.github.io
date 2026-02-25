@@ -3,7 +3,13 @@ title: 'Python 3.4: import'
 date: '2020-03-11T09:41:35+01:00'
 layout: post
 categories: python
+excerpt_separator: <!--more-->
 ---
+
+Python kann Pakete und Module auf sehr unterschiedliche Art und Weise importieren.
+Hier eine kurze Übersicht.
+
+<!--more-->
 
 ## relativ vs. absolut
 

@@ -3,11 +3,14 @@ title: 'Python 105: wheels'
 date: '2022-10-15T15:49:11+02:00'
 layout: post
 categories: python
+excerpt_separator: <!--more-->
 ---
 
 Python *wheels* are a distribution format for Python packages defined by [PEP-427](https://peps.python.org/pep-0427/).
 As long as your package is simple and just consists of a bunch of Python files, creating and shipping a *source only distribution* is probably fine.
 But as soon your Python package build process takes time or needs (many) other dependencies to build — or even worse — it needs some (C-)compiler and libraries plus their development headers, those packages become a pain.
+
+<!--more-->
 
 ```console
 $ docker run --rm -ti python:3-slim pip install libvirt-python

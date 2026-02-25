@@ -1,8 +1,9 @@
 ---
-title: '"iproute2" statt "ifconfig,route,vconfig,ifenslave,brctl"'
+title: 'TotW: "iproute2" statt "ifconfig,route,vconfig,ifenslave,brctl"'
 date: '2016-04-07T17:00:58+02:00'
 layout: post
 categories: network linux
+excerpt_separator: <!--more-->
 ---
 
 Mit `iproute2` hat Linux schon lange einen Nachfolger für die althergebrachten Tools wie `ifconfig` und `route`.
@@ -11,7 +12,9 @@ Der exakte Umfang hängt allerdings von der Kernel-Version und von der Paket-Ver
 
 Mit [iproute2](http://baturin.org/docs/iproute2/) gibt es eine sehr schöne Übersicht, was man mit iproute so alles machen kann:
 
-# **Ethernet-Interface** konfigurieren (<del>ifconfig</del>,<del>route</del>)
+<!--more-->
+
+## **Ethernet-Interface** konfigurieren (<del>ifconfig</del>,<del>route</del>)
 
 ```bash
 ip addr replace 10.200.17.2/24 dev "eth0"
@@ -34,7 +37,7 @@ ip link set dev "eth-ssh" up
 ip link del dev "eth-ssh"
 ```
 
-# **Bridge** einrichten (<del>brctl</del>, <ins>bridge</ins>)
+## **Bridge** einrichten (<del>brctl</del>, <ins>bridge</ins>)
 ```bash
 ip link add name "br-inet" type bridge
 ip addr add 10.200.17.2/24 dev "br-inet"
@@ -44,7 +47,7 @@ ip link set dev eth0 up
 ip route replace default via 10.200.17.1 dev "br-inet"
 ```
 
-# **802.1q VLAN** einrichten (<del>vconfig</del>)
+## **802.1q VLAN** einrichten (<del>vconfig</del>)
 ```bash
 ip link add name "vlan-phahn17" link eth0 type vlan id 17
 ip addr add 10.200.17.2/24 dev "vlan-phahn17"
@@ -53,7 +56,7 @@ ip link set dev "vlan-phahn17" up
 ip link del dev "vlan-phahn17"
 ```
 
-# **Kanal-Bündelung** (Bonding) einrichten (<del>ifenslave</del>)
+## **Kanal-Bündelung** (Bonding) einrichten (<del>ifenslave</del>)
 ```bash
 ip link add name "bond-intern" type bond
 ip link set dev eth0 master "bond-intern"
@@ -62,7 +65,7 @@ echo … >/sys/class/net/"bond-intern"/bonding/…
 ip link del dev "bond-intern"
 ```
 
-# **tap**-Interface für Ethernet-Frames anlegen (<del>tunctl</del>,<del>openvpn --mktun</del>)
+## **tap**-Interface für Ethernet-Frames anlegen (<del>tunctl</del>,<del>openvpn --mktun</del>)
 
 Das eine Ende ist ein Netzwerk-Interface `tap0`, das andere ein Device-File `/dev/net/tun`, aus dem Ethernet-Frames heraus kommen bzw. geschrieben werden können.
 ```bash
@@ -78,7 +81,7 @@ Allerdings kann (Design-bedingt) der Host dann nicht direkt mit den VMs kommuniz
 Hintergrund ist, dass die Linux-Bridge eher ineffizient ist, weil das Ethernet-Device dann im promiscuous-Modus laufen muss und damit zu viele Pakete aus dem Netzwerk die Bridge erreichen und damit von der Host-CPU gefiltert werden müssen.
 Mit `macvtap` bekommt jede VM seine eigene MAC-Adresse und nur diese werden über das Ethernet-Device an den Switch publiziert, so dass dieser schon die Pakete filtern kann.
 
-# **Virtual-Ethernet-Device** (veth) einrichten
+## **Virtual-Ethernet-Device** (veth) einrichten
 
 Prinzipiell nur ein Patch-Kabel zwischen zwei Netzwerk-Interfaces, die direkt miteinander verbunden sind, ohne `/dev/net/tun` dazwischen.
 Nützlich für Container oder für die direkte Kommunikation zweier lokale Prozesse, die nur per Netzwerk kommunizieren.

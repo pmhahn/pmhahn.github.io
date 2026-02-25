@@ -3,11 +3,15 @@ title: 'Python Garbage Collection'
 date: '2020-08-03T07:24:07+02:00'
 layout: post
 categories: python
+excerpt_separator: <!--more-->
 ---
 
 Man sollte mit `__del__()`-Methoden in Python sehr aufpassen:
-
 Der [Garbage Collector](https://docs.python.org/3/library/gc.html) (GC) von Python räumt im Gegensatz zu anderen Sprachen auch zyklische Strukturen auf, jedoch ist das deutlich komplizierter.
+Das kann deshalb zu unerwarteten Problemen führen.
+
+<!--more-->
+
 Normalerweise werden Objekt über die Referenzzählung freigegebenen:
 
 > root -> a[1] -> b[1]

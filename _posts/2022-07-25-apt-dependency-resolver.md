@@ -23,7 +23,7 @@ Simplify specifying one additional dependency on the command line made it work.
 
 So what happened and why did APT refuse the initial command?
 
-# Resolver
+## Resolver
 
 [Dependency resolution](https://github.com/Debian/apt#dependency-resolution) has some very useful information on how the resolver works:
 > APT works in its internal resolver in two stages:
@@ -58,7 +58,7 @@ LC_ALL=C apt-get install \
 - `-o Debug::pkgProblemResolver::ShowScores=yes` shows the calculated *importance* score of all packages.
 - `univention-s4-connector` is the package to install.
 
-# Explanation
+## Explanation
 
 ```
 Reading package lists...
@@ -67,7 +67,7 @@ Reading state information...
 ```
 Some progress information.
 
-## Mark phase
+### Mark phase
 ```
   MarkInstall univention-s4-connector:amd64 < none -> 14.0.10-2A~5.0.0.202207141231 @un puN Ib > FU=1
   Installing attr as Depends of univention-s4-connector
@@ -192,7 +192,7 @@ For each package a line consisting of multiple fields is printed by [apt-pkg/pre
 - `>` end of package details
 - `FU=1` for packages named on the command line, otherwise `FU=0`.
 
-## Conflict resolution phase
+### Conflict resolution phase
 
 ```
 Starting pkgProblemResolver with broken count: 1
@@ -302,7 +302,7 @@ For that it cancels the upgrade of `libldb2`, which re-established the constrain
 ```
 The canceled upgrade of `libdb2` bubbles up the chain and the installation command aborts with an error.
 
-# Fixes
+## Fixes
 
 There are multiple *fixes*, to get the installation working.
 
@@ -318,13 +318,13 @@ There are multiple *fixes*, to get the installation working.
 According to my gut feeling I think 3 is the most correct one, but if you know better:
 please mail me.
 
-# Post Script
+## Post Script
 
 After publishing this and also asking the [APT Team](https://lists.debian.org/deity/2022/07/msg00033.html) _Andre Wagner_ mailed me this link:
 [An Ubuntu 22.04 LTS Fix Is Coming For A Very Annoying & Serious APT Problem](https://www.phoronix.com/news/Ubuntu-22.04-APT-Breaks-Things)
 It points to an [Ubuntu bug report](https://www.phoronix.com/news/Ubuntu-22.04-APT-Breaks-Things) and includes [a patch](https://salsa.debian.org/apt-team/apt/-/merge_requests/248), which was [merged](https://salsa.debian.org/apt-team/apt/-/merge_requests/248) 2 weeks ago into [apt](https://salsa.debian.org/apt-team/apt/-/merge_requests/248).
 
-# Disclaimer
+## Disclaimer
 
 Please note that there are different tools, which might use different resolvers:
 - `apt-get` is the stable command line tool, which should be used from scripts.

@@ -4,11 +4,14 @@ date: '2019-03-07T17:23:13+01:00'
 layout: post
 categories: virt
 tags: totw
+excerpt_separator: <!--more-->
 ---
 
 Q: Wie kann ich XML-Definition von VMs anpassen?
 
 A: `virsh edit` kennen vermutlich inzwischen viele, aber das erfordert Handarbeit und lässt sich nicht automatisieren.
+
+<!--more-->
 
 Alternativ kann man das Debian-Paket `virtinst` installieren, was dann u.a. `virt-xml` mitbringt, mit dem man per Kommandozeile VMs modifizieren kann:
 

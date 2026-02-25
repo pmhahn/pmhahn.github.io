@@ -3,11 +3,15 @@ title: 'The Unicode desaster'
 date: '2013-04-17T18:30:42+02:00'
 layout: post
 categories: python
+excerpt_separator: <!--more-->
 ---
 
 Wenn man das Zeichen-Encoding richtig machen will, empfiehlt es sich, intern mit Unicode zu arbeiten und bei jedem Zugriff auf das Dateisystem die Daten zwischen dem internen Unicode-Format und der externen Kodierung zu konvertieren.
 Leider ist Python-2 aus [Kompatibilitätsgründen](http://fedoraproject.org/wiki/Features/PythonEncodingUsesSystemLocale) dazu gezwungen, sein altes kaputtes Verhalten beizubehalten.
 Besser wird es erst mit Python 3, wo dann alle Zeichenketten standardmäßig Unicode verwenden und man explizit sagen muß, wenn man ein Byte-Array haben möchten.
+
+<!--more-->
+
 Kaputt deswegen, weil:
 
 ```console

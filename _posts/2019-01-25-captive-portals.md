@@ -3,6 +3,7 @@ title: 'Automagischer Login an Captive Portals'
 date: '2019-01-25T17:16:04+01:00'
 layout: post
 categories: network
+excerpt_separator: <!--more-->
 ---
 
 Wer wie ich öfters mit der Bahn unterwegs ist weiß, dass in einigen Zügen die Bahn inzwischen WLAN anbietet:
@@ -11,6 +12,8 @@ Die Bahn greift dabei auf die Technologie des Unternehmens [Hotsplots](https://w
 Nachdem man eine IP-Adresse per DHCP bekommen hat kann man noch nicht direkt los legen, sondern muss auf einer Portalseite zunächst die AGB akzeptieren.
 Dazu braucht man einen Browser.
 Das nervt mich, wenn ich das jedesmal wieder von Hand machen muss.
+
+<!--more-->
 
 Technisch funktionieren diese sogenannten [Captive Portals](https://de.wikipedia.org/wiki/Captive_Portal) (CP) so:
 

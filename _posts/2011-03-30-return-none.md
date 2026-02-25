@@ -3,10 +3,13 @@ title: 'return None'
 date: '2011-03-30T13:32:58+02:00'
 layout: post
 categories: python
+excerpt_separator: <!--more-->
 ---
 
 C-Programmierer kennen es zu genüge, das im Fehlerfall solch passenden Werte wie `NULL` oder `-1` zurückgegeben werden.
 Leider ist diese Art der Fehlerbehandlung auch in etlichen Python-Programmen gang und gebe, die meiner bescheidenen Meinung die Fehlersuche und Behandlung erschweren.
+
+<!--more-->
 
 Das Problem ist meiner Meinung nach, dass man sich für den Fehlerfall kreative Rückgabewerte überlegen muss, die dann bei falscher oder sogar fehlender Fehlerbehandlung entsprechend kreativ interpretiert werden und dazu führen, dass die seltsamsten Folgefehler auftreten, die dann nur noch schwerer zu finden sind.
 Prominentes Beispiel dafür ist sicherlich [Ariane 5 Flug 501](http://de.wikipedia.org/wiki/Ariane_V88).

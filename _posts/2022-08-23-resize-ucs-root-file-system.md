@@ -3,11 +3,14 @@ title: 'Resize UCS root file system'
 date: '2022-08-23T18:13:41+02:00'
 layout: post
 categories: UCS filesystem
+excerpt_separator: <!--more-->
 ---
 
 Q: How do I resize the root file system of my UCS VM?
 
 A: It depends on if you are using *Logical Volume Manager* (LVM) or not.
+
+<!--more-->
 
 ## With LVM
 

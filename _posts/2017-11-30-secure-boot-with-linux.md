@@ -3,6 +3,7 @@ layout: post
 title: "Secure Boot with Linux"
 date: 2017-11-30 13:07:00  +0100
 categories: linux security
+excerpt_separator: <!--more-->
 ---
 
 Why
@@ -17,6 +18,8 @@ For QEMU/KVM there is "OVMF":
 It is based on the EDK2 (EFI Development KIT).
 It is developed by the "TianoCore" community.
 It has not keys pre-installed.
+
+<!--more-->
 
 You either have to get your boot-loader (GRUB), Linux-kernel signed by that key owner, or install your own PK.
 Microsoft will not sign GRUB2 directly:

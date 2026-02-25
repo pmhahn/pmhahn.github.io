@@ -3,6 +3,7 @@ title: 'RFC: Bash quiz: $1 gleiche Zeichen $2'
 date: '2011-09-28T07:48:05+02:00'
 layout: post
 categories: shell
+excerpt_separator: <!--more-->
 ---
 
 Auf der Suche nach $1 gleichen Zeichen $2 hatte ich ursprünglich folgenden Code:
@@ -15,6 +16,8 @@ ruler () {  # count char
     done
 }
 ```
+
+<!--more-->
 
 Daraus ist dann irgendwann folgendes entstanden:
 ```bash

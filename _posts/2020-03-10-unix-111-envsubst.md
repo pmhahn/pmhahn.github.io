@@ -1,9 +1,10 @@
 ---
-title: 'UNIX 111: envsubst'
+title: 'TotW: envsubst'
 date: '2020-03-10T14:55:35+01:00'
 layout: post
 categories: shell UCS
 tags: totw
+excerpt_separator: <!--more-->
 ---
 
 UCR implementiert einen Template-Mechanismus:
@@ -16,6 +17,8 @@ In vielen anderen Situationen wird gerne `sed` (oder ähnliches) genutzt, um Pla
 echo '@XXX@' | sed -e "s/@XXX@/$(hostname)/g"
 ```
 Bei dieser Art der Ersetzung übersieht man gerne, dass man dort eigentlich die Werte passend escapen muss, denn ein `/` würde hier den sed-Befehl ändern.
+
+<!--more-->
 
 Eine Alternative ist [`envsubst`](man:envsubst(1)) aus den `gettext-base`, mit denen man über die Prozess-Umgebungsvariablen eine Ersetzung durchführen kann:
 ```bash

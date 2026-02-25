@@ -3,6 +3,7 @@ layout: post
 title: "Reproducible Build"
 date: 2019-04-09 17:54:00  +0200
 categories: debian
+excerpt_separator: <!--more-->
 ---
 
 [Debian](https://www.debian.org/) had started to make their build reproducible:
@@ -11,6 +12,8 @@ This allows anybody to verify that nobody tempered with the build system.
 
 More Linux and BSD distributions joined that effort.
 For that the project was later moved to <https://reproducible-builds.org/>.
+
+<!--more-->
 
 Build date
 ==========

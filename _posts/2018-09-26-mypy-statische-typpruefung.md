@@ -3,12 +3,15 @@ title: 'mypy: statische Typprüfung'
 date: '2018-09-26T16:22:38+02:00'
 layout: post
 categories: python
+excerpt_separator: <!--more-->
 ---
 
 [mypy](http://mypy-lang.org/) prüft statisch (d.h. zur Entwicklungszeit und nicht während der Laufzeit) Python-Code auf korrekte Datentypen.
 Eigentlich ist Python ja untypisiert, was schön ist, weil man nicht Variablken vorab deklarieren muss und damit jede Menge Tipparbeit spart.
 Andererseits führt das eben dann ggf. erst zur Laufzeit dazu, dass einem der Code um die Ohren fliegt, weil Typen eben nicht kompatibel sind.
 <!-- Teile von UCS enthalten inzwischen bereits die notwendigen Typ-Auszeichungen. Sönke hat zudem dazu mal im [8. Hackathon](https://mail.univention.de/appsuite/#!&app=io.ox/files&folder=1401&id=1401/2637) auch ein Programm geschrieben, was einem hilfe, diese zu erstellen. -->
+
+<!--more-->
 
 Neuerdings (zumindest in der aktuelle Version 0.630) hinterlässt `mypy` aber im aktuellen Arbeitsverzeichnis ein verstecktes Verzeichnis `.mypy_cache`, was ich ziemlich nervig finde.
 Zum Glück kann man über eine zentrals [Konfigurationsdatei](https://mypy.readthedocs.io/en/latest/config_file.html) `~/.mypy.ini` auch sagen, dass man selber lieber ein zentrales Verzeichnis verwenden will:

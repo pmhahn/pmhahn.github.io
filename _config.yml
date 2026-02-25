@@ -109,4 +109,4 @@ exclude:
 
 # Install: sudo apt install jekyll ruby-jekyll-paginate-v2 ruby-jekyll-sitemap ruby-jekyll-feed ruby-classifier-reborn
 # Build: jekyll b
-# Serve: jekyll s
+# Serve: jekyll s -w -l -D -H 0.0.0.0

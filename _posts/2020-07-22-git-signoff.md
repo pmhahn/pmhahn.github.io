@@ -3,12 +3,15 @@ layout: post
 title: "Sign-off multiple previous GIT commits"
 date: 2020-07-22 13:45:00  +0200
 categories: git
+excerpt_separator: <!--more-->
 ---
 
 Working for `libvirt` I had to add the [Developer Certificate of Origin](http://developercertificate.org/) to several previous commits, where I forgot to directly use `git commit --signoff`.
 [StackOverflow](https://stackoverflow.com/questions/13043357/git-sign-off-previous-commits) has that question, but it started missing `-s` for `--signoff` with `-S` for `--gpg-sign`.
 
 At the end I used the following so sign the last 89 commits:
+
+<!--more-->
 
 ```bash
 git config trailer.sign.key 'Signed-off-by'

@@ -3,6 +3,7 @@ title: 'Debian Secure-Boot Sprint 2018'
 date: '2018-04-11T11:14:47+02:00'
 layout: post
 categories: debian security
+excerpt_separator: <!--more-->
 ---
 
 Letzte(s) Woche(nende) war ich in Fulda auf dem [Debian Secure-Boot Sprint](https://wiki.debian.org/Sprints/2018/SecureBootSprint).
@@ -14,6 +15,8 @@ Die Herausforderung für Debian besteht darin, das es dort viele Entwickler gibt
 - der SHIM-Maintainer
 - der Maintainer vom fwupdate-Paket
 - die Mitglieder des Security-Teams
+
+<!--more-->
 
 Diese sind weltweit verstreut und brauchen alle Zugriff auf den den einen Schlüssel, der im SHIM von Debian verankert ist.
 Microsoft fordert aber in seiner [Richtlinie](https://blogs.msdn.microsoft.com/windows_hardware_certification/2013/12/03/microsoft-uefi-ca-signing-policy-updates/), das dieser private Schlüssel in einem Hardware-Token gespeichert ist, was Debian vor das Problem stellt, eine zentrale Infrastruktur für das Signieren zu haben.

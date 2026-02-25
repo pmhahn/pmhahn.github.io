@@ -4,6 +4,7 @@ date: '2011-04-05T16:40:05+02:00'
 layout: post
 categories: debian
 tags: apt
+excerpt_separator: <!--more-->
 ---
 
 Sönke suchte eine einfache Möglichkeit, alle veralteten Kernel von einem System zu löschen.
@@ -15,6 +16,8 @@ aptitude remove '?and(?installed,
 ?not(?reverse-Depends(?and(?name(univention-kernel-image-*),
 ?version(TARGET))))))'
 ```
+
+<!--more-->
 
 *Aptitude* unterstützt eine Form der Prädikatenlogik, mit der sich [komplexe Suchanfragen](http://algebraicthunk.net/~dburrows/projects/aptitude/doc/en/ch02s03s05.html "Aptitude Search Term Reference") formulieren lassen.
 Hier wird diese dazu genutzt, „alle installierten Linux-Kernel-Pakete zu löschen, auf die kein aktuelles Univention-Kernel-Paket mehr verweist.“

@@ -4,6 +4,7 @@ date: '2022-12-19T16:52:27+01:00'
 layout: post
 categories: python
 tags: auditd pipe
+excerpt_separator: <!--more-->
 ---
 
 Univention Corporate Server (UCS) is a Debian GNU/Linux based enterprise operating system.
@@ -12,6 +13,8 @@ Most of the time this worked without problems but recently our tests were failin
 Any *expert* will already think of *timing issues* and at the end it actually will be.
 
 I invite you to follow me on the twisted road deep down into the technical details of our test infrastructure called `vnc-automate`.
+
+<!--more-->
 
 ## Motivation
 

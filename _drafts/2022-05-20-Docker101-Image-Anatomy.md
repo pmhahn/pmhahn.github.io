@@ -17,21 +17,21 @@ When working with images multiple layers are involved:
 
 <!--more-->
 
-# Docker registry layout
-## Directory
+## Docker registry layout
+### Directory
 At the top you have a **directory** like [Docker Hub](https://hub.docker.com/) or [Quay.io](https://quay.io/) or a [Gitlab container registry](https://docs.gitlab.com/ee/user/packages/container_registry/) or a [private docker registry](https://docs.docker.com/registry/) like `docker-registry.knut` or [docker.software-univention.de](https://docker.software-univention.de/v2/_catalog). They map **image names and tags** to an image, which is known by its sha256 hash. This mapping is **volatile** and can be updated any time. If you want [reproducible build](https://reproducible-builds.org/) you should do this lookup once manually and then specify the sha256 instead of the name.
 
-## Manifests
+### Manifests
 An image is described by a **manifest**, which names the *architecture* the image is for, references a *configuration* document by sha256 and all the stacked *layers* by there hash required to assemble the complete image.
 Multiple architectures can be supported by building the image for each architecture and pushing them to the same name. This creates an additional manifest for each architecture and also a **manifest-list**, which references all of them and itself is pointed to in the directory.
 
-## Layers
+### Layers
 Each **layer** consists of a set of files, which are additive by nature. They have to be stacked over each other in the right order to assemble the complete file system. Each layer is read-only to prevent any kind of modification. A writable layer is put on top last to allow multiple containers to use the same image without interfering with each other. Changing an existing file will trigger a *pull-up*, where the original file is copied from its read-only-layer to the writable top-layer first before the write occurs. Deleting a file will simply create a *white-out* entry in the top-layer, which will hide the underlying file, so this actually will not free any space.
 
-# Examples
+## Examples
 You need some tools like `curl`, `jq` and most importantly `docker`.
 
-## Pulling an image
+### Pulling an image
 Here is what happens when you do a `docker pull debian` on the command line.
 First the *repository tag* is normalized:
 
@@ -123,7 +123,7 @@ curl -fsSL -D ./layer.head -o ./layer.body \
   'https://registry-1.docker.io/v2/library/debian/blobs/67e8aa6c8bbc76b1f2bccb3864b0887671833b8667dc1f6c965fcb0eac7e6402'
 ```
 
-## Building an image
+### Building an image
 The following `Dockerfile` is used as an example:
 
 ```Dockerfile
@@ -208,4 +208,6 @@ Successfully built 16d8a396acd5Successfully tagged anatomy:latest
 ```
    This concludes the build and prints out the *image ID*. In addition to that it also associates a local *image tag* with that hash.
 
-## Pushing an image
+### Pushing an image
+
+{% include abbreviations.md %}

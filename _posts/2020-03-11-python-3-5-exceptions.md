@@ -3,6 +3,7 @@ title: 'Python 3.5: exceptions'
 date: '2020-03-11T10:19:27+01:00'
 layout: post
 categories: python
+excerpt_separator: <!--more-->
 ---
 
 Folgendes ist mit Python 3 syntaktisch nicht mehr erlaubt:
@@ -19,6 +20,8 @@ try: pass
 except ExceptionType as (a, b, c):
  pass
 ```
+
+<!--more-->
 
 Statt dessen sollte man die neue Syntax verwenden:
 ```python

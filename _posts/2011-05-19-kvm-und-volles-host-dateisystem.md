@@ -3,6 +3,7 @@ title: 'KVM und volles Host-Dateisystem'
 date: '2011-05-19T08:11:23+02:00'
 layout: post
 categories: virt
+excerpt_separator: <!--more-->
 ---
 
 Bei KVM wird fast immer das Qcow2-Dateiformat für die Speicherung des Festplattenimmages verwendet.

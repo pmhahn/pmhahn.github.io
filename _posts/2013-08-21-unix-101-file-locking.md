@@ -4,9 +4,12 @@ date: '2013-08-21T05:51:15+02:00'
 layout: post
 categories: filesystem
 tags: locking
+excerpt_separator: <!--more-->
 ---
 
 Ich könnte diese Folge auch „Schlaflos in Oldenburg“ nennen, aber hier ein Beispiel, wie man es nicht macht (in Auszügen):
+
+<!--more-->
 
 ```python
 class Source(object):

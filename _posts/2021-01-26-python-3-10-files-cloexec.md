@@ -3,12 +3,15 @@ title: 'Python 3.10: files CLOEXEC'
 date: '2021-01-26T11:12:11+01:00'
 layout: post
 categories: python
+excerpt_separator: <!--more-->
 ---
 
 In Python 3 gabt es mehrere wichtige Änderung bezüglich Dateien und Prozessen:
 Um aus [open()](https://docs.python.org/3.7/library/functions.html#open) zu zitieren:
 
 > The newly created file is [non-inheritable](https://docs.python.org/3.7/library/os.html#fd-inheritance).
+
+<!--more-->
 
 Bisher wurden Dateien normal geöffnet, d.h. Kindprozesse haben diese geöffneten Dateideskriptoren geerbt und sich diese mit den Eltern geteilt.
 Das ist das Standardverhalten, was notwendig ist, damit Prozesse gemeinsam an Dateien arbeiten können:

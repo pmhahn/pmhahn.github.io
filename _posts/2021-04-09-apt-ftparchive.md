@@ -15,14 +15,14 @@ Basically it contains the concatenated package meta data from all packages.
 
 <!--more-->
 
-# Tools
+## Tools
 
-## `dpkg`
+### `dpkg`
 
 Basically you can get the meta data from `dpkg -I $pkg.deb` or `dkg -s $pkg`.
 For multiple packages you have to iterate that for each package.
 
-## `dpkg-scanpackages`
+### `dpkg-scanpackages`
 
 There even is [dpkg-scanpackages](man:dpkg-scanpackages(1)), which does this by scanning the given directory recursively.
 
@@ -33,7 +33,7 @@ So instead of just re-rebuilding the package just for that the `Section` or `Pri
 
 For source packages there is `dpkg-scansources`, which is used to generates the `Sources` files.
 
-## `apt-ftparchive`
+### `apt-ftparchive`
 
 [apt-ftparchive](man:apt-ftparchive(1)) is an improved version, which can do much more.
 In combines `dpkg-scanpackages` with `dpkg-scansources`, but also can generate the `Releases` file.
@@ -41,7 +41,7 @@ In addition to all those `Packages` and `Sources` files it may also list other f
 The file is often associated wit a `Releases.gpg` file containing the GnuPG signature required for checking the security chain.
 Newer releases are using a `InRelease` files, which contains the signature inline to allow atomic testing.
 
-# Caching
+## Caching
 
 On top of the `apt-ftparchive` also adds caching.
 Basically all tools from above still use `dpkg -I` to do the heavy listing.
@@ -53,7 +53,7 @@ When next time the index is re-built, the meta data from the cache is used if av
 The cache uses a simple *Berkeley database*.
 The file can be specified with `-d` / `--db` / `-o APT::FTPArchive::DB`.
 
-## Uniqueness
+### Uniqueness
 
 For Debian package repositories there is a very important rule:
 
@@ -67,7 +67,7 @@ This easily happens if a package is re-built, bit is not [reproducible](https://
 In that case `apt-ftparchive` would re-used the **old** meta-data for the **new** content.
 This usually breaks when such a package is first downloaded by a client as then the file checksums no longer match!
 
-## Invalidation
+### Invalidation
 
 This can be solved in two ways:
 
@@ -76,7 +76,7 @@ This can be solved in two ways:
    This will store the package files modification time-stamp with the cache entry.
    The cached entry is then only used if the files time-stamp is still the same.
 
-## Performance issues
+### Performance issues
 
 Enabling `AlwaysStat` may create a performance problem:
 For each binary package file `apt-ftparchive` now needs to do a `stat()` call to get the I-node information.
@@ -86,7 +86,7 @@ This get much worse if you do this over NFS as there each `stat()` call takes a 
 Without `AlwaysStat` only a single `listdir()` call per directory *should* be needed.
 Everything else only requires looking up the returned file names in the cache, which mostly happens in memory.
 
-## File Tree Walk
+### File Tree Walk
 
 Actually you will notice that `apt-ftparchive` performs abyssal in the cold-cache case.
 It still does `stat()` calls for all files even when `AlwayStat` is disabled.
@@ -98,7 +98,7 @@ To **walk** the directory recursively it must check the type of the returned dir
 * *Symbolic links* may be skipped or followed.
 * Other types like *device files*, *UNIX sockets*, *named PIPEs* should be ignored.
 
-## `d_type`
+### `d_type`
 
 You will find using `find -type f` performing a lot better even in the cold-cache case.
 Normally a *directory entry* just maps the *name* to the *i-node number*.
@@ -110,14 +110,14 @@ If present the call to [lstat()](man:lstat(2)) can be skipped.
 Combining this with `AlwaysStat=false` makes `apt-ftparchive` really fast.
 But as `ftw()` is used internally you have to replace this with your own `find`.
 
-# Fast `apt-ftparchive`
+## Fast `apt-ftparchive`
 
 Instead you can give `apt-ftparchive` list of files to prevent it from using `ftw()` itself.
 But this does not work with `packages` and `sources`, but only with `generate`.
 Depending on the file type you specify those files using `FileList` and `SourceFileList`.
 They work in the sections `TreeDefault`, `Tree` and `BinDirectory`.
 
-## Build file lists
+### Build file lists
 
 Depending on your desired output format you have to separate the files by architecture and (micro) type manually:
 
@@ -130,7 +130,7 @@ find amd64 all source -maxdepth 1 \
   -name \*.dsc        -fprint .files/source.dsc
 ```
 
-## Common configuration
+### Common configuration
 
 Put this in and the following sections into a `dist.conf` file:
 
@@ -153,7 +153,7 @@ mkdir -p dists/dist/main/source
 mkdir -p dists/dist/main/debian-installer/binary-amd64
 ```
 
-## Build flat Packages file
+### Build flat Packages file
 
 Build a `Packages` or `Sources` file to be included with `deb [trusted=yes] file:///.../ amd64/` and `deb ... all/`:
 
@@ -180,7 +180,7 @@ BinDirectory "source" {
 };
 ```
 
-## Build dists Packages file
+### Build dists Packages file
 
 Build a `Packages` or `Sources` file to be included with `deb [trusted=yes] file:///.../ dist main`:
 
@@ -206,7 +206,7 @@ Tree "dists/dist/" {
 };
 ```
 
-# Summary
+## Summary
 
 1. Do not use `ftw()` on large directories.
 2. In Python use [scandir()](https://docs.python.org/3/library/os.html#os.scandir) instead of [listdir()](https://docs.python.org/3/library/os.html#os.listdir).
@@ -214,11 +214,11 @@ Tree "dists/dist/" {
 4. The cache lookup used the path as given;
    make sure to not prefix it with `./` only in same cases as this leads to duplicate cache entries.
 
-# Appendix
+## Appendix
 
 There are some other knobs for tuning:
 
-## Hash algorithms
+### Hash algorithms
 
 Calculating the different hash sums takes time.
 You can enable / disable them individually by specifying the following options:
@@ -233,7 +233,7 @@ This can also be configured for `Packages` and `Sources` individually:
 * `apt::ftparchive::packages::<ALGO> "<BOOL>";`
 * `apt::ftparchive::sources::<ALGO> "<BOOL>";`
 
-## Compression formats
+### Compression formats
 
 You can also configure the compression formats:
 
@@ -245,7 +245,7 @@ You can also configure the compression formats:
 * `.zstd`
 * `.xz`
 
-## Contents
+### Contents
 
 Each binary package ships directories and files.
 You can get their paths from `dpkg -c $pkg.deb` or `dpkg -L $pkg` for a single package.
@@ -255,7 +255,7 @@ This is useful is you want to know which packages ship which files.
 Extracting this data, storing it in the cache, putting it into the file and compressing it takes some time.
 This must be enabled explicitly with `--contents` or `-o apt::ftparchive::contents=true`.
 
-## Internals: Cache format
+### Internals: Cache format
 
 The format of the cache file is an internal detail of `apt-ftparchive`.
 Normally you should not use it yourself, but knowing the format helps with debugging.

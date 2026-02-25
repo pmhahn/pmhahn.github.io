@@ -4,6 +4,7 @@ date: '2021-01-15T18:28:11+01:00'
 layout: post
 categories: linux security
 tags: auditd
+excerpt_separator: <!--more-->
 ---
 
 In the [UMC-server vs. python-notifier pullcord](https://forge.univention.org/bugzilla/show_bug.cgi?id=52518) we had the situation, that an **unknown** process kept killing **other** processes from time to time and we had **no idea, which process** it was.
@@ -16,7 +17,9 @@ We tried several things:
 
 This never showed a process forking a `kill -SIGTERM $PID`, so we needed a bigger hammer.
 
-# strace
+<!--more-->
+
+## strace
 
 `strace` can be used to trace the system calls a process is doing.
 (System calls are the "doors" between user-space and kernel-space and do the transition from unprivileged user-space code to privileged kernel code.)
@@ -36,7 +39,7 @@ This never showed a process forking a `kill -SIGTERM $PID`, so we needed a bigge
 - By default only the first 32 characters of strings are logged.
   Use `-s 256` to increase that.
 
-# audit
+## audit
 
 The Linux kernel includes an [audit](https://github.com/linux-audit) framework, which you can think of as **`strace` on speed**.
 The [Linux Audit framework](https://pmhahn.github.io/audit/) can do a lot more than system call tracing:
@@ -79,7 +82,7 @@ too many rules led to to an release updates taking many hours instead of minutes
 
 The individual audit rule snippets must be concatenated to a single file `/etc/audit/audit.rules` and loaded into the Linux kernel, which is done by running `augenrules --load`.
 
-## auditd vs journald
+### auditd vs journald
 
 Afterwards the audit events are both logged into `/var/log/audit/audit.log` and to "systemd journal".
 To prevent the events being logged twice by `journald` and `auditd`, disable the first by running `systemctl mask systemd-journald-audit.socket`.
@@ -100,7 +103,7 @@ type=PROCTITLE msg=audit(1610524812.243:7148742): proctitle=2F7573722F62696E2F70
 - Use `--key Bug52518` to limit the output to those events tagged with the specified key.
 - You can use `--start 12.01.2021 12:00:00` and `--end 13.01.2021 13:00:00` to limit the time frame.
 
-## audit spam
+### audit spam
 
 In addition to our manually configured system call events many other services emit Audit events as well, which will clutter the log:
 
@@ -116,7 +119,7 @@ They can be filtered out by using the `exclude` list in `/etc/audit/rules.d/bug5
 
 We add the named [message types](https://github.com/linux-audit/audit-documentation/blob/master/specs/messages/message-dictionary.csv) to **always** to white list them, all other types are black listed by catching them with **never**.
 
-## Analysis
+### Analysis
 
 Use the above method we were able to capture (among others) the following event:
 
@@ -149,7 +152,7 @@ We only need `proctitle` to see, that `umc-server` is killing `umc-**web**-serve
 Those two processes are unrelated, as they have no immediate parent/child association.
 Investigating other usages of `sys_kill` by using the same technique showed `umc-server` to also kill many other processes like `s4c`, `univention-portal` and all other services using `/usr/bin/python2.7`.
 
-# gdb
+## gdb
 
 Next we did a source code audit of `umc-server`, but found "nothing":
 We only were able to construct an obscure case, were the new multi-process setup used `os.kill()`, but that mode was not enabled at both customers.

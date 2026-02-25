@@ -3,10 +3,13 @@ title: 'Python 3.2: __next__'
 date: '2020-03-10T18:18:01+01:00'
 layout: post
 categories: python
+excerpt_separator: <!--more-->
 ---
 
 Python 3 verwendet öfters Iteratoren als Python 2, so lieferen `dict().keys(), dict().values(), dict.items()` inzwischen Iteratoren statt Listen.
 In Python 2 wurde dafür extra `dict().iterkeys(), dict().itervalues(), dict().iteritems()` hinzugefügt, die es in Python 3 nicht mehr gibt.
+
+<!--more-->
 
 Das führt mit Python 3 aber dazu, das Konstrukte wie `dict().keys() + dict().keys()` nicht mehr funktioniert, weil hier jetzt zwei Iteratoren per `+` verknüpft werden soll anstatt von zwei Listen.
 Man kann dafür [itertools.chain()](https://docs.python.org/3/library/itertools.html#itertools.chain) verwenden oder muss es eben explizit umschreiben in `list(dict().keys()) + list(dict().keys())`.

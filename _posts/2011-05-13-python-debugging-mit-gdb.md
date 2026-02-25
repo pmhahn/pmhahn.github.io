@@ -3,6 +3,7 @@ title: 'Python debugging mit gdb'
 date: '2011-05-13T09:02:56+02:00'
 layout: post
 categories: python
+excerpt_separator: <!--more-->
 ---
 
 Wenn ein Python-Prozeß zu hängen scheint und keinen Mucks mehr von sich gibt, kann `gdb` noch ein Stück weiterhelfen um herauszubekommen, wo der Prozeß hängt.

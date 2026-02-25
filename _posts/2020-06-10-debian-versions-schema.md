@@ -4,11 +4,16 @@ date: '2020-06-10T18:03:32+02:00'
 layout: post
 categories: debian
 tags: version
+excerpt_separator: <!--more-->
 ---
 
 Die [Versionsnummer](man:deb-version(7)) von Debian-Paketen baut sich nach folgendem [Schema](https://www.debian.org/doc/debian-policy/ch-controlfields.html#version) auf:
 
 > [_Epoche_`:`]_UpstreamVersion_[`-`_DebianRevision_]
+
+Der Vergleich zweier solcher Versionsnummer hat aber noch einige Details, die es zum Teil in sich haben.
+
+<!--more-->
 
 ## Versions-Vergleich
 

@@ -10,7 +10,7 @@ Q: How do you find the process listening on an UNIX domain socket?
 
 <!--more-->
 
-# Intro
+## Intro
 
 UNIX domain sockets - like TCP sockets - provide a bi-directional for communication between processes.
 But in contrast to TCP sockets, they only exist locally on the host.
@@ -28,7 +28,7 @@ Therefor it is good practice for portable applications to put the socket in a se
 More details are described in the manual page [unix](man:unix(7)), which also includes an example C program.
 Python also provides support and includes server code in [socketserver](https://docs.python.org/3/library/socketserver.html).
 
-# The problem
+## The problem
 
 If we starts two processes listening on the same path, which one will get new connections?
 
@@ -56,7 +56,7 @@ nc: unix connect failed: Connection refused
 
 So given the *path* we want to find the *process* serving that *Inode*!
 
-# The duplicate issue
+## The duplicate issue
 
 Multiple processes serving the same socket often happens by accident as `bind()` fails if the socket still exists.
 If the server process crashes or does not cleanup the path itself, the server will fail to start next time.
@@ -81,7 +81,7 @@ If the old service is still running, its socket will no longer be reachable.
 
 Also be aware that `close()`ing the socket will not remove the socket path, so your daemon should `unlink()` it itself when shutting down.
 
-# The naive try
+## The naive try
 
 Do you know `fuser` and `lsof`?
 You should!
@@ -169,7 +169,7 @@ But we are still missing the link from the Inode in the file system path to the 
 The question is quiet popular and on [StackExchange](https://unix.stackexchange.com/questions/16300/whos-got-the-other-end-of-this-unix-socketpair) you will find interesting solutions like using `gdb /proc/kcore`.
 The `Num` column really is a kernel address, which can be linked to a [struct unix_sock](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/include/net/af_unix.h?id=master#n53), which then can be used to find the process.
 
-# Using `ss`
+## Using `ss`
 
 The Linux kernel implements the [sock_diag](man:sock_diag(7)) extension since 4.2, which provides additional information to diagnose socket issues.
 Using `ss` from [iproute2](https://wiki.linuxfoundation.org/networking/iproute2) starting with version [v4.19.0~55](https://git.kernel.org/pub/scm/network/iproute2/iproute2.git/commit/?id=0bab7630e38863d3d2a5ddaeabf8745c4258a1a9) does show the VFS information:
@@ -190,30 +190,30 @@ $ stat -c 'ino:%i dev:0/%d' /tmp/socket
 ino:1569946 dev:0/65025
 ```
 
-# Finally
+## Finally
 
 So finally we have a solution:
 
 1. `stat` the socket to get the device ID and Inode
 2. Use `ss --processes --unix --all --extened` to look-up that tuple and match it to the process ID.
 
-# More details
+## More details
 
 There are some more *nice-to-know* details about *UNIX domain sockets*, which are mostly irrelevant for this problem so far.
 But I want to mention them anyway for reference:
 
-## Abstract sockets
+### Abstract sockets
 There exist a second class called *abstract sockets*:
 * their path name starts with the `NUL` characters, making their path length 0.
 * then they can use the remaining 107 characters to define a unique identifier, which other programs can use to connect.
 * they are not represented in the file system.
 
-## Credential passing
+### Credential passing
 As the communicating processes are both local to the host, the listening process can get additional information from the sender.
 This includes the *process*, *user* and *group* IDs (PID, UID, GID).
 See `SCM_CREDENTIALS` in the manual page.
 
-## File descriptor passing
+### File descriptor passing
 UNIX domain sockets can be used to pass file descriptors between processes.
 This can be used to have a privileged process, which opens a file on request of another process.
 Usually it performs additional checks before it passes its opened file on to the requesting process.

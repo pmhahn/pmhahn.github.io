@@ -3,12 +3,15 @@ title: 'Shell-trivia #2: set -e'
 date: '2019-04-15T10:47:53+02:00'
 layout: post
 categories: shell
+excerpt_separator: <!--more-->
 ---
 
 Es gab bereits einen Blog-Eintrag [Shell-trivia #1: set -e]({% post_url 2015-10-19-shell-trivia-1-set-e %}), aus gegebenem Anlass hier die Fortsetzung:
 
 Per `set -e` kann man die Shell veranlassen, ein Skript abzubrechen, sobald eins der Kommandos fehlschlägt.
 Leider steckt der Teufel hier im Detail.
+
+<!--more-->
 
 Betrachten wir folgendes Beispiel:
 ```bash

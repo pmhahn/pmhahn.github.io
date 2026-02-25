@@ -3,6 +3,7 @@ title: 'Networking 101: IP and Ethernet'
 date: '2021-06-16T08:33:24+02:00'
 layout: post
 categories: network linux
+excerpt_separator: <!--more-->
 ---
 
 Aus gegebenen Anlass, weil scheinbar die Basics fehlen:
@@ -18,6 +19,8 @@ Der Netzwerk-Stack wird gerne in Schichten aufgeteilt, beim [OSI-Modell](https:/
 7. Anwendung (Application)
 
 Relevant für die heutige Nachhilfestunde sind nur **IP(v4)** und **Ethernet**.
+
+<!--more-->
 
 Das Schichtenmodell dient der Vereinfachung und Strukturierung.
 Betrachtet man eine Schichte, regelt diese die Kommunikation auf einer bestimmten Ebene.

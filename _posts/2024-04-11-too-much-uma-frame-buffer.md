@@ -3,6 +3,7 @@ title: 'Too much UMA frame buffer'
 date: '2024-04-11T14:34:39+02:00'
 layout: post
 categories: linux
+excerpt_separator: <!--more-->
 ---
 
 Some time ago I received a new Lenovo [P14s](https://www.lenovo.com/de/de/p/laptops/thinkpad/thinkpadp/thinkpad-p14s-gen-4-(14-inch-amd)-mobile-workstation/len101t0070) notebook.
@@ -10,6 +11,8 @@ My previous [L470](https://www.lenovo.com/de/de/p/laptops/thinkpad/thinkpadl/thi
 Since then I experienced regular stalls:
 Mostly during our daily video conferences the laptop locked up for some minutes;
 only after 1-2 minutes I was able to resume my work, but found some process(es) gone.
+
+<!--more-->
 
 Finally I was able to nail the issue down to a memory issue:
 The [Linux kernel out-of-memory-killer](https://www.kernel.org/doc/gorman/html/understand/understand016.html) (OOM-kill) found all memory used, tried to swap, failed, and then killed some process — mostly `thunderbird`.

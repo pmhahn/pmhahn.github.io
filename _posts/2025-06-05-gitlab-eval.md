@@ -123,3 +123,5 @@ Sadly the feature flag is still not enabled by default as of today, so please vo
 
 [1]: https://gitlab.com/gitlab-org/gitlab-runner/-/blob/main/shells/bash.go?ref_type=heads#L394-398
 [2]: https://gitlab.com/gitlab-org/gitlab-runner/-/issues/27909
+
+{% include abbreviations.md %}

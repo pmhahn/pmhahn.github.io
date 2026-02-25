@@ -3,11 +3,14 @@ layout: post
 title: "Lenovo ThinkPad L470 Firmware update with Linux"
 date: 2018-10-04 09:01:00  +0200
 categories: linux
+excerpt_separator: <!--more-->
 ---
 
 My company notebook (A Lenovo ThinkPad L470) sometimes crashed when I put it into the docking station:
 It turn back on, the external monitor turns on, but after that I only see a black screen with the mouse cursor.
 Today I had enough and performed the pending firmware update, which also includes the Intel CPU microcode updates.
+
+<!--more-->
 
 As a Linux only user performing the firmware update is still fun, as Lenovo provides only a [Windows tool](https://pcsupport.lenovo.com/de/de/downloads/ds120327) or as an alternative a [bootable CD](https://support.lenovo.com/de/de/downloads/ds120328).
 There also is the [Linux Vendor Firmware Service](https://fwupd.org/) which nowadays simplified the process and Levono also contributes to it, but not for my model.

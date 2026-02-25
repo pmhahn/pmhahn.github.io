@@ -4,6 +4,7 @@ date: '2017-03-01T17:30:41+01:00'
 layout: post
 categories: filesystem shell
 tags: find
+excerpt_separator: <!--more-->
 ---
 
 I had to search [man 1 find](man:find(1)) too often for `printf`:

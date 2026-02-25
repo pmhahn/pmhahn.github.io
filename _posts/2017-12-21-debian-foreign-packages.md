@@ -3,6 +3,7 @@ layout: post
 title: "Find Debian packages installed from removed source"
 date: 2017-12-21 17:06:00  +0100
 categories: debian
+excerpt_separator: <!--more-->
 ---
 
 Sometimes you add a temporary APT source to `/etc/apt/sources.list`, install same packages and remove the repository again.
@@ -12,6 +13,8 @@ Here is some handy shell command, to find those packages, which are
 
 * installed on your system
 * but have no version in any of the currently configured APT repositories:
+
+<!--more-->
 
 ```bash
 dpkg-query -W -f '${Package}\n' |

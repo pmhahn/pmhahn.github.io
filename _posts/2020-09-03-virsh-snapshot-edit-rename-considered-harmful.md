@@ -3,10 +3,13 @@ title: 'virsh snapshot-edit &#8211;rename considered harmful'
 date: '2020-09-03T11:59:58+02:00'
 layout: post
 categories: virt
+excerpt_separator: <!--more-->
 ---
 
 Recently I stumbled over the possibility to retro-actively modify the snapshot XML data of saved VMs.
 This is most helpful for fixing the fallout of [Bug #50412](https://forge.univention.org/bugzilla/show_bug.cgi?id=50414), where several CPUs features related to "TSX" where disabled by the Linux kernel to prevent the [TSX Asynchronous Abort vulnerability](https://wiki.ubuntu.com/SecurityTeam/KnowledgeBase/TAA_MCEPSC_i915).
+
+<!--more-->
 
 You can also use the `--rename` option, which allows you to rename your snapshots, but this is **buggy**:
 It only renames the XML file and the data within, but **not** the name of the snapshot within the QCOW2 file itself!

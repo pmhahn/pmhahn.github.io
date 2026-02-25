@@ -3,6 +3,7 @@ title: 'Pakete aus verschiedenen Repositories'
 date: '2011-05-23T12:48:22+02:00'
 layout: post
 categories: debian UCS
+excerpt_separator: <!--more-->
 ---
 
 Zum Testen des Univention-Updaters wird dieser oft auf einem alten UCS-System installiert und dann damit ein Update auf die aktuellste Version durchgeführt.
@@ -14,6 +15,8 @@ Um sicherzustellen, daß man nur den neueren Updater und nicht auch weitere Pake
 deb http://omar.knut.univention.de/build2/ ucs_2.4-0-ucs2.4-3/all/
 deb http://omar.knut.univention.de/build2/ ucs_2.4-0-ucs2.4-3/$(ARCH)/
 ```
+
+<!--more-->
 
 ```
 #/etc/apt/preferences

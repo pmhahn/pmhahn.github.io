@@ -126,3 +126,5 @@ Run `/usr/bin/mailman-web migrate` as user `root` to fix this.
 > django.template.exceptions.TemplateSyntaxError: 'humanize' is not a registered tag library.
 
 Adding `django.contrib.humanize` TO `INSTALLED_APPS` in `/etc/mailman3/mailman-web.py` fixes this.
+
+{% include abbreviations.md %}

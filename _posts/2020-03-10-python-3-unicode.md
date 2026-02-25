@@ -3,6 +3,7 @@ title: 'Python 3.3: unicode'
 date: '2020-03-10T23:39:42+01:00'
 layout: post
 categories: python
+excerpt_separator: <!--more-->
 ---
 
 In Python 2 sind Zeichenketten intern eine Ansammlung von Bytes, in Python 3 dagegen **Unicode-Zeichen**.
@@ -14,6 +15,8 @@ Nun gilt es umgekehrt und man muss Bytes explizit in Python 3 deklarieren.
 | `b"` | bytes    | bytes    |
 | `"`  | bytes    | unicode  |
 | `u"` | unicode  | unicode  |
+
+<!--more-->
 
 ## UTF-8
 

@@ -4,6 +4,7 @@ date: '2018-10-25T14:37:27+02:00'
 layout: post
 categories: shell
 tags: ldap
+excerpt_separator: <!--more-->
 ---
 
 Q: Wie war noch mal die Definition von **inetOrgPerson** im LDAP Schema?
@@ -14,6 +15,8 @@ A:
 ldapsearch -xLLLo ldif-wrap=no -b cn=Subschema -s base \
  objectClasses -E mv='(objectClasses=inetOrgPerson)'
 ```
+
+<!--more-->
 
 oder die vom Lieblingsgetränk:
 ```bash

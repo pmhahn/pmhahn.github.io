@@ -168,3 +168,5 @@ There you have to quote `"` and `'` manually.
 I leave that to you.
 
 I will simply accept `bash` and use `@Q` as that is much more readable and — most importantly — correct.
+
+{% include abbreviations.md %}

@@ -1,9 +1,9 @@
 ---
 title: 'TCP Keep Alive'
 date: '2011-04-19T18:03:12+02:00'
-excerpt: 'TCP Keepalive ist standardmäßig nicht aktiv.'
 layout: post
 categories: network
+excerpt_separator: <!--more-->
 ---
 
 Privat hatte ich neulich auf einem Server das Problem, daß dort massenhaft `imapd`-Prozesse liefen, die sich selbst nach Tagen nicht beendet haben, wie ein `ps u` mit gezeigt hat.
@@ -12,6 +12,11 @@ Grund war, das es sich um eine alte Version des Cyrus-Imap-Servers handelte, der
 Ein `strace -p` hat gezeigt, das dieser brav in einem `read(0)` blockiert war während der Partner dieser TCP-Verbindung schon längst Opfer einer DSL-Zwangstrennung geworden war, die dafür gesorgt hatte, das diese Verbindung nicht ordentlich beendet wurde.
 
 Nun mag sich der ein oder andere Fragen, warum diese Verbindung nicht durch irgendein Timeout beendet wurde?
+
+Die Antwort: TCP Keepalive ist standardmäßig nicht aktiv!
+
+<!--more-->
+
 Nun, die meisten TCP-Timeouts beziehen sich auf die Phase des Verbindungsaufbaus, nicht aber auf den regulären Betrieb!
 Da der Server dem Client in diesem Fall nichts mitzuteilen hat, wird nie ein Paket vom Server zum Client gesendet, anhand dessen der Server erkennen könnte, das der Client nicht länger erreichbar ist.
 So wartet der Server bis in alle Ewigkeit auf das nächste Paket vom Client.

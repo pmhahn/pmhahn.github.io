@@ -3,10 +3,13 @@ title: 'docker run user'
 date: '2020-09-12T14:57:28+02:00'
 layout: post
 categories: container
+excerpt_separator: <!--more-->
 ---
 
 `docker` is nice to run application commands as you can put them into a container, which also includes the required dependencies.
 This saves you from cluttering your notebook with a multitude of strange packages from Debian, PyPI, golang, … We're already using this for running our DocBook toolchain or `ucslint` and are in the process to convert `ucs-ec2-tools` to this.
+
+<!--more-->
 
 Most of these images require access to your files:
 `ucslint` for checking your code, `ucs-ec2-tools` for your `.cfg` and associated files, `DocBook` to your documentation.

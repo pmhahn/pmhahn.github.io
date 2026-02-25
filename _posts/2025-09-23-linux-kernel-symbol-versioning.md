@@ -261,3 +261,5 @@ This has been reverted by [2039010](https://bugs.launchpad.net/ubuntu/+source/li
 - LWN: [A new version of modversions](https://lwn.net/Articles/986892/)
 - [Anatomy of the Linux loadable kernel module](https://terenceli.github.io/技术/2018/06/02/linux-loadable-module)
 - Linux manual page: [Executable and Linking Format](https://man7.org/linux/man-pages/man5/elf.5.html)
+
+{% include abbreviations.md %}

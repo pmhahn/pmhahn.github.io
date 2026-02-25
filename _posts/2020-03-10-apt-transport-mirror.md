@@ -4,11 +4,15 @@ date: '2020-03-10T15:51:06+01:00'
 layout: post
 categories: debian
 tags: apt
+excerpt_separator: <!--more-->
 ---
 
 Q: Kennt ihr `apt-transport-mirror`?
 
 Kennt ihr auch das Problem, dass ihr Debian- (oder UCS-)Systeme habt, die aber zwischen verschiedenen Netzen unterwegs sind (z.B. mein Notebook) und man™ eigentlich je nach Netzwerkumgebung einen anderen Depot-Server für die Debian-Pakete verwenden will?
+
+<!--more-->
+
 Wenn ich in Bremen bin, möchte ich z.B. unseren _Internen Debian Mirror_ verwenden, weshalb meine `/etc/apt/sources.list` dann so aussieht:
 
 ```
