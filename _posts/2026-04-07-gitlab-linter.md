@@ -1,15 +1,15 @@
 ---
 title: 'Running linters in GitLab'
-date: '2026-01-23T14:36:00+02:00'
+date: '2026-04-07T09:32:00+02:00'
 layout: post
 categories: gitlab
 excerpt_separator: <!--more-->
 ---
 
-Linters run as part of GitLab Continuous Integration pipelines to guarentee code quality.
+Linters run as part of GitLab Continuous Integration pipelines to guarantee code quality.
 A Merge Request based workflow will start from a branch `main` being currently at some commit `start`.
-You normally fork a branch `develop` from that branch `base` and will create several commita `c1`, `c2`, …, `cN`.
-When you [push that branch and create a Merge Request]({% post_url 2024-08-27-gitlab-merge-request-cli %}), a pipeline may start and  will run severals jobs.
+You normally fork a branch `develop` from that branch `base` and will create several commits `c1`, `c2`, …, `cN`.
+When you [push that branch and create a Merge Request]({% post_url 2024-08-27-gitlab-merge-request-cli %}), a pipeline may start and  will run several jobs.
 
 <!--more-->
 
@@ -29,7 +29,7 @@ There are different ways to run your linters:
 2.  You may want to build the **diff** from `main` to `develop` and run your linter on that.
     That way you check you *effective change*.
 3.  You may also want to run the linter on **each** commit.
-    This is imporant if you later want to use `git bisect` to find regressions.
+    This is important if you later want to use `git bisect` to find regressions.
 
 Depending on which strategy you want to use, you have to configure your jobs differently in GitLab.
 
@@ -79,10 +79,17 @@ To check all commits of a MR individually, you have to do more work.
 The [`git` protocol](https://git-scm.com/book/en/v2/Git-Internals-Git-Objects) only supports fetching refs by name or tags / commits / trees / blobs by SHA1!
 The problem is that you don't know how many commits are between the fork-point and HEAD; you do not know which value to use for `GIT_DEPTH`.
 By using `GIT_DEPTH: 0` you tell the GitLab-Runner to **not** do a shallow-clone and to clone all commits reachable from the tip of the branch.
-For large reppositories with many commits or large blobs that can become very costly.
+For large repositories with many commits or large blobs that can become very costly.
 So reducing the number or type of objects to download can become important.
 
-But there is one caviate:
+There are two sub-cases:
+
+### Only check all commit messages
+
+If you only need the commit messages (and not the files itself), you can use [`git clone --filter`](https://git-scm.com/docs/git-rev-list#Documentation/git-rev-list.txt---filterfilter-spec) to limit which type of objects you want to clone initially: commits, trees, blobs.
+Missing objects are lazy-fetches, which can result in a dramatic performance issue when your initial clone filters too much!
+
+But there is one caveat and you have to be careful to use the right `git` commands:
 If any `git` command requires missing data, `git` will fetch it on demand.
 It will connect again to the remote serer and fetch the missing data.
 As this will result in (many) network connection with lots of round-trips, this is then slower than to download it at once during the initial `clone`.
@@ -90,13 +97,6 @@ As this will result in (many) network connection with lots of round-trips, this 
 Therefore check the commands you run:
 - `git format-patch` and `git show` require the associated `tree`s and `blob`s to be present and will trigger delayed fetches.
 - `git log --no-patch` does not and works on `commit`s alone.
-
-There are two subcases:
-
-### Only check all commit messages
-
-If you only need the commit messages (and not the files itself), you can use [`git clone --filter`](https://git-scm.com/docs/git-rev-list#Documentation/git-rev-list.txt---filterfilter-spec) to limit which type of objects you want to clone initially: commits, trees, blobs.
-Missing objects are lazy-fetches, which can result in a dramatic performance issue when your initial clone filters too much!
 
 ```yaml
 run linter:
@@ -109,16 +109,23 @@ run linter:
 
 If you also need the latest tree, use `--filter=tree:0` instead.
 
+### Check all individual commits and their trees (WIP)
 
-### Check all individual commits and their trees
+Similar to above we first fetch only all `commit` objects.
+We then let `git` fetch the required `tree` and `blob` objects on demand.
 
 ```yaml
 run linter:
   variables:
     GIT_DEPTH: 0
-    GIT_FETCH_EXTRA_FLAGS: --prune --quiet --no-tags --filter=object:type=commit
+    GIT_FETCH_EXTRA_FLAGS: --prune --quiet --no-tags --filter=tree:0
   script:
-    - git log --no-patch "${CI_MERGE_REQUEST_DIFF_BASE_SHA}..HEAD" | checkpatch -
+    - git log --patch "${CI_MERGE_REQUEST_DIFF_BASE_SHA}..HEAD" | checkpatch -
 ```
+
+The alternative to start first with a limited number of commits and to incrementally deepen that number of commits until the fork-point is reached also works, but requires more work and leads to multiple network round-trips to the repository server.
+Which strategy is faster may depend on the history size.
+
+TBC…
 
 {% include abbreviations.md %}
