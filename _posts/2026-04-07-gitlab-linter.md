@@ -68,8 +68,35 @@ This is more efficient and also uses the credentials of the Runner.
 run linter:
   variables:
     GIT_DEPTH: 1
-    GIT_FETCH_EXTRA_FLAGS: --prune --quiet --no-tags $CI_MERGE_REQUEST_DIFF_BASE_SHA
+    GIT_FETCH_EXTRA_FLAGS: "--prune --quiet --no-tags $CI_MERGE_REQUEST_DIFF_BASE_SHA"
   script:
+    - git diff "${CI_MERGE_REQUEST_DIFF_BASE_SHA}..HEAD" | checkpatch -
+```
+
+Correction (2026-04-17):
+Actually this does not work as the GitLab-Runner uses `git init` followed by `git fetch` by default.
+For the later GitLab will add the refspecs `+refs/heads/*:refs/origin/heads/*` and `+refs/tags/*:refs/tags/*` to `git fetch`, which will fetch all heads and tags.
+Neither the `--no-tags` disables fetching the tags not is the `$CI_MERGE_REQUEST_DIFF_BASE_SHA` needed.
+
+Instead of using `init+ferch`, `git clone` can be used if
+- the feature-flag [`FF_USE_GIT_NATIVE_CLONE`](https://docs.gitlab.com/runner/configuration/feature-flags/) is enabled.
+- the version of `git` is at least `2.49` released 2025-03-14 supporting `--branch` and the newer `--revision`.
+- `GIT_STRATEGY=clone` is set as a job variable.
+
+`GIT_DEPTH` can be used to limit the `git clone --depth`, which then also adds `--single-branch`.
+That option and other options like `--no-tags` can be passed via `GIT_CLONE_EXTRA_FLAGS`.
+
+The drawback is, that `git clone` can only clone a single branch or revision.
+Fetching `CI_MERGE_REQUEST_DIFF_BASE_SHA` thus requires a manual call of `git fetch`.
+
+```yaml
+run linter:
+  variables:
+    GIT_STRATEGY: "clone"
+    GIT_DEPTH: 1
+    GIT_CLONE_EXTRA_FLAGS: "--no-tags --single-branch"
+  script:
+    - git fetch origin "$CI_MERGE_REQUEST_DIFF_BASE_SHA"
     - git diff "${CI_MERGE_REQUEST_DIFF_BASE_SHA}..HEAD" | checkpatch -
 ```
 
