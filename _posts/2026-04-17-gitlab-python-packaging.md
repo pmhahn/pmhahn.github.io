@@ -232,13 +232,9 @@ release_job:
     GIT_DEPTH: 1
     GIT_CHECKOUT: false
     GLAB_CONFIG_DIR: ${CI_PROJECT_DIR}/.glab-config.${CI_PIPELINE_ID}
+    GLAB_ENABLE_CI_AUTOLOGIN: true
   dependencies: []
   script:
-    - >
-      glab auth login
-      --job-token "$CI_JOB_TOKEN"
-      --hostname "$CI_SERVER_FQDN"
-      --api-protocol "$CI_SERVER_PROTOCOL"
     - >
       glab changelog generate >changelog.md
       --version "$CI_COMMIT_TAG"
@@ -255,9 +251,6 @@ release_job:
 ```
 The final part creates a [GitLab release][gitlab-release].
 It uses [GitLab's changelog API][gitlab-changelog] to automatically create a changelog in Markdown format from the git commits having a `Changelog:` trailer.
-
-To use [`glab`][glab] in a pipeline you have to explicitly use `glab auth login` first to setup using the `CI_JOB_TOKEN`.
-Mind [issue #8125](https://gitlab.com/gitlab-org/cli/-/work_items/8125).
 
 For my environment I have to tell `glab` to use configuration file in a writeable directory.
 Without that it will try to write to `/.glab/`, which will fail.
