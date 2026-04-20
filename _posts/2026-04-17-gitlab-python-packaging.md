@@ -228,15 +228,15 @@ release_job:
   rules:
     - if: '$CI_COMMIT_TAG =~ /^v?\d+\.\d+\.\d+$/'
   variables:
-    # GIT_STRATEGY: none
-    GIT_DEPTH: 1
-    GIT_CHECKOUT: false
+    GIT_STRATEGY: none
     GLAB_CONFIG_DIR: ${CI_PROJECT_DIR}/.glab-config.${CI_PIPELINE_ID}
     GLAB_ENABLE_CI_AUTOLOGIN: true
+    GITLAB_HOST: $CI_SERVER_URL
   dependencies: []
   script:
     - >
       glab changelog generate >changelog.md
+      --repo "$CI_PROJECT_PATH"
       --version "$CI_COMMIT_TAG"
       --to "$CI_COMMIT_BRANCH"
   release:
@@ -254,9 +254,6 @@ It uses [GitLab's changelog API][gitlab-changelog] to automatically create a cha
 
 For my environment I have to tell `glab` to use configuration file in a writeable directory.
 Without that it will try to write to `/.glab/`, which will fail.
-
-`glab` also requires a local `git` repository to work with.
-Therefore I use `GIT_DEPTH: 1` to reduce the number of commits to fetch combined with `GIT_CHECKOUT: false` to disable creating a work-space.
 
 That `assets:links:` part creates a link to the PyPI package registry.
 [GitLab 18.11](https://docs.gitlab.com/releases/18/gitlab-18-11-released/) just received a feature, where [packages are included as release evidence](https://docs.gitlab.com/user/project/releases/release_evidence/#include-packages-as-release-evidence), which might make this optional.
