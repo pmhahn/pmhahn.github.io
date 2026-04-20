@@ -143,7 +143,7 @@ pyright:
     - !reference [.uv, after_script]
 
 pyrefly:
-  extends: [.uv]  # .lint
+  extends: [.uv, .py]  # .lint
   stage: lint  # TEMPORARY
   script:
     - uvx pyrefly check  # --output-format CodeQuality --output gl-code-quality-report.json
