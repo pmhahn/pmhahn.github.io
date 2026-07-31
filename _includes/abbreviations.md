@@ -58,6 +58,7 @@
 *[FIPS]: Federal Information Processing Standards
 *[FOP]: Formatting Object Processor
 *[FQHN]: Fully Qualified Host Name
+*[FUSE]: File-system in USEr-space
 *[gcc]: GNU Compiler Collection
 *[GID]: Group Identifier
 *[GIMP]: GUN Image Manipulation Program
