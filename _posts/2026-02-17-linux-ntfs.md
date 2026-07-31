@@ -15,7 +15,7 @@ The _Windows New Technology File System_ (NTFS) has a long history with Linux:
 | [Captive][2]    | FUSE   | `ntfs.sys` |        | 2003-2006 | Read-write |
 | [NTFS-3G][3]    | FUSE   | Linux-NTFS | 3.18   | 2006-     | Read-write |
 | [NTFS3][4]      | Kernel | Paragon    | 5.15   | 2021-     | Read-write |
-| [NTFS Plus][5]  | Kernel | Linux-NTFS | 7.x?   | 2026?     | Read-write |
+| [NTFS Plus][5]  | Kernel | Linux-NTFS | 7.1    | 2026-     | Read-write |
 | AVM NTFS        | Kernel | NTFS-3G    |        | 2012-     | Read-write |
 
 [1]: https://flatcap.github.io/linux-ntfs/misc.html
@@ -44,7 +44,7 @@ gantt
     Captive     : 2003-01-01, 2006-01-01
     NTFS-3G     : 2006-01-01, 2030-01-01
     NTFS3       : 2021-11-01, 2026-01-01
-    NTFS+       : 2026-03-01, 2030-01-01
+    NTFS+       : 2026-06-14, 2030-01-01
     ANTFS       : 2012-01-01, 2030-01-01
     2.0.0       : vert, 1996-06-09, 1m
     2.2.0       : vert, 1999-01-26, 1m
@@ -61,6 +61,8 @@ gantt
     6.1         : vert, 2022-12-11, 1m
     6.6         : vert, 2023-10-29, 1m
     6.12        : vert, 2024-11-17, 1m
+    6.18        : vert, 2025-11-30, 1m
+    7.1         : vert, 2026-06-14, 1m
 ```
 
 ## Links
