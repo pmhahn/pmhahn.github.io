@@ -66,6 +66,7 @@ gantt
 ```
 
 ## Links
+
 - Wikipedia: [Linux Kernel version history](https://en.wikipedia.org/wiki/Linux_kernel_version_history)
 
 <!-- <https://www.cyberark.com/resources/threat-research-blog/the-linux-kernel-and-the-cursed-driver -->

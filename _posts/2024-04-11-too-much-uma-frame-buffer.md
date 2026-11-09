@@ -23,15 +23,15 @@ Running `free -h` and `head -n1 /proc/meminfo` only showed the system using **11
 1 GiB off is expected as that is used for legacy services and video memory, but 5 GiB?
 My old L470 had 16 GiB physical memory and reported 15 GiB as usable, which I was expecting also for the new model.
 
-The culprit is the *integrated AMDGPU*, for which 4 GiB are reserved as *UMA frame buffer*.
-There’s a setting in the [UEFI firmware](https://download.lenovo.com/bsco/index.html#/graphicalsimulator/ThinkPad%20P14s%20Gen%202%20AMD%20(20A0,20A1)) under *Config → Display*, where you can change the setting.
+The culprit is the _integrated AMDGPU_, for which 4 GiB are reserved as _UMA frame buffer_.
+There’s a setting in the [UEFI firmware](https://download.lenovo.com/bsco/index.html#/graphicalsimulator/ThinkPad%20P14s%20Gen%202%20AMD%20(20A0,20A1)) under _Config → Display_, where you can change the setting.
 [AMD](https://www.amd.com/en/support/kb/faq/pa-280 "Advanced Mirco Devices") provides some background, but does not provide any hint on how much memory should be reserved for which use-case.
-The only recommendation is *screen-width × screen-height × bytes-per-pixel × factor*, but even for 4K with double-buffering that is only 128 MiB.
+The only recommendation is _screen-width × screen-height × bytes-per-pixel × factor_, but even for 4K with double-buffering that is only 128 MiB.
 4 GiB looks way too much.
 
 [![Lenovo P14s UEFI configuration]({{site.url}}/images/p14suefi-300x193.png)]({{site.url}}/images/p14suefi.png)
 
-As I neither run games on the notebook nor do any graphic heavy work nor use the GPU for ML, I changed the value from *Auto* (obviously *4 GiB*) to *1 GiB* and now have 3 GiB more memory available for Linux to use for running processes.
+As I neither run games on the notebook nor do any graphic heavy work nor use the GPU for ML, I changed the value from _Auto_ (obviously _4 GiB_) to _1 GiB_ and now have 3 GiB more memory available for Linux to use for running processes.
 
 I also added more swap space, so that Linux has the option to use the NVMe to swap out some unused memory instead of being forced to kill some processes, if memory pressure gets too high.
 

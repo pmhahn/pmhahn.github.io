@@ -29,6 +29,7 @@ Einziges Problem ist derzeit des LSILogic-SCSI-Controller, der mit QEMU-1.1 noch
     1. Number of Virtual CPUs
     2. Memory Size
 3. Daraus eine libvirt-XML-Datei erstellen:
+
     ```xml
     <domain type="kmv">
         <name>NAME</name>
@@ -62,7 +63,8 @@ Einziges Problem ist derzeit des LSILogic-SCSI-Controller, der mit QEMU-1.1 noch
         </qemu:commandline>
     </domain>
     ```
-4. Von der www.lsi.com-Seite die Datei `lsi_bios.zip` herunterladen und daraus die Datei `8xx_64.rom` extrahieren und verfügbar machen:
+
+4. Von der [LSI](https://www.lsi.com/)-Seite die Datei `lsi_bios.zip` herunterladen und daraus die Datei `8xx_64.rom` extrahieren und verfügbar machen:
     `unzip -d /var/lib/libvirt/images/ lsi_bios.zip 8xx_64.rom`
 5. `virsh define "$VM.xml"`
 6. `virsh start "$VM"`

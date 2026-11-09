@@ -24,12 +24,13 @@ gitGraph
 ```
 
 There are different ways to run your linters:
-1.  You may run your linter like `ruff` just on the **last** commit `cN`, which then just checks the state after applying all commits `c1…cN` on top of `branch`.
-    This will not only check and find issues introduced by your changes, but will also check all other files and find issues there.
-2.  You may want to build the **diff** from `main` to `develop` and run your linter on that.
-    That way you check you *effective change*.
-3.  You may also want to run the linter on **each** commit.
-    This is important if you later want to use `git bisect` to find regressions.
+
+1. You may run your linter like `ruff` just on the **last** commit `cN`, which then just checks the state after applying all commits `c1…cN` on top of `branch`.
+   This will not only check and find issues introduced by your changes, but will also check all other files and find issues there.
+2. You may want to build the **diff** from `main` to `develop` and run your linter on that.
+   That way you check you _effective change_.
+3. You may also want to run the linter on **each** commit.
+   This is important if you later want to use `git bisect` to find regressions.
 
 Depending on which strategy you want to use, you have to configure your jobs differently in GitLab.
 
@@ -79,6 +80,7 @@ For the later GitLab will add the refspecs `+refs/heads/*:refs/origin/heads/*` a
 Neither the `--no-tags` disables fetching the tags not is the `$CI_MERGE_REQUEST_DIFF_BASE_SHA` needed.
 
 Instead of using `init+ferch`, `git clone` can be used if
+
 - the feature-flag [`FF_USE_GIT_NATIVE_CLONE`](https://docs.gitlab.com/runner/configuration/feature-flags/) is enabled.
 - the version of `git` is at least `2.49` released 2025-03-14 supporting `--branch` and the newer `--revision`.
 - `GIT_STRATEGY=clone` is set as a job variable.
@@ -122,6 +124,7 @@ It will connect again to the remote serer and fetch the missing data.
 As this will result in (many) network connection with lots of round-trips, this is then slower than to download it at once during the initial `clone`.
 
 Therefore check the commands you run:
+
 - `git format-patch` and `git show` require the associated `tree`s and `blob`s to be present and will trigger delayed fetches.
 - `git log --no-patch` does not and works on `commit`s alone.
 

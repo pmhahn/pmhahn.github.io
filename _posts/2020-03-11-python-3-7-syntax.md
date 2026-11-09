@@ -13,6 +13,7 @@ Mit Python 3 ist `print()` eine Funktion und andere Funktionen sind verschoben o
 ## print
 
 `print` ist ab Python 3 eine Funktion:
+
 ```python
 # Python 2:
 print "text"
@@ -41,6 +42,7 @@ Mit einem `from __future__ import print_function` kann man die Umstellung auch s
 
 Auch wurden viele Module aus der [Standardbibliothek](https://docs.python.org/3/library/index.html) aufgeräumt und [Verschoben](https://portingguide.readthedocs.io/en/latest/stdlib-reorg.html).
 Entweder man verwendet [six.moves](https://six.readthedocs.io/#module-six.moves) oder so etwas wie
+
 ```python
 try:
  # Python 3

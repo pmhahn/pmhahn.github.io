@@ -9,13 +9,14 @@ excerpt_separator: <!--more-->
 
 Python 3 has switch to [Rich Comparisons](https://www.python.org/dev/peps/pep-0207/).
 With Python 2 is was enough to implement a single `__cmp__(self, other)` method, now you have to implement
-* `__lt__(self, other)`
-* `__le__(self, other)`
-* `__eq__(self, other)`
-* `__ne__(self, other)`
-* `__ge__(self, other)`
-* `__gt__(self, other)`
-* `__hash__(self)`
+
+- `__lt__(self, other)`
+- `__le__(self, other)`
+- `__eq__(self, other)`
+- `__ne__(self, other)`
+- `__ge__(self, other)`
+- `__gt__(self, other)`
+- `__hash__(self)`
 
 [`@functools.total_ordering`](https://docs.python.org/3/library/functools.html#functools.total_ordering) helps with this, but this is still painful.
 
@@ -114,7 +115,6 @@ class Ugly(Base):
 
 but this does not get prettier when you compare more then two values.
 
-
 Re-using the idea of `total_ordering` you can write your own decorator for classes, which adds the missing functions based on some attribute:
 
 ```python
@@ -167,7 +167,7 @@ assert z != y
 assert z in {x}
 ```
 
-This also work for more complex structures like *tuples*:
+This also work for more complex structures like _tuples_:
 
 ```python
 x, y = foo((1, 1)), foo((1, 2))

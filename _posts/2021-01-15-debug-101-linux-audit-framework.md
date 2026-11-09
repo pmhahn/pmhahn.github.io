@@ -53,6 +53,7 @@ It was designed for CAPP-compliant auditing.
 - SELinux and AppArmor report and log violations via Audit.
 
 First you have to install Debian package `auditd`, which for UCS is in "unmaintained".
+
 ```bash
 ucr set repository/online/unmaintained=yes
 apt-get -qq update
@@ -62,7 +63,7 @@ apt-get -q –assume-yes install auditd
 For the pullcord case we needed to find the process doing a `sys_kill` with `a1=SIGTERM`.
 This is done by adding the following rule to file `/etc/audit/rules.d/bug52518.rules`:
 
-```
+```text
 -a always,exit -F arch=b64 -S kill -F a1=15 -k Bug52518
 ```
 
@@ -71,7 +72,7 @@ The event is emitted on **exit** (after the Linux kernel already has executed it
 
 In addition to that we also want to track processes doing an `sys_exit` or `sys_execve`, so we append a second rule:
 
-```
+```text
 -a always,exit -F arch=b64 -S exit -S execve -k Bug52518 
 ```
 
@@ -89,9 +90,9 @@ To prevent the events being logged twice by `journald` and `auditd`, disable the
 
 Most log events consists of multiple lines, which are linked via their common **Audit ID**.
 The events are logged as **RAW** events, which makes them hard to read.
-For example the time stamp is in *seconds since the UNIX epoch* and process titles are printed hex-encoded:
+For example the time stamp is in _seconds since the UNIX epoch_ and process titles are printed hex-encoded:
 
-```
+```text
 type=SYSCALL msg=audit(1610524812.243:7148742): arch=c000003e syscall=62 success=yes exit=0 a0=1312 a1=f a2=1 a3=20 items=0 ppid=1 pid=5965 auid=4294967295 uid=0 gid=0 euid=0 suid=0 fsuid=0 egid=0 sgid=0 fsgid=0 tty=(none) ses=4294967295 comm="univention-mana" exe="/usr/
 type=OBJ_PID msg=audit(1610524812.243:7148742): opid=4882 oauid=-1 ouid=0 oses=-1 ocomm="univention-mana"
 type=PROCTITLE msg=audit(1610524812.243:7148742): proctitle=2F7573722F62696E2F707974686F6E322E37002F7573722F7362696E2F756E6976656E74696F6E2D6D616E6167656D656E742D636F6E736F6C652D736572766572007374617274
@@ -112,7 +113,7 @@ In addition to our manually configured system call events many other services em
 
 They can be filtered out by using the `exclude` list in `/etc/audit/rules.d/bug52518.rules`:
 
-```
+```text
 -a always,exclude -F msgtype=PROCTITLE -F msgtype=SYSCALL -F msgtype=PATH -F msgtype=CWD -F msgtype=EXECVE -F msgtype=SERVICE_START -F msgtype=SERVICE_STOP -F msgtype=CONFIG_CHANGE
 -a never,exclude
 ```
@@ -163,7 +164,7 @@ Next we told the debugger to break on the process using system call 62 (`sys_kil
 We also want to cache the process being killed by `SIGTERM`, so we also trap on that using `catch signal 15`.
 After resuming the program with `continue` we only had to wait some more to be interrupted again.
 
-```
+```text
 Thread 1 "univention-mana" hit Catchpoint 1 (signal SIGTERM), 0x00007fb21d8f5317 in kill () at ../sysdeps/unix/syscall-template.S:84
 84	../sysdeps/unix/syscall-template.S: Datei oder Verzeichnis nicht gefunden.
 ```
@@ -172,7 +173,7 @@ Running `backtrace` immediately showed the C-level traceback, but you can even g
 It does not only provide the "debugging symbols" for the Python interpreter, which map the machine code back to source code lines, but also extend `gdb` with some useful commands to debug Python programs from within `gdb` itself.
 You can get a Python traceback by using `py-bt`:
 
-```
+```text
 (gdb) py-bt
 Traceback (most recent call first):
   File "/usr/lib/python2.7/dist-packages/notifier/popen.py", line 270, in __killall
@@ -198,7 +199,7 @@ Nailed it:
 
 And you also can have a look at Python local variables using `py-locals` (reformatted for improved readability):
 
-```
+```text
 self = <RunIt(
  _RunIt__stderr=None,
  stdout=None,

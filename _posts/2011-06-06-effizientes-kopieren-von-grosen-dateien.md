@@ -35,8 +35,8 @@ Das es effizienter geht zeiht **BtrFS** mit der Möglichkeit, Dateien per `cp --
 2636db080b31d5181602d5d092d42ea1 copy
 ```
 
-Ähnlich zu `ln` wird hier aber nicht einfach ein neuer Hard-Link auf die Inode angelegt, so daß Änderung über *einen Namen* sich auch auf den Inhalt auswirken, der über *den anderen Namen* angesprochen wird.
-Statt dessen bekommt die Kopie eine eigene Inode, sie sich per Copy-on-write die *Datenblöcke* mit der Ursprungsdatei teilt.
+Ähnlich zu `ln` wird hier aber nicht einfach ein neuer Hard-Link auf die Inode angelegt, so daß Änderung über _einen Namen_ sich auch auf den Inhalt auswirken, der über _den anderen Namen_ angesprochen wird.
+Statt dessen bekommt die Kopie eine eigene Inode, sie sich per Copy-on-write die _Datenblöcke_ mit der Ursprungsdatei teilt.
 Erst durch Modifikation einer der beiden Dateien driften diese auseinander und verwenden bei fortschreitender Modifikation irgendwann getrennte Datenblöcke.
 
 {% include abbreviations.md %}

@@ -7,6 +7,7 @@ excerpt_separator: <!--more-->
 ---
 
 In the early days of [K&R C](https://en.wikipedia.org/wiki/C_(programming_language)#K&R_C) programming the type for functions parameters was optional and declared separately:
+
 ```c
 void old(a, b, c)
  int a;
@@ -20,6 +21,7 @@ void old(a, b, c)
 <!--more-->
 
 For [ANSI C](https://en.wikipedia.org/wiki/ANSI_C) the syntax was changed, which allows the types to be specified directly before the arguments:
+
 ```c
 void new(int a, bool b, char *c) {
  printf("a=%i b=%d c=%p\n", a, b, c);

@@ -10,7 +10,7 @@ Zum Testen des Univention-Updaters wird dieser oft auf einem alten UCS-System in
 Dabei mischt man Pakete aus dem offiziellen UCS-Depot mit neueren Paketen von omar.
 Um sicherzustellen, daß man nur den neueren Updater und nicht auch weitere Pakete von omar verwendet, kann man apt-Pinnging verwenden:
 
-```
+```text
 #/etc/apt/sources.list:
 deb http://omar.knut.univention.de/build2/ ucs_2.4-0-ucs2.4-3/all/
 deb http://omar.knut.univention.de/build2/ ucs_2.4-0-ucs2.4-3/$(ARCH)/
@@ -18,7 +18,7 @@ deb http://omar.knut.univention.de/build2/ ucs_2.4-0-ucs2.4-3/$(ARCH)/
 
 <!--more-->
 
-```
+```text
 #/etc/apt/preferences
 Package: *
 Pin: origin omar.knut.univention.de

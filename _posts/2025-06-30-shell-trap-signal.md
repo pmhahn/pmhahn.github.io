@@ -7,6 +7,7 @@ excerpt_separator: <!--more-->
 ---
 
 What's wrong with signal handling like this:
+
 ```sh
 #!/bin/sh
 trap 'echo Cleanup…' EXIT HUP INT TERM
@@ -60,6 +61,7 @@ But that behaviour is very implementation dependant as you will see later on.
 ## Implementation specific handling of EXIT
 
 Let's try this with the more informative shell script `trap.sh`:
+
 ```sh
 #!/bin/bash
 cleanup () {
@@ -80,6 +82,7 @@ trap 'cleanup 15' TERM
 ```
 
 ### bash
+
 ```console
 $ bash ./trap.sh 0  # EXIT
 Process 499218 received signal 0 after rv=0
@@ -103,7 +106,9 @@ Terminated
 As you can see [`bash`](https://www.gnu.org/software/bash/) **always** calls the trap handler for `EXIT`!
 
 ### dash
+
 Let's repeat this with [`dash`](http://gondor.apana.org.au/~herbert/dash/):
+
 ```console
 $ dash ./trap.sh 0  # EXIT
 Process 502873 received signal 0 after rv=1
@@ -122,7 +127,9 @@ Terminated
 ```
 
 ### busybox
+
 And once more with [`busybox`](https://busybox.net/):
+
 ```console
 $ busybox sh ./trap.sh 0  # EXIT
 Process 502338 received signal 0 after rv=0
@@ -145,6 +152,7 @@ There `EXIT` is _almost_ never called, except by `busybox` on `SIGQUIT`.
 That is why **portable** shell scripts setup `trap` not only for `EXIT`, but also for other `SIG`nals.
 
 But if you do that, please make sure to do it right:
+
 1. Reset the `trap` handler to its default.
 2. Afterwards kill the process by re-sending the received signal to the process again.
 

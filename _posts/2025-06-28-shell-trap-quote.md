@@ -7,6 +7,7 @@ excerpt_separator: <!--more-->
 ---
 
 What's wrong with
+
 ```sh
 #!/bin/bash
 TMPDIR=$(mktemp -d)
@@ -23,7 +24,7 @@ Actually there are multiple issues:
 
 ## TMPDIR
 
-Please do not assign to `TMPDIR` as that variable in an *input parameter* to `mktemp` itself:
+Please do not assign to `TMPDIR` as that variable in an _input parameter_ to `mktemp` itself:
 When you read [man:mktemp](man:mktemp(1)) your will find this for option `-p`:
 > if DIR is not specified, use $TMPDIR if set, else /tmp.
 
@@ -32,6 +33,7 @@ By using `TMPDIR` inside your script to store the path of your **specific** temp
 Other [equivalent implementations thereof](https://docs.python.org/3/library/tempfile.html#tempfile.mkstemp)) also use `TEMP` and `TMP`, so better do not use these as well.
 
 So lets use `tmp`:
+
 ```sh
 tmp=$(mktemp -d)
 trap 'rm -r $tmp' EXIT
@@ -43,6 +45,7 @@ By default [man:mktemp](man:mktemp(1)) will only create _safe_ file names, e.g. 
 Remember that `$IFS` is used by the shell to split every argument — which is not quoted — into multiple arguments.
 By default it is set to _space_, _tab_ and _newline_.
 But you can redefine or extend it, after which _hell breaks loose_:
+
 ```console
 $ bash -c 'IFS="$IFS/."; . my-trap-script"
 rm: cannot remove '': No such file or directory
@@ -60,6 +63,7 @@ My advise is to do that only in functions and to use `local IFS` there to have t
 
 To prevent `$IFS`-splitting you have to quote arguments.
 So let's try with this:
+
 ```sh
 tmp=$(mktemp -d)
 trap 'rm -r "$tmp"' EXIT
@@ -89,6 +93,7 @@ Later on when the trap is executed, the command is evaluated a second time.
 That is when the _double quotes_ prevent `$tmp` from being split on `$IFS`.
 
 So lets look at the following variant:
+
 ```sh
 tmp=$(mktemp -d)
 trap "rm -r $tmp" EXIT
@@ -100,10 +105,12 @@ _Double quotes_ are now use when the trap is setup:
 If `$tmp` is changed later on, we still delete file temporary file we just created.
 
 But `shellcheck` is unhappy now:
-```
+
+```text
 trap "rm -r $tmp" EXIT
             ^-- SC2064 (warning): Use single quotes, otherwise this expands now rather than when signalled.
 ```
+
 Personally I think [SC2064](https://www.shellcheck.net/wiki/SC2064) is a bad advise here as we want to evaluate "$tmp" now and not later.
 I want to delete the file `$tmp` is pointing to right now, not where it might point to in the future.
 I'm not alone with that opinion and [issue 1945](https://github.com/koalaman/shellcheck/issues/1945) calls SC2064 questionable.
@@ -120,13 +127,16 @@ It will fail as there is no file `/tmp/I`, `./like` and `./blanks` — hopefully
 
 So how do we fix that?
 I give you two variants:
+
 1. Nestes double quoting using backslash-escaping:
+
    ```sh
    tmp=$(mktemp -d)
    trap "rm -r \"$tmp\"" EXIT
    ```
 
 2. Single quotes inside double quotes:
+
    ```sh
    tmp=$(mktemp -d)
    trap "rm -r '$tmp'" EXIT
@@ -147,6 +157,7 @@ On the 2nd evaluation when the trap is executed, you will have an odd number of 
 So we need a mechanism to quote `$tmp` correctly, so it survives two rounds of evaluation.
 
 Luckily `bash` has such a feature:
+
 ```sh
 tmp=$(mktemp -d)
 # shellcheck disable=SC2064
@@ -157,6 +168,7 @@ trap "rm -r ${tmp@Q}" EXIT
 > The expansion is a string that is the value of parameter quoted in a format that can be reused as input.
 
 That is exactly what we want:
+
 - the outer quotes prevent `$tmp` from being split when the `trap` is setup.
 - the `@Q` adds the necessary escaping to also prevent `$tmp` from being split when the trap executes.
 

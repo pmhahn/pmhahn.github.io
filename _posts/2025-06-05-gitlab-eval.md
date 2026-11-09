@@ -102,6 +102,7 @@ We fixed this strange GitLab behaviour by enabling the [Runner Feature Flag](htt
 This puts one level of parenthesis around the `eval` command to run it in a sub-shell – see last example from above.
 
 This can be done in the pipeline itself by setting the variable to `true` or `1`:
+
 ```yaml
 fixed:
   variables:

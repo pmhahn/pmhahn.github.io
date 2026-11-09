@@ -8,7 +8,7 @@ excerpt_separator: <!--more-->
 ---
 
 You can install Debian packages using `dpkg -i $pkg.deb`, but this low-level tool does not resolve inter-package dependencies.
-This is the job of APT, the *Advanced Packaging Tool*.
+This is the job of APT, the _Advanced Packaging Tool_.
 It usually works on a set of packages, which are shipped in a [package repository](https://wiki.debian.org/DebianRepository/Format).
 This has a `Packages` file, which lists all binary packages included in the repository.
 Basically it contains the concatenated package meta data from all packages.
@@ -26,7 +26,7 @@ For multiple packages you have to iterate that for each package.
 
 There even is [dpkg-scanpackages](man:dpkg-scanpackages(1)), which does this by scanning the given directory recursively.
 
-In addition it supports the so called *override* files:
+In addition it supports the so called _override_ files:
 They are needed to overwrite the meta data of packages **after** a package has already been built.
 This usually happens with new Debian releases, when the package did not change but needs updated meta data.
 So instead of just re-rebuilding the package just for that the `Section` or `Priority` can be changed easily.
@@ -47,10 +47,10 @@ On top of the `apt-ftparchive` also adds caching.
 Basically all tools from above still use `dpkg -I` to do the heavy listing.
 Forking such a process for a large number of packages will make this inefficient very fast.
 
-So the cache stores that data for each *path*.
+So the cache stores that data for each _path_.
 When next time the index is re-built, the meta data from the cache is used if available.
 
-The cache uses a simple *Berkeley database*.
+The cache uses a simple _Berkeley database_.
 The file can be specified with `-d` / `--db` / `-o APT::FTPArchive::DB`.
 
 ### Uniqueness
@@ -83,27 +83,28 @@ For each binary package file `apt-ftparchive` now needs to do a `stat()` call to
 The Linux kernel will cache that data internally, but doing this for 58k with a cold cache will take some time.
 This get much worse if you do this over NFS as there each `stat()` call takes a round-trip to the server.
 
-Without `AlwaysStat` only a single `listdir()` call per directory *should* be needed.
+Without `AlwaysStat` only a single `listdir()` call per directory _should_ be needed.
 Everything else only requires looking up the returned file names in the cache, which mostly happens in memory.
 
 ### File Tree Walk
 
 Actually you will notice that `apt-ftparchive` performs abyssal in the cold-cache case.
 It still does `stat()` calls for all files even when `AlwayStat` is disabled.
-The culprit here is [ftw()](man:ftw(3)), the C-library used to implement the *File Tree Walk*:
+The culprit here is [ftw()](man:ftw(3)), the C-library used to implement the _File Tree Walk_:
 
 To **walk** the directory recursively it must check the type of the returned directory entry:
-* For a *directory* it must recurs.
-* For a *file* it must do the lookup thing.
-* *Symbolic links* may be skipped or followed.
-* Other types like *device files*, *UNIX sockets*, *named PIPEs* should be ignored.
+
+- For a _directory_ it must recurs.
+- For a _file_ it must do the lookup thing.
+- _Symbolic links_ may be skipped or followed.
+- Other types like _device files_, _UNIX sockets_, _named PIPEs_ should be ignored.
 
 ### `d_type`
 
 You will find using `find -type f` performing a lot better even in the cold-cache case.
-Normally a *directory entry* just maps the *name* to the *i-node number*.
+Normally a _directory entry_ just maps the _name_ to the _i-node number_.
 But actually most Linux file systems nowadays implement a performance optimization:
-The also store the *i-node type* **directly within** the *directory entry* itself.
+The also store the _i-node type_ **directly within** the _directory entry_ itself.
 This is then returned by [readdir()](man:readdir(3)) as `d_type`.
 If present the call to [lstat()](man:lstat(2)) can be skipped.
 
@@ -134,7 +135,7 @@ find amd64 all source -maxdepth 1 \
 
 Put this in and the following sections into a `dist.conf` file:
 
-```
+```text
 Dir {
 	ArchiveDir ".";
 	OverrideDir ".override/";
@@ -157,7 +158,7 @@ mkdir -p dists/dist/main/debian-installer/binary-amd64
 
 Build a `Packages` or `Sources` file to be included with `deb [trusted=yes] file:///.../ amd64/` and `deb ... all/`:
 
-```
+```text
 BinDirectory "amd64" {
 	// InternalPrefix "<PREFIX>/";
 	// BinOverride "";
@@ -184,7 +185,7 @@ BinDirectory "source" {
 
 Build a `Packages` or `Sources` file to be included with `deb [trusted=yes] file:///.../ dist main`:
 
-```
+```text
 TreeDefault {
 	BinCacheDB "db.$(ARCH)";
 	SrcCacheDB "db.$(ARCH)";
@@ -223,27 +224,27 @@ There are some other knobs for tuning:
 Calculating the different hash sums takes time.
 You can enable / disable them individually by specifying the following options:
 
-* `apt::ftparchive::md5 "<BOOL>";`
-* `apt::ftparchive::sha1 "<BOOL>";`
-* `apt::ftparchive::sha256 "<BOOL>";`
-* `apt::ftparchive::sha512 "<BOOL>";`
+- `apt::ftparchive::md5 "<BOOL>";`
+- `apt::ftparchive::sha1 "<BOOL>";`
+- `apt::ftparchive::sha256 "<BOOL>";`
+- `apt::ftparchive::sha512 "<BOOL>";`
 
 This can also be configured for `Packages` and `Sources` individually:
 
-* `apt::ftparchive::packages::<ALGO> "<BOOL>";`
-* `apt::ftparchive::sources::<ALGO> "<BOOL>";`
+- `apt::ftparchive::packages::<ALGO> "<BOOL>";`
+- `apt::ftparchive::sources::<ALGO> "<BOOL>";`
 
 ### Compression formats
 
 You can also configure the compression formats:
 
-* The uncompressed files
-* `.gzip`
-* `.bzip2`
-* `.lz4`
-* `.lzma`
-* `.zstd`
-* `.xz`
+- The uncompressed files
+- `.gzip`
+- `.bzip2`
+- `.lz4`
+- `.lzma`
+- `.zstd`
+- `.xz`
 
 ### Contents
 
@@ -260,28 +261,28 @@ This must be enabled explicitly with `--contents` or `-o apt::ftparchive::conten
 The format of the cache file is an internal detail of `apt-ftparchive`.
 Normally you should not use it yourself, but knowing the format helps with debugging.
 
-The *Berkeley database* contains several entries per *file path*.
-Their *key* is build by appending a `:` and a two-letter code depending on the type to the path:
+The _Berkeley database_ contains several entries per _file path_.
+Their _key_ is build by appending a `:` and a two-letter code depending on the type to the path:
 
-*   `:st` (stat):
-    File statistics for all files like `.deb`, `.udeb`, `.dsc`, `.orig.tar.gz`, `.debian.diff.gz`, `.debian.tar.gz`.
-    It uses the file time of last modification `mtime` for cache validation.
-    The file size `size` and calculated hashes using `md5`, `sha1`, `sha256` and `sha512` are stored within.
-    Additional `flags` indicate, if other database records exists.
+- `:st` (stat):
+  File statistics for all files like `.deb`, `.udeb`, `.dsc`, `.orig.tar.gz`, `.debian.diff.gz`, `.debian.tar.gz`.
+  It uses the file time of last modification `mtime` for cache validation.
+  The file size `size` and calculated hashes using `md5`, `sha1`, `sha256` and `sha512` are stored within.
+  Additional `flags` indicate, if other database records exists.
 
-    Be aware that this entry is architecture and version dependant!
-    As of 2021 it is 152 bytes for `x86_64`.
+  Be aware that this entry is architecture and version dependant!
+  As of 2021 it is 152 bytes for `x86_64`.
 
-*   `:cl` (Control):
-    Debian binary package control data for binary packages `.deb` and `.udeb`.
-    This is used to build the `Packages` files.
+- `:cl` (Control):
+  Debian binary package control data for binary packages `.deb` and `.udeb`.
+  This is used to build the `Packages` files.
 
-*   `:cn` (Content):
-    Debian binary package content list of files.
-    This is used to build the `Contents` files.
+- `:cn` (Content):
+  Debian binary package content list of files.
+  This is used to build the `Contents` files.
 
-*   `:cs` (Source):
-    Debian source package control data `.dsc`.
-    This is used to build the `Sources` files.
+- `:cs` (Source):
+  Debian source package control data `.dsc`.
+  This is used to build the `Sources` files.
 
 {% include abbreviations.md %}

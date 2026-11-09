@@ -101,7 +101,7 @@ Therefore it is important to write efficient and correct `Dockefiles`:
 
 ## Docker-in-Docker
 
-With *Docker-in-docker* you get a pristine `dockerd` for each build:
+With _Docker-in-docker_ you get a pristine `dockerd` for each build:
 It is empty and thus does not have any previous images and thus layers cached.
 Thus a build will always starts from scratch, which might be slow.
 Therefore you can use `docker build --cache-from=…` to load a previous version of your image, which will pull in all the old layers for caching.
@@ -111,15 +111,15 @@ Therefore you can use `docker build --cache-from=…` to load a previous version
 The architecture of Kaniko is vastly different as there is no central `dockerd` for caching any layers.
 But [2 caching modes](https://github.com/GoogleContainerTools/kaniko#caching) are supported:
 
-- `--cache=true` enabled *Caching Layers*, where `kaniko` builds an artificial image, which can be pushed to a remote image registry.
+- `--cache=true` enabled _Caching Layers_, where `kaniko` builds an artificial image, which can be pushed to a remote image registry.
   These are no regular OCI images:
   they re-use the data structure and infrastructure for images, but you cannot execute them with `docker run` or similar.
   You **must not** push these images to `docker-registry.knut.univention.de` as that registry has no automatic cache cleanup mechanism to remove old and unused layers/images.
   Use `gitregistry.knut.univention.de` instead but make sure to setup [Cleanup policy](https://docs.gitlab.com/ee/user/packages/container_registry/reduce_container_registry_storage.html) below `Setting → Packages and Registries → Clean up image tag` with a sensible retention period for images named `cache`.
   A separate registry can be specified via the option `--cache-repo`.
-  By default Kaniko does not cache *COPY* layers, which must be enabled explicitly via the option `--cache-copy-layers` if desired.
-- With *Caching Base Images* layers are cached locally in a directory, but this is a pain to setup:
-  it requires an extra step where a separate command has to be used to *warm the cache*.
+  By default Kaniko does not cache _COPY_ layers, which must be enabled explicitly via the option `--cache-copy-layers` if desired.
+- With _Caching Base Images_ layers are cached locally in a directory, but this is a pain to setup:
+  it requires an extra step where a separate command has to be used to _warm the cache_.
   This is not integrated into Kaniko itself and extra care has to be taken to not create any concurrency issues.
 
 Currently caching is not enabled by default in our `kaniko.yml` as setting up the cache retention policy is not automated.

@@ -39,6 +39,7 @@ mit dem selben Traceback.
 
 Immer noch keine Idee?
 Den nächsten Hinweis bekommt man mit einem Blick in die [Datei](https://github.com/univention/univention-corporate-server/blob/4.4-4/test/ucs-test/tests/51_samba4/56evaluate_windows_gpo#L508):
+
 ```python
 windows_set_gpo_registry_value(gpo_name,
  "HKCU\Software\Policies\Microsoft\UCSTestKey",
@@ -48,7 +49,8 @@ windows_set_gpo_registry_value(gpo_name,
 ```
 
 Immer noch nicht?
-```
+
+```text
  "HKCU\Software\Policies\Microsoft\UCSTestKey"
                                   ^^12345678
 ```

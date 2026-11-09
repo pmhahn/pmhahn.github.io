@@ -19,8 +19,7 @@ c="";c+=x;c+=y;c+=z;c
 
 <!--more-->
 
-Test
-====
+## Test
 
 Let's test this with a small program:
 
@@ -58,30 +57,27 @@ for v, s in T.items():
     print(f"| `{v:24s}` | {row} |")
 ```
 
-Results
-=======
+## Results
 
-This is with *Python 3.7* on *Intel® Core™ i5-6200U CPU @ 2.30GHz*:
+This is with _Python 3.7_ on _Intel® Core™ i5-6200U CPU @ 2.30GHz_:
 
 | Variant / Length           |          1 |         16 |        256 |         1k |         4k |       64k |
 |----------------------------|------------|------------|------------|------------|------------|-----------|
-| `f"{x}{y}{z}"            ` | .100       | .098       | .116       | .173       | .323       | 6.964 +0% |
-| `x + y + z               ` | .114 + 14% | .127 + 30% | .213 + 84% | .192 + 11% | .332 +  3% | 7.023 +1% |
-| `"".join((x, y, z))      ` | .134 + 34% | .133 + 36% | .153 + 32% | .206 + 19% | .414 + 28% | 7.037 +1% |
-| `c="";c+=x;c+=y;c+=z;c   ` | .141 + 41% | .156 + 60% | .241 +108% | .219 + 26% | .396 + 23% | 6.943     |
-| `"%s%s%s" % (x, y, z)    ` | .180 + 80% | .183 + 87% | .320 +176% | .309 + 78% | .529 + 64% | 7.097 +2% |
+| `f"{x}{y}{z}"`             | .100       | .098       | .116       | .173       | .323       | 6.964 +0% |
+| `x + y + z`                | .114 + 14% | .127 + 30% | .213 + 84% | .192 + 11% | .332 +  3% | 7.023 +1% |
+| `"".join((x, y, z))`       | .134 + 34% | .133 + 36% | .153 + 32% | .206 + 19% | .414 + 28% | 7.037 +1% |
+| `c="";c+=x;c+=y;c+=z;c`    | .141 + 41% | .156 + 60% | .241 +108% | .219 + 26% | .396 + 23% | 6.943     |
+| `"%s%s%s" % (x, y, z)`     | .180 + 80% | .183 + 87% | .320 +176% | .309 + 78% | .529 + 64% | 7.097 +2% |
 | `"{}{}{}".format(x, y, z)` | .248 +149% | .282 +189% | .400 +245% | .423 +144% | .646 +100% | 7.305 +5% |
 
-Conclusion
-==========
+## Conclusion
 
 **Currently** f-strings seems to be the fastest.
 The historical recommendation to not use `+` seems to be out-dated, at least for the case of a limited set of strings to concatenate.
 
-Links
-=====
+## Links
 
-* [An Optimization Anecdote](https://www.python.org/doc/essays/list2str/)
-* [Stackoverflow: What is the most efficient string concatenation method in Python](https://stackoverflow.com/questions/1316887/what-is-the-most-efficient-string-concatenation-method-in-python)
+- [An Optimization Anecdote](https://www.python.org/doc/essays/list2str/)
+- [Stackoverflow: What is the most efficient string concatenation method in Python](https://stackoverflow.com/questions/1316887/what-is-the-most-efficient-string-concatenation-method-in-python)
 
 {% include abbreviations.md %}

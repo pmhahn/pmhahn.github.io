@@ -11,6 +11,7 @@ Q: Der OpenLDAP-Server liefert mir zu wenig Daten und ich kann oder will ihn abe
 Was kann ich tun?
 
 A: [Bug #16639](https://forge.univention.org/bugzilla/show_bug.cgi?id=16639) macht’s möglich:
+
 ```bash
 printf 'dn: cn=config\nchangetype: modify\nreplace: olcLogLevel\nolcLogLevel: %d\n\n' 256 |
  ldapmodify -xH ldapi:///

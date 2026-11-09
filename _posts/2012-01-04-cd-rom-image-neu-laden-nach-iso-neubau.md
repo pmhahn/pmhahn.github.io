@@ -16,6 +16,7 @@ Wenn KVM-Instanzen das latest-ISO-Image einbinden kommt es immer wieder vor, da�
 Das liegt daran, das beim Starten der VM die ursprüngliche ISO-Datei geöffnet wurde und die Meta-Daten darauf beim Mounten im Gast-Betriebssystem eingelesen wurden.
 Nach dem Neubau passen dann diese Daten nicht mehr zum dann aktuellen Inhalt der ISO-Datei.
 Entweder muß man über UVMM das Medium im CD-ROM-Laufwerk wechseln (aus- und wiedereinhängen), oder man wirft das Image eben per Kommandozeile aus und sofort wieder ein:
+
 ```bash
 eject /dev/sr0 && eject -t /dev/sr0
 ```

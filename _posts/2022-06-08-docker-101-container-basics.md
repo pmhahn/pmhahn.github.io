@@ -6,7 +6,7 @@ categories: container
 excerpt_separator: <!--more-->
 ---
 
-Following [Gitlab 101: Container usage]({% post_url 2022-03-10-gitlab-101-container-usage %}) and [Gitlab 102: container followup]({% post_url 2022-05-24-gitlab-102-container-followup %}) let's have a look at *Docker images* itself, also known as [OCI](https://www.opencontainers.org/ "Open Container Initative") Images.
+Following [Gitlab 101: Container usage]({% post_url 2022-03-10-gitlab-101-container-usage %}) and [Gitlab 102: container followup]({% post_url 2022-05-24-gitlab-102-container-followup %}) let's have a look at _Docker images_ itself, also known as [OCI](https://www.opencontainers.org/ "Open Container Initative") Images.
 If you want to know the gory details have a look at the [image specification](https://github.com/opencontainers/image-spec/blob/main/spec.md) yourself.
 
 When working with images multiple parts are involved:
@@ -19,7 +19,7 @@ When working with images multiple parts are involved:
 <!--more-->
 
 The last two only exist when the image is uploaded to respectively downloaded from a (remote) registry:
-When images are transferred between hosts the layers are transferred as *compressed tape archives* (`.tar.gz`).
+When images are transferred between hosts the layers are transferred as _compressed tape archives_ (`.tar.gz`).
 Locally they are stored in some other (unpacked) format as `.tgz` files are not efficient for random access.
 
 Content like manifests, configurations and layers are identified by their unique sha256 fingerprint.
@@ -29,6 +29,7 @@ Any change would result in a different sha256 unless you get a [collision](https
 ## A simple example
 
 This example creates a minimal image with just one file inside:
+
 ```console
 # mkdir temp
 # printf 'FROM scratch\nADD Dockerfile /\n' >temp/Dockerfile
@@ -146,11 +147,13 @@ Docker stores it locally below `/var/lib/docker/image/overlay2/imagedb/content/s
  }
 }
 ```
+
 Additional metadata is stored in a second location below `/var/lib/docker/image/overlay2/imagedb/metadata/sha256/` containing the timestamp of last update.
 
 </details>
 
 At the end it lists the layers of the image:
+
 ```json
  "rootfs": {
   "type": "layers",
@@ -159,12 +162,13 @@ At the end it lists the layers of the image:
   ]
 }
 ```
+
 They are stored below `/var/lib/docker/image/overlay2/layerdb/sha256/` in some compressed JSON format.
 Before it can be used it will get unpacked to `/var/lib/docker/overlay2/`.
 
 ### Manifests
 
-An image is described by a **manifest**, which names the *architecture* the image is for, references a *configuration* document by sha256 and all the stacked *layers* by their hash required to assemble the complete image.
+An image is described by a **manifest**, which names the _architecture_ the image is for, references a _configuration_ document by sha256 and all the stacked _layers_ by their hash required to assemble the complete image.
 Multiple architectures can be supported by building the image for each architecture and pushing them to the same name.
 This creates an additional manifest for each architecture and also a **manifest-list**, which references all of them and itself is pointed to in the directory.
 
@@ -177,7 +181,7 @@ The push refers to repository [localhost:5000/empty]
 latest: digest: sha256:4cb519a68a7d30937115b054a02e82df0d44477d418dbf81a74472975dfb70e2 size: 524
 ```
 
-Note that while (in this case) the *layer ID* `9d1e415268eb` matches the previously seen value, the *manifest ID* `4c**b519a68a…**` is different from the *image ID* `4c**d7d90bcd38…**`!
+Note that while (in this case) the _layer ID_ `9d1e415268eb` matches the previously seen value, the _manifest ID_ `4c**b519a68a…**` is different from the _image ID_ `4c**d7d90bcd38…**`!
 This can be confirmed by running the following command again:
 
 ```console
@@ -240,6 +244,7 @@ curl http://localhost:5000/v2/empty/manifests/latest |
 </details>
 
 In the middle is the list of layers:
+
 ```json
  "fsLayers": [
   {
@@ -254,10 +259,11 @@ Each **layer** consists of a set of files, which are additive by nature.
 They have to be stacked over each other in the right order to assemble the complete file system.
 Each layer is read-only to prevent any kind of modification.
 A writable layer is put on top last to allow multiple containers to use the same image without interfering with each other.
-Changing an existing file will trigger a *pull-up*, where the original file is copied from its read-only-layer to the writable top-layer first before the write occurs.
-Deleting a file will simply create a *white-out* entry in the top-layer, which will hide the underlying file, so this actually will not free any space.
+Changing an existing file will trigger a _pull-up_, where the original file is copied from its read-only-layer to the writable top-layer first before the write occurs.
+Deleting a file will simply create a _white-out_ entry in the top-layer, which will hide the underlying file, so this actually will not free any space.
 
 As stated above layers are transferred as compressed TAR files, which can be accessed directly like this:
+
 ```console
 # curl –silent –fail –show-error http://localhost:5000/v2/empty/blobs/sha256:baf0be5522d4916aa5f49282fee717c0db36dd76bf3596ee1a581e364618d372 |
  gzip -dc | tar -t -f – -v
@@ -265,7 +271,8 @@ As stated above layers are transferred as compressed TAR files, which can be acc
 ```
 
 `baf0be5522d4916aa5f49282fee717c0db36dd76bf3596ee1a581e364618d372` from the manifests equals the sha256 of the **compressed** archive.
-After importing it the local configuration lists has *diff\_id* `9d1e415268eb1a4f5ac75d7f42983be65f92d94d0d5f5648bb1489acaa35e329`, which equals the shas256 of the **uncompressed** archive:
+After importing it the local configuration lists has _diff\_id_ `9d1e415268eb1a4f5ac75d7f42983be65f92d94d0d5f5648bb1489acaa35e329`, which equals the shas256 of the **uncompressed** archive:
+
 ```console
 # curl –silent –fail –show-error http://localhost:5000/v2/empty/blobs/sha256:baf0be5522d4916aa5f49282fee717c0db36dd76bf3596ee1a581e364618d372 |
  gzip -dc | sha256sum
@@ -274,10 +281,10 @@ After importing it the local configuration lists has *diff\_id* `9d1e415268eb1a4
 
 ## Summary
 
-Docker uses a *content addressable* scheme to store its data.
-It uses *stacked layers* to efficiently handle images.
-While layers may be shared by multiple images, their *configurations* will be different, leading to different sha256 fingerprints.
-Depending on if an image was pushed or pulled a *manifest* may be involved, which add yet another sha256.
+Docker uses a _content addressable_ scheme to store its data.
+It uses _stacked layers_ to efficiently handle images.
+While layers may be shared by multiple images, their _configurations_ will be different, leading to different sha256 fingerprints.
+Depending on if an image was pushed or pulled a _manifest_ may be involved, which add yet another sha256.
 
 If you're still not confused, running containers get yet another sha256 ID and docker uses some completely different identifiers internally below `/var/lib/docker/overlay2/l/`.
 

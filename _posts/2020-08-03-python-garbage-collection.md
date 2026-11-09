@@ -51,6 +51,7 @@ Mit [PEP 442](https://www.python.org/dev/peps/pep-0442/) gibt es seit Python 3.4
 Dazu wurde die Ausführung der `__del__()`-Methoden von der eigentlichen Freigabe der Objekte getrennt.
 
 Bzgl. Referenzen auf [Exceptions](https://docs.python.org/3/reference/compound_stmts.html#the-try-statement) ist folgendes zu ergänzen:
+
 ```python
 try:
  …
@@ -61,6 +62,7 @@ except Exception as ex:
 Mit Python 2 konnte man über `sys.exc_info()[2]` an den kompletten Traceback kommen, der u.a. die Stack-Frames aller verschachtelt aufgerufenen Funktionen enthält, in der der eigentliche Fehler dann tief verschachtelt auftrat.
 Diese Stack-Frames enthalten auch Referenzen auf die lokalen Variablen aller Funktionen, weshalb es hier leicht zu einer zyklischen Referenzierung kommen kann.
 Deswegen sollte man `sys.exc_info()[2]` nie dauerhaft speichern und es immer folgendermaßen verwenden:
+
 ```python
 try:
  tb = sys.exc_info()[2]
@@ -75,6 +77,7 @@ Mit Python 3 wurde `sys.exc_info()` überarbeitet, denn die Traceback Informatio
 Deswegen hat sich dort auch die Bedeutung von `except Exception as ex:` in einem entscheidenden Punkt geändert:
 "ex" ist nach dem `except`-Block nicht mehr gesetzt, es passiert also ein implizites `del ex`.
 Will man die Exception für später aufheben, muss man sie explizit einer zweiten Variablen zuweisen:
+
 ```python
 try:
  …

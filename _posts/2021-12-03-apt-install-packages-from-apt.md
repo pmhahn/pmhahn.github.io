@@ -20,7 +20,7 @@ Next to setting several UCR variables it also setups `omar/build2/` as an additi
 
 ## `/etc/apt/sources.list.d/99omar.list`
 
-```
+```text
 deb [trusted=yes] http://omar.knut.univention.de/build2/ ucs_5.0-0-errata5.0-0/all/
 deb [trusted=yes] http://omar.knut.univention.de/build2/ ucs_5.0-0-errata5.0-0/$(ARCH)/
 ```
@@ -31,7 +31,7 @@ At least make sure to remove this file if you do errata release QA as otherwise 
 
 ## `/etc/apt/preferences.d/99omar.pref`
 
-```
+```text
 Package: *
 Pin: origin omar.knut.univention.de
 Pin-Priority: 499

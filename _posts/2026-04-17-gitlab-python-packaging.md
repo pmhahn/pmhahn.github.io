@@ -112,7 +112,9 @@ ruff format:
   script:
     - uvx ruff format --diff
 ```
+
 This runs [`ruff`][ruff-gitlab] twice:
+
 1. Once as a linter to check form [common issues](https://docs.astral.sh/ruff/rules/)
 2. Once again as a code formatter to check, if the formatting does not follow the configured style.
 
@@ -184,22 +186,23 @@ build python package:
     paths:
       - dist/
 ```
+
 This builds the Python package.
 
 Alter `uv publish` will fail when you try to upload a Python package with an already existing version.
-This happens mostly because I forget to update `[project]version` in the `pyproject.toml`.
+This happens mostly because I forget to update `[project]version` in the [`pyproject.toml`][pyproject].
 The out-commented code above would poke the version into the file before each build.
 
 My alternative was to switch to [`setuptools-scm`][setuptools-scm]:
 This will use `git desctibe` to generate the version from `git tags`, which requires two things:
 
-1.  The image must contain the `git` binary. Debian's `-slim`-images do not.
-    Switch to the non-`-slim` versions.
-2.  Fetch enough history:
-    `GIT_DEPTH: 1` may not be enough to walk the git commits from `HEAD` to any previous `git tag`.
-    Therefor I use `GIT_DEPTH: 0` to fetch the complete history, but combine it with `GIT_FETCH_EXTRA_FLAGS: --filter=tree:0`:
-    That way I use [`git`'s partial-clone][git-partial] feature:
-    It fetch all commit object, but only the tree and blob objects required for HEAD.
+1. The image must contain the `git` binary. Debian's `-slim`-images do not.
+   Switch to the non-`-slim` versions.
+2. Fetch enough history:
+   `GIT_DEPTH: 1` may not be enough to walk the git commits from `HEAD` to any previous `git tag`.
+   Therefor I use `GIT_DEPTH: 0` to fetch the complete history, but combine it with `GIT_FETCH_EXTRA_FLAGS: --filter=tree:0`:
+   That way I use [`git`'s partial-clone][git-partial] feature:
+   It fetch all commit object, but only the tree and blob objects required for HEAD.
 
 ```yaml
 publish python package:
@@ -217,9 +220,12 @@ publish python package:
   script:
     - uv publish dist/*.whl
 ```
+
 This published the Python package to GitLab's [PyPI package registry][gitlab-pypi].
 
 ## Creating a GitLab release
+
+Use the command line tool [`glab`][glab] to both create a changelog and release:
 
 ```yaml
 release_job:
@@ -249,6 +255,7 @@ release_job:
           url: $CI_PROJECT_URL/-/packages/
           link_type: package
 ```
+
 The final part creates a [GitLab release][gitlab-release].
 It uses [GitLab's changelog API][gitlab-changelog] to automatically create a changelog in Markdown format from the git commits having a `Changelog:` trailer.
 
@@ -257,7 +264,6 @@ Without that it will try to write to `/.glab/`, which will fail.
 
 That `assets:links:` part creates a link to the PyPI package registry.
 [GitLab 18.11](https://docs.gitlab.com/releases/18/gitlab-18-11-released/) just received a feature, where [packages are included as release evidence](https://docs.gitlab.com/user/project/releases/release_evidence/#include-packages-as-release-evidence), which might make this optional.
-
 
 [gitlab-cc]: https://docs.gitlab.com/ci/testing/code_quality/
 [gitlab-cc-json]: https://docs.gitlab.com/ci/testing/code_quality/#code-quality-report-format

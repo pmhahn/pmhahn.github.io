@@ -13,6 +13,7 @@ Dummerweise liegen viele Pakete innerhalb des `univention`-Pakets, so daß es da
 <!--more-->
 
 Die Lösung ist in der [`__path__`-Variable](http://docs.python.org/tutorial/modules.html#packages-in-multiple-directories) versteckt:
+
 ```python
 import os.path
 import univention

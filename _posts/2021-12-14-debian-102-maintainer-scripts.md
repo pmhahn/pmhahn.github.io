@@ -36,7 +36,7 @@ postinst configure ""
 
 ## Upgrade
 
-```
+```text
 old.prerm upgrade "$new_version"
 new.preinst upgrade "$old_version"
 old.postrm upgrade "$new_version"
@@ -113,7 +113,7 @@ Basically make sure your service is configured and running each time `postinst` 
 Most often you can just ignore the parameter there:
 Only very seldom there is the need to distinguish failed upgrades from new installations, in almost all cases the service should be just running (again).
 
-But `prerm` is a different beast and you should spend some time on thinking about the difference between *removal* and *upgrade*:
+But `prerm` is a different beast and you should spend some time on thinking about the difference between _removal_ and _upgrade_:
 For a long time it was Debians policy to stop all services before an upgrade and only restart them afterwards.
 For some services this is still needed as program files cannot be upgraded if a process executing them is still running (a binary executable file is write-protected while a process is executing it).
 This has lead to long down times especially during upgrades.

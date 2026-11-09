@@ -62,9 +62,11 @@ Korrekt wäre ldapsearch … 1.1.
 
 LDAP ist hierarchisch, d.h. der Benutzer mit `dn: uid=phahn,ou=Entwicklung,o=Univention,l=Oldenburg,st=NDS,c=de` erbt **indirekt** das Country, den State, die Location/Organisation/-einheit.
 Die `objectClass` `organizationalPerson` erlaubt auch das explizite erfassen der Attribute, aber man kann auch auf die Attribute aus dem `dn` filtern:
+
 ```bash
 ldapsearch … '(&(uid=*)(l:dn:=Oldenburg))'
 ```
+
 findet alle Benutzer unterhalb eines Containers `Location` "Oldenburg".
 
 Der Versuch, alle realen Benutzer aus unserem LDAP-Verzeichnis zu bekommen, könnte also so aussehen, enthält aber immer noch zu viel Schrutz:

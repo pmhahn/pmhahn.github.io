@@ -17,7 +17,7 @@ But in contrast to TCP sockets, they only exist locally on the host.
 As such they cannot be used for inter-host-communication.
 
 UNIX domain sockets do not use port numbers to distinguish between multiple instances.
-Traditionally they use paths and are represented in the file system as *socket* Inodes.
+Traditionally they use paths and are represented in the file system as _socket_ Inodes.
 But there also exists a second variant, which is described in [below](#abstract-sockets).
 
 There also is a limit on the maximum path length, with is `UNIX_PATH_MAX = 108` characters, so be careful to not use deeply nested directories.
@@ -43,9 +43,9 @@ $ ls -i /tmp/socket
 ^^^^^^^
 ```
 
-As you see, both listening processes create a *new* UNIX socket Inode in the file system.
+As you see, both listening processes create a _new_ UNIX socket Inode in the file system.
 Opening a connection on that path will thus reach only one process:
-the *latest*:
+the _latest_:
 
 ```console
 $ nc -N -U /tmp/socket </dev/null
@@ -54,7 +54,7 @@ $ nc -N -U /tmp/socket </dev/null
 nc: unix connect failed: Connection refused
 ```
 
-So given the *path* we want to find the *process* serving that *Inode*!
+So given the _path_ we want to find the _process_ serving that _Inode_!
 
 ## The duplicate issue
 
@@ -68,7 +68,7 @@ s = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
 s.bind('/tmp/socket')
 ```
 
-```
+```text
 Traceback (most recent call last):
   File "<stdin>", line 1, in <module>
   File "/usr/lib/python2.7/socket.py", line 228, in meth
@@ -97,7 +97,7 @@ nc      12554 phahn    3u  unix 0x00000000ac502341      0t0 13383220 /tmp/socket
                                                             ^^^^^^^^
 ```
 
-They both find *both* processes, but we know that only the latest will get all the requests.
+They both find _both_ processes, but we know that only the latest will get all the requests.
 Even worse they might provide no output at all:
 
 ```console
@@ -108,14 +108,13 @@ $ lsof ./socket
 ```
 
 Yes, the output of `lsof` remains empty!
-It also does if your path contains *symbolic links* and you are using the *wrong* path to the socket Inode.
+It also does if your path contains _symbolic links_ and you are using the _wrong_ path to the socket Inode.
 
 So the tools are less ideal for UNIX sockets as the problem there is more difficult:
 
-* For a file you have the *file system ID* and the *Inode* within that file system, which uniquely identifies the file.
+- For a file you have the _file system ID_ and the _Inode_ within that file system, which uniquely identifies the file.
   The tools just have to walk `/proc/$pid/fd/$fd` and compare this to the 2-tuple of the requested files.
-
-* Same for UDP and TCP sockets, where the kernel guarantees that only one process per host can uniquely use that socket (`fork()`s ignored).
+- Same for UDP and TCP sockets, where the kernel guarantees that only one process per host can uniquely use that socket (`fork()`s ignored).
 
 But for UNIX domain sockets we already have seen that multiple processes can open the same path for serving, each one gets a new UNIX socket Inode and thus only the latest process gets all new requests.
 All previous serving processes remain until they terminate themselves or are killed by someone.
@@ -133,36 +132,36 @@ $ grep /tmp/socket /proc/net/unix
 Both `fuser` and `lsof` use that information to find the processes, which opened UNIX sockets.
 But;
 
-* `Path` matches exactly the string, which was used by the process when it called `bind()`.
+- `Path` matches exactly the string, which was used by the process when it called `bind()`.
   If the sockets gets moved or renamed, both `fuser` and `lsof` can no longer match the path to a process.
   `lsof` even will fail, when the path is relative or is different because it contains symbolic links.
 
   You might assume, that the socket Inode in the file system is not relevant, but it is.
   If you manually rename the socket afterwards, a program can still connect your daemons on the renamed path:
 
-    ```console
-$ mv /tmp/socket /tmp/socket.old
-$ nc -N -U /tmp/socket.old </dev/null
-```
+    ```bash
+    mv /tmp/socket /tmp/socket.old
+    nc -N -U /tmp/socket.old </dev/null
+    ```
 
-* The listed `Inode` in is different from the Inode in the file system:
+- The listed `Inode` in is different from the Inode in the file system:
   To handle sockets like files the Linux kernel implements a virtual file system called `sockfs`:
 
     ```console
-$ grep sock /proc/filesystems
-nodev   sockf
-```
+    $ grep sock /proc/filesystems
+    nodev   sockf
+    ```
 
   For each opened socket it contains an Inode, which then the processes reference:
 
     ```console
-$ readlink /proc/12554/fd/3 /proc/12550/fd/3
-socket:[13383220]
-socket:[13381347]
-        ^^^^^^^^
-```
+    $ readlink /proc/12554/fd/3 /proc/12550/fd/3
+    socket:[13383220]
+    socket:[13381347]
+            ^^^^^^^^
+    ```
 
-  The numbers in the square brackets 'socket:[...]` match the Inode numbers from `/proc/net/unix'.
+    The numbers in the square brackets 'socket:[...]` match the Inode numbers from `/proc/net/unix'.
 
 But we are still missing the link from the Inode in the file system path to the socket Inode of the process.
 
@@ -182,7 +181,7 @@ u_str  LISTEN  0       5         /tmp/socket 13383220             * 0     users:
                                              ^^^^^^^^                                                           ^^^^^^^
 ```
 
-This both lists the socket Inode as *Port* and the path Inode in the last column as *ino:*.
+This both lists the socket Inode as _Port_ and the path Inode in the last column as _ino:_.
 `dev` corresponds to the device number given by `stat`:
 
 ```console
@@ -199,21 +198,25 @@ So finally we have a solution:
 
 ## More details
 
-There are some more *nice-to-know* details about *UNIX domain sockets*, which are mostly irrelevant for this problem so far.
+There are some more _nice-to-know_ details about _UNIX domain sockets_, which are mostly irrelevant for this problem so far.
 But I want to mention them anyway for reference:
 
 ### Abstract sockets
-There exist a second class called *abstract sockets*:
-* their path name starts with the `NUL` characters, making their path length 0.
-* then they can use the remaining 107 characters to define a unique identifier, which other programs can use to connect.
-* they are not represented in the file system.
+
+There exist a second class called _abstract sockets_:
+
+- their path name starts with the `NUL` characters, making their path length 0.
+- then they can use the remaining 107 characters to define a unique identifier, which other programs can use to connect.
+- they are not represented in the file system.
 
 ### Credential passing
+
 As the communicating processes are both local to the host, the listening process can get additional information from the sender.
-This includes the *process*, *user* and *group* IDs (PID, UID, GID).
+This includes the _process_, _user_ and _group_ IDs (PID, UID, GID).
 See `SCM_CREDENTIALS` in the manual page.
 
 ### File descriptor passing
+
 UNIX domain sockets can be used to pass file descriptors between processes.
 This can be used to have a privileged process, which opens a file on request of another process.
 Usually it performs additional checks before it passes its opened file on to the requesting process.

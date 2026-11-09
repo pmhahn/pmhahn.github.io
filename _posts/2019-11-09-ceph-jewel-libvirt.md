@@ -13,17 +13,18 @@ Therefor I did a [manual installation](https://docs.ceph.com/docs/jewel/install/
 In contrast to [Ceph Storage with UCS](https://help.univention.com/t/cool-solution-ceph-storage-with-ucs/12535) I do not want to use CephFS, but use Rados directly.
 
 This is a **test setup** and not appropriate for production:
-* I'm only running one monitor, which is a *single point of failure*.
-* I disabled replication on purpose.
-* all nodes have a single big `ext4` file system, so no partitioning, no fast journal disks, and [issues with extended attributes](https://docs.ceph.com/docs/jewel/rados/configuration/filesystem-recommendations/#not-recommended).
+
+- I'm only running one monitor, which is a _single point of failure_.
+- I disabled replication on purpose.
+- all nodes have a single big `ext4` file system, so no partitioning, no fast journal disks, and [issues with extended attributes](https://docs.ceph.com/docs/jewel/rados/configuration/filesystem-recommendations/#not-recommended).
 
 <!--more-->
 
 My setup consists of 3 hosts, which are in the `192.168.0.0/24` network and use my domain `phahn.dev`:
 
-* hdmi1 = 192.168.0.15 = `ceph-mon`, `libvirtd`
-* hdmi2 = 192.168.0.18 = `ceph-osd`
-* hdmi3 = 192.168.0.24 = `ceph-osd`
+- hdmi1 = 192.168.0.15 = `ceph-mon`, `libvirtd`
+- hdmi2 = 192.168.0.18 = `ceph-osd`
+- hdmi3 = 192.168.0.24 = `ceph-osd`
 
 Commands are executed on `hdmi1`, where I'm logged in as the user `root`:
 
@@ -53,11 +54,11 @@ done
 
 Following
 [ceph.conf](//docs.ceph.com/docs/jewel/rados/configuration/ceph-conf/) I
-create a *degraded* cluster:
+create a _degraded_ cluster:
 
-* My nodes only have a single network interface, so my public network is the
+- My nodes only have a single network interface, so my public network is the
   same as my internal (`cluser`) network.
-* You have to explicitly list all OSD with their name;
+- You have to explicitly list all OSD with their name;
   otherwise the monitor will not initialize the OSDs correctly and they will remain stuck in the `booting` stage.
 
 ```bash

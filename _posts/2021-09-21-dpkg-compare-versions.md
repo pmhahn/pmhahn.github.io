@@ -20,26 +20,26 @@ The format is:
 
 <!--more-->
 
-1.  The _epoch_ is the last resort when version numbers go backward and [should be used sparingly](https://www.debian.org/doc/debian-policy/ch-controlfields.html#epochs-should-be-used-sparingly).
-    It is reserved for cases, for example where upstream changes its version scheme incompatibly or to fix serious errors.
-    The _epoch_ is a small number - by default starting at **0** - and it **not** included with the filename:
-    This makes comparing packages by filename wrong as this misses the _epoch_!
-2.  The _upstream-version_ is a sequence of alphanumeric characters plus the characters _full stop_, _plus_, _hyphen_ and _tilde_.
-    The pattern `[0-9A-Za-z.+~-]+?` is **not** _greedy_:
-    It will capture **all hyphens except the last one**, which is used to separate the _debian-revision_.
-3.  The _debian-revision_ is **optional** and the part after the **last** _hyphen_ character.
-    Therefor the same character set as in _upstream-version_ is allowed **except** the _hyphen_ character:
-    The pattern `[0-9A-Za-z.+~]+` is greedy.
+1. The _epoch_ is the last resort when version numbers go backward and [should be used sparingly](https://www.debian.org/doc/debian-policy/ch-controlfields.html#epochs-should-be-used-sparingly).
+   It is reserved for cases, for example where upstream changes its version scheme incompatibly or to fix serious errors.
+   The _epoch_ is a small number - by default starting at **0** - and it **not** included with the filename:
+   This makes comparing packages by filename wrong as this misses the _epoch_!
+2. The _upstream-version_ is a sequence of alphanumeric characters plus the characters _full stop_, _plus_, _hyphen_ and _tilde_.
+   The pattern `[0-9A-Za-z.+~-]+?` is **not** _greedy_:
+   It will capture **all hyphens except the last one**, which is used to separate the _debian-revision_.
+3. The _debian-revision_ is **optional** and the part after the **last** _hyphen_ character.
+   Therefor the same character set as in _upstream-version_ is allowed **except** the _hyphen_ character:
+   The pattern `[0-9A-Za-z.+~]+` is greedy.
 
 When two version strings are compared, they are compared section by section, e.g. first numerically by _epoch_, second by _upstrean_version_ and only last by _debian-revision_.
 The last two sections require a special algorithm for comparison:
 
-*   Each section is separated into a sequence of consecutive non-digit-characters and digits.
-*   Consecutive digits are compared **numerically**
-*   All non-digits are compared **lexical** as strings, using a **modified** ASCII encoding
-*   `~` sorts before the _empty string_ - think of this as _-ε_ (minus Epsilon), which is often used for _alpha_ / _beta_ / _release-candidates_ or _backports_, as they must sort **before** the final version.
-*   After that follow the upper `A-Z` and lower-case letters `a-z`.
-*   Last comes the _plus_ `+`, _hyphen_ `-` (only in _upstream-version_) and _full stop_ `.`.
+- Each section is separated into a sequence of consecutive non-digit-characters and digits.
+- Consecutive digits are compared **numerically**
+- All non-digits are compared **lexical** as strings, using a **modified** ASCII encoding
+- `~` sorts before the _empty string_ - think of this as _-ε_ (minus Epsilon), which is often used for _alpha_ / _beta_ / _release-candidates_ or _backports_, as they must sort **before** the final version.
+- After that follow the upper `A-Z` and lower-case letters `a-z`.
+- Last comes the _plus_ `+`, _hyphen_ `-` (only in _upstream-version_) and _full stop_ `.`.
 
 ## Examples
 
@@ -139,7 +139,7 @@ What most confuses people is that the _upstream-version_ seems to be _greedy_ in
 
 Actually no:
 
-*   The greedy version `[0-9-]+-[0-9]+` would **mistakenly** capture everything as _upstream-version_ as it does **not stop** before the last hyphen.
-*   The minimal version `[0-9-]+?-[0-9]+` leaves the last part to _debian-revision_ while capturing only the remaining prefix correctly as _upstream-version_.
+- The greedy version `[0-9-]+-[0-9]+` would **mistakenly** capture everything as _upstream-version_ as it does **not stop** before the last hyphen.
+- The minimal version `[0-9-]+?-[0-9]+` leaves the last part to _debian-revision_ while capturing only the remaining prefix correctly as _upstream-version_.
 
 {% include abbreviations.md %}

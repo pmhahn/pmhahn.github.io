@@ -8,6 +8,7 @@ excerpt_separator: <!--more-->
 
 The Linux kernel itself and its modules may export symbols, so that other modules can import and use them.
 As the functions are written in C, it is important that the function signature matches:
+
 - the number of arguments must match
 - the ordering of the arguments must match
 - the data types must match, which includes the structure and layout of all input and output parameters
@@ -133,29 +134,36 @@ This is where versioning kicks in.
 ## Anatomy of a Linux kernel module
 
 When you write and export a function in the Linux kernel or an module, the following happens:
+
 ```c
 void my_function(void) {
     return;
 }
 ```
+
 1. The compiler/assembler puts the code into the `.text` section.
 2. The name of the function is added to the `.strtab` section.
 3. An entry is added to the `symtab` section linking the offset within the `.text` section to the name via its offset in the `strtab` section.
 
 Using `EXPORT_SYMBOL` adds more magic:
+
 ```c
 #include <linux/module.h>
 EXPORT_SYMBOL(my_function);
 ```
+
 1. It puts the name of the function into a section called `__ksymtab_strings`.
+
     ```console
     $ LC_ALL=C readelf --wide --string-dump=__ksymtab_strings avm-modver.ko
     String dump of section '__ksymtab_strings':
       [     0]  my_function
     ```
+
 2. It creates a new section called `__ksymtab+my_function` with a single `struct kernel_symbol` linking the address of the function to its name.
     Later on these sections will be collected by the linker script `scripts/module-common.lds` and will be put into the section called `__ksymtab`.
     Similar happens for `EXPORT_SYMBOL_GPL` and `EXPORT_SYMBOL_GPL_FUTURE` and `EXPORT_SYMBOL_NS`, but with different prefixes.
+
     ```console
     $ LC_ALL=C readelf --wide --relocated-dump=__ksymtab --relocs avm-modver.ko | grep -A4 __ksymtab
     Relocation section '.rela__ksymtab' at offset 0x14fc8 contains 3 entries:
@@ -173,6 +181,7 @@ Too see more details, use `make avm-modver.i` to run the pre-processor and to ge
 With `CONFIG_MODVERSIONS` enabled even more magic happens.
 If a module uses `EXPORT_SYMBOL`, then `genksyms` is called.
 The source code of the module is pre-processed again via `cpp`, but with a different definition for `EXPORT_SYMBOLS`.
+
 1. For each function exported via `EXPORT_SYMBOL` a CRC for the function signature is computed by parsing the C function call.
     A new section called `___kcrctab+my_function` with a single `long` containing the CRC is created.
     Later on these sections will be collected by the linker script `scripts/module-common.lds` and will be put into the section called `__kcrctab`.
@@ -193,6 +202,7 @@ Symbols exported via `EXPORT_SYMBOL_GPL` can only be resolved if the module has 
 
 When `CONFIG_MODVERSIONS` is enabled, the linker inside the Linux kernel also checks the CRC:
 For every undefined symbol there is a matching entry for it in section `__versions`, which contains the CRC of the symbol from compile time.
+
 ```console
 $ LC_ALL=C readelf --wide -s avm-modver.ko | grep UND
      0: 0000000000000000     0 NOTYPE  LOCAL  DEFAULT  UND
@@ -225,6 +235,7 @@ Hex dump of section '__versions':
 <!-- ~/REPOS/LINUX/linux/scripts/mod/modpost.c -->
 The original Linux kernel uses `const struct modversion_info __version[]`.
 The structure has a fixed size of 64 bytes:
+
 - the first 8 bytes contain the CRC.
 - the remaining 56 bytes contain the symbol name.
 
@@ -246,6 +257,7 @@ Hex dump of section '__versions':
 
 <!-- /usr/src/linux-headers-6.8.0-84-generic/scripts/mod/modpost.c -->
 Ubuntu has changed this and uses `const char ____versions[]`:
+
 - the first 8 bytes contain the CRC.
 - next follows the symbol name with a terminating NUL byte.
 - more NUL bytes for padding up to the next address dividable by 4.
@@ -257,6 +269,7 @@ This has been reverted by [2039010](https://bugs.launchpad.net/ubuntu/+source/li
 …
 
 ## Further reading
+
 - Linux: [Building External Modules - Module Versioning](https://docs.kernel.org/kbuild/modules.html#module-versioning)
 - LWN: [A new version of modversions](https://lwn.net/Articles/986892/)
 - [Anatomy of the Linux loadable kernel module](https://terenceli.github.io/技术/2018/06/02/linux-loadable-module)

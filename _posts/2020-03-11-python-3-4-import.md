@@ -19,6 +19,7 @@ Findet es diese nicht, sucht es dann nach `bar`.
 Python 3 verwendet standardmäßig **absolute** imports, was man auch schon in Python 2 mit einem `from __future__ import absolute_import` erreichen kann.
 
 Module können dann so importiert werden:
+
 ```python
 # absoluter import
 import abso.lut
@@ -45,6 +46,7 @@ Unter `/usr/lib/python3/dist-packages/` landen unsere Pakete, aber es gibt eben 
 Mit UCS-4 (= Debian Stretch) haben wir **Python 3.5**, UCS-5 (= Debian Buster) aber **Python 3.7**.
 Zum Glück kann uns das derzeit aber egal sein.
 Trotzdem sollten wir es vermeiden, diese Pfade überall hart zu kodieren, wie es derzeit aber leider in UCS manchmal noch der Fall ist:
+
 ```bash
 # Bad
 /usr/bin/python2.7 /usr/lib/pymodules/python2.7/univention/s4connector/s4/main.py

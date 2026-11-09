@@ -13,6 +13,7 @@ A: Man kann die Datei per Network-Block-Device (NBD) nur-lesbar exportieren und 
 <!--more-->
 
 Auf dem Quell-KVM-Server (z.B. krus):
+
 ```bash
 ssh krus
 sudo iptables -I INPUT 1 -p tcp --dport 10809 -j ACCEPT
@@ -25,6 +26,7 @@ exit
 ```
 
 Auf dem Ziel-KVM-Server:
+
 ```xml
 <domain type="kvm">
  …
@@ -43,6 +45,7 @@ Auf dem Ziel-KVM-Server:
 ```
 
 Und weil das noch nicht cool genug ist, kann man auch noch lokal eine Qcow2-Datei darüberlegen, damit das ganze lokal schreibbar wird und Änderungen nicht auf den Server zurückgeschrieben werden:
+
 ```bash
 qemu-img create -f qcow2 \
  -o backing_fmt=nbd \
@@ -51,6 +54,7 @@ qemu-img create -f qcow2 \
 ```
 
 In der XML-Datei muß natürlich dann ganz normal diese Qcow2-Datei eingebunden werden:
+
 ```xml
 <disk type="file" device="disk">
  <driver name="qemu" type="qcow2" copy_on_read="on"/>
@@ -64,6 +68,7 @@ Geschriebene Blöcke werden natürlich sofort und nur in der lokalen Datei gespe
 
 Damit entsteht im Laufe der Zeit ein mehr-oder-minder vollständiges lokales Abbild der entfernten Datei.
 Will man wirklich wirklich alle Daten kopieren, kann man anschließend auch dem laufenden Qemu-KVM-Prozess sagen, daß es (in aller Ruhe) die Blöcke der Backing-Datei kopieren soll, so daß anschließend die lokale Qcow2-Datei alle Datenblöcke enthält und man die Verbindung zur ursprünglichen Datei kappen kann:
+
 ```bash
 virsh blockpull --domain "$domain" \
  --path "/var/lib/libvirt/images/lenny-0.qcow2" \

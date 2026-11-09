@@ -13,23 +13,24 @@ While working on [speeding up the build process]({% post_url 2020-05-02-speedup-
 <!--more-->
 
 Building a package by default involves the following programs calling each other:
-* `debuild`
-  * `dpkg-buildpackage`
-    * `dpkg-source --build $dir` → `../$pkg_$ver.dsc`
-    * `make -f debian/rules`
-      * `dpkg-deb --build $dir $deb`
-    * `dpkg-genbuildinfo` → `../$pkg_$ver_$arch.buildinfo`
-    * `dpkg-genchanges` → `../$pkg_$ver_$arch.changes`
+
+- `debuild`
+  - `dpkg-buildpackage`
+    - `dpkg-source --build $dir` → `../$pkg_$ver.dsc`
+    - `make -f debian/rules`
+      - `dpkg-deb --build $dir $deb`
+    - `dpkg-genbuildinfo` → `../$pkg_$ver_$arch.buildinfo`
+    - `dpkg-genchanges` → `../$pkg_$ver_$arch.changes`
 
 Several of them already have an option to overwrite the directory and/or an be invoked from paths outside the normal build directory:
 
-* `dpkg-source` places the files in the current working directory by default, but you can give it an absolute path.
-* `dpkg-deb` can use an absolute path for its output file.
+- `dpkg-source` places the files in the current working directory by default, but you can give it an absolute path.
+- `dpkg-deb` can use an absolute path for its output file.
    It is invoked by `dh_builddeb`, which has the option `--destdir=Verzeichnis`.
-* `dpkg-genbuildinfo` has the `-u$dir` option.
-* `dpkg-genchanges` has the `-u$dir` option.
+- `dpkg-genbuildinfo` has the `-u$dir` option.
+- `dpkg-genchanges` has the `-u$dir` option.
 
-So for a first try for an *out-of-tree* build we can do it like this:
+So for a first try for an _out-of-tree_ build we can do it like this:
 
 ```sh
 #/bin/sh
@@ -54,7 +55,7 @@ dpkg-source --aftere-build .
 (cd "$out" && debsign *.changes)  # FIXME
 ```
 
-This *mostly* works but **fails** for the following reasons at the moment:
+This _mostly_ works but **fails** for the following reasons at the moment:
 
 1. The path for the `.changes` file is hard-coded in `dpkg-buildpackage` and cannot be changed.
 

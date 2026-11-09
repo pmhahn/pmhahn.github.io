@@ -71,7 +71,7 @@ Dazu läuft intern in unserer DMZ die VM **ec2-vpn.pingst.univention.de** mit de
 Diese baut per **OpenVPN** eine **unverschlüsselte** Verbindung zur NAT-Instanz bei Amazon auf.
 Diese Verbindung besteht nur logisch, denn es wird das verbindungslose UDP für den Transport der den OpenVPN-Pakete verwendet.
 
-Technisch ist das durch einen sogenannten *Transit-Tunnel* gelöst:
+Technisch ist das durch einen sogenannten _Transit-Tunnel_ gelöst:
 Beide OpenVPN-Seiten haben jeweils ein **tun**-Interface mit der IP-Adresse `10.211.0.1` bei Amazon bzw. `10.211.0.2` in unserer DMZ.
 Per Routing-Tabelle werden die Pakete jeweils an diese lokale Adresse weitergeleitet.
 
@@ -93,7 +93,7 @@ Das ist zum Beispiel der Fall, **bevor** der obige Hack mit `dhclient.conf.local
 
 Greif man nun aus dem internen Netz **192.168.0.0/24** auf meine VM 10.200.7.14 in EC2 zu, passiert folgendes:
 
-```
+```text
 traceroute to 10.210.7.14 (10.210.7.14), 30 hops max, 60 byte packets
  1  192.168.0.240  0.362 ms  0.324 ms  0.416 ms
  2  192.168.0.250  0.518 ms  0.392 ms  0.347 ms
@@ -106,7 +106,7 @@ traceroute to 10.210.7.14 (10.210.7.14), 30 hops max, 60 byte packets
 1. Mein Notebook 192.168.0.82 schickt ein Paket an unser lokales Gateway _lerberg_ mit IP `192.168.0.240`.
 2. Dieses leitet das Paket zur KNUT-Firewall bei Briteline _rigtig_ mit IP `192.168.0.250` weiter.
 3. Dort passiert es die _Firewall_ `192.168.250.250` zur DMZ.
-4. Von dort geht das Paket zu unserem OpenVPN-Client `ec2-vpn` mit `192.168.5.27`. Dort wird das Paket durch den *Transit-Tunnel* geleitet. Vom verpacken durch OpenVPN sieht man hier nichts.
+4. Von dort geht das Paket zu unserem OpenVPN-Client `ec2-vpn` mit `192.168.5.27`. Dort wird das Paket durch den _Transit-Tunnel_ geleitet. Vom verpacken durch OpenVPN sieht man hier nichts.
 5. Beim OpenVPN-Server im Amazon-VPN angekommen wird das Paket entpackt und innerhalb des VPN zugestellt.
 6. Schließlich erreicht das Paket die VM.
 
@@ -115,7 +115,7 @@ Wie bekommt man nun mehr Geschwindigkeit bzw. was habe ich heute Nacht geändert
 - Die [t1.micro](https://aws.amazon.com/de/ec2/previous-generation/) Instanz wurde durch eine leistungsfähigere Instanz ersetzen.
 - Neben der NAT-Instanz läuft nun im zweiten Subnetz `10.211.0.0/28` auch ein NAT-Gateway, das standardmäßig in der Routing-Tabelle für das alte Subnetz `10.210.0.0/8` konfiguriert wird. Der DHCP-Hack ist damit nicht mehr notwendig für ausgehende Verbindungen.
 - Fernen gibt es nun auch ein **IPv6 Egress-Gateway**, welches es erlaubt, dass VMs ausgehende IPv6-Verbindungen aufbauen können. IPv6 ist allerdings erst für die neuere Instanztypen **m4** verfügbar.
-- Es existiert ein partieller(nur *maintained*) lokalen Spiegel unseres Download-Servers beim Amazon, den man nutzen kann: `ucr set repository/online/server=http://ucs-updates.s3-website-eu-west-1.amazonaws.com/` Der Spiegel ist transparent und liefert für alle Anfragen, die er nicht beantworten kann, einen HTTP-Redirect auf [updates.software-univention.de](http://updates.software-univention.de/), was mit `apt` auch wunderbar funktioniert. Dieser Spiegel enthält **nur** die statischen `.deb`-Pakete, nicht die dynamischen Daten wie `Packages`-Dateien und Updater-Scripte.
+- Es existiert ein partieller(nur _maintained_) lokalen Spiegel unseres Download-Servers beim Amazon, den man nutzen kann: `ucr set repository/online/server=http://ucs-updates.s3-website-eu-west-1.amazonaws.com/` Der Spiegel ist transparent und liefert für alle Anfragen, die er nicht beantworten kann, einen HTTP-Redirect auf [updates.software-univention.de](http://updates.software-univention.de/), was mit `apt` auch wunderbar funktioniert. Dieser Spiegel enthält **nur** die statischen `.deb`-Pakete, nicht die dynamischen Daten wie `Packages`-Dateien und Updater-Scripte.
 
 Ich bin gespannt auf eure Rückmeldungen, ob es geholfen hat.
 

@@ -7,6 +7,7 @@ excerpt_separator: <!--more-->
 ---
 
 Auf der Suche nach $1 gleichen Zeichen $2 hatte ich ursprünglich folgenden Code:
+
 ```bash
 ruler () {  # count char
     local i
@@ -20,6 +21,7 @@ ruler () {  # count char
 <!--more-->
 
 Daraus ist dann irgendwann folgendes entstanden:
+
 ```bash
 ruler () {  # count char
     local _r="${2:-=}"
@@ -33,6 +35,7 @@ ruler () {  # count char
 ```
 
 Oder doch gleich Python:
+
 ```bash
 ruler () {  # count char
     python -c 'import sys;print sys.argv[2] * int(sys.argv[1])' "$1" "${2:-=}"
@@ -40,6 +43,7 @@ ruler () {  # count char
 ```
 
 Folgendes wollte leider nicht:
+
 ```bash
 ruler () {  # count char
     seq -f"${2:-=}" "$1"
@@ -47,6 +51,7 @@ ruler () {  # count char
 ```
 
 Aber folgendes funktioniert:
+
 ```bash
 ruler () {  # count char
     local t

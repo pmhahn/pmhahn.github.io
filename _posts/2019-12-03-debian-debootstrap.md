@@ -8,7 +8,7 @@ excerpt_separator: <!--more-->
 
 At work I need minimal Docker images.
 `debootstrap` is Debians default way to create `chroot` environments.
-By default they include all *required* and *essential* packages.
+By default they include all _required_ and _essential_ packages.
 For a hardware system this is okay, but too much for a container image.
 
 <!--more-->
@@ -32,10 +32,10 @@ debootstrap --print-debs \
 
 This includes packages like:
 
-* `diffutils`
-* `e2fsprogs`
-* `fdisk`
-* `login`
+- `diffutils`
+- `e2fsprogs`
+- `fdisk`
+- `login`
 
 The first two can be removed easily, but the last two are still pulled in as required dependencies.
 
@@ -54,16 +54,15 @@ pbuilder create \
 
 (I install `pbuilder` inside the `chroot` environment as I always use `--pbuilder-internal` to resolve dependencies inside the `chroot` environment.)
 
-More less
-=========
+## More less
 
 This image is still quiet large.
-Please have a look at [Debuerro](https://github.com/debuerreotype/debuerreotype) which creates the official *Slim* [Debian Docker Images](https://hub.docker.com/_/debian).
+Please have a look at [Debuerro](https://github.com/debuerreotype/debuerreotype) which creates the official _Slim_ [Debian Docker Images](https://hub.docker.com/_/debian).
 They use the following [tricks to shrink](https://github.com/debuerreotype/debuerreotype/blob/master/scripts/debuerreotype-minimizing-config) the image even more compared to my naive approach:
 
-* Setup `/etc/dpkg/dpkg.cfg.d/` to exclude certain files during package installation:
-  * All documentation below `/usr/share/doc/` except the `copyright` files.
-  * All locale related files below `/usr/share/locale/` except for `C.UTF-8`.
-  * The unpacked `Packages`, `Sources`, `Release` files below `/var/lib/apt/`.
+- Setup `/etc/dpkg/dpkg.cfg.d/` to exclude certain files during package installation:
+  - All documentation below `/usr/share/doc/` except the `copyright` files.
+  - All locale related files below `/usr/share/locale/` except for `C.UTF-8`.
+  - The unpacked `Packages`, `Sources`, `Release` files below `/var/lib/apt/`.
 
 {% include abbreviations.md %}

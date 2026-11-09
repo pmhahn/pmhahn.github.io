@@ -26,11 +26,11 @@ Das Schichtenmodell dient der Vereinfachung und Strukturierung.
 Betrachtet man eine Schichte, regelt diese die Kommunikation auf einer bestimmten Ebene.
 Dazu wird dort ein Protokoll definiert, was diesen Ablauf bestimmt.
 Nur für die **Umsetzung** dieser Kommunikation wird auf die **direkt darunter liegende Ebene** zugegriffen;
-ansonsten bleiben diese Details außen vor und werde nicht *nach oben* durchgereicht.
+ansonsten bleiben diese Details außen vor und werde nicht _nach oben_ durchgereicht.
 
 ## Internet Protocol IPv4
 
-Über das *Domain Name System* (DNS) werden Rechnernamen in IP-Adressen aufgelöst.
+Über das _Domain Name System_ (DNS) werden Rechnernamen in IP-Adressen aufgelöst.
 Die Kommunikation darüber bestimmt das **Routing**:
 
 ```console
@@ -56,7 +56,7 @@ Dieses bekommt die Ethernet-MAC-Adresse des Emfänger:
 - Für ein lokalel Paket direkt die Adresse des anderen lokalen Rechners.
 - Alle anderen Pakete wird die Adresse des Gateways genutzt, der sich dann um die weitere Weiterleitung kümmern muss.
 
-Um an die MAC-Adresse des Empfänger zu kommen wird ein *Address Resolution Protocol* (ARP)-Paket per Ethernet-Broadcast an alle Rechner im lokalen Segment geschikt.
+Um an die MAC-Adresse des Empfänger zu kommen wird ein _Address Resolution Protocol_ (ARP)-Paket per Ethernet-Broadcast an alle Rechner im lokalen Segment geschikt.
 Dieses Fragt nach der MAC-Adresse, die zu der Ziel-IP-Adresse gehört.
 Diese Anfrage wird von allen Rechnern empfangen, aber nur derjenige Rechner, der lokal diese IP-Adresse hat, antwortet dann mit seiner MAC-Adresse.
 
@@ -88,9 +88,10 @@ Immer wenn ein Rechner ein Paket **versendet**, steht im Ethernet-Frame seine **
 Diese assoziiert der Switch mit dem Port, über den das Paket **empfangen** wurde.
 Beim nächsten Paket **an** diese Adresse weiß dann der Switch, das dieses Paket **nur** über diesen Port gesendet werden muss.
 
-Nur wenn der Switch die Adresse noch nicht gelernt hat, wird das Paket in *guter alter Tradition* über **alle** Ports versendet – mit all den Nachteilen von Kollision von oben…
+Nur wenn der Switch die Adresse noch nicht gelernt hat, wird das Paket in _guter alter Tradition_ über **alle** Ports versendet – mit all den Nachteilen von Kollision von oben…
 
 Für virtuelle Maschinen wird das in Software realisiert:
+
 ```console
 # brctl show
 bridge name     bridge id               STP enabled     interfaces
@@ -144,12 +145,14 @@ Das führt teilweise zu seltsamen Paket-Routing:
 - Selbiges gilt auch für 2 VMs aus unterschiedlichen IP-Adressbereichen.
 - Zwei VMs auf dem selben IP-Adressbreich, die zudem auch auf dem selben KVM-Host laufen, nutzen eben kein Routing und kommunizieren direkt per Ethernet, so dass diese Pakete nie den KVM-Server Richtung `lerberg` verlassen müssen.
 
-Das ist so gewollt denn in einem *echten* Netzwerk würde man die Bereiche z.B. durch eine Firewall voneinander abschotten wollen.
+Das ist so gewollt denn in einem _echten_ Netzwerk würde man die Bereiche z.B. durch eine Firewall voneinander abschotten wollen.
 
 Auf der anderen Seite kann man das aber auch zu seinem Vorteil ausnutzen und z.B. weitere Routen ergänzen:
+
 ```console
 # ip route add 192.168.0.0/24 dev eth0
 ```
+
 Damit weiß die VM, dass sie auch mit Host aus dem KNUT-Netz direkt verbunden ist und mit diesen direkt per Ethernet sprechen kann, ohne den Umweg über `lerberg` nehmen zu müssen.
 
 Aber:
@@ -162,7 +165,7 @@ Dafür müsste man auf `omar` (und ggf. auf allen anderen Rechner auch) auch dor
 
 Wie oben beschrieben baut der Linux-Kernel einen Switch in Software nach.
 Dieser Mechanismus hat einen gravierenden Nachteil:
-Normalerweise reagiert die Netzwerkkarte nur auf *ihre* MAC-Aresse und filtert alle nicht an sie gerichtetet Pakete *in Hardware* heraus.
+Normalerweise reagiert die Netzwerkkarte nur auf _ihre_ MAC-Aresse und filtert alle nicht an sie gerichtetet Pakete _in Hardware_ heraus.
 Auf einem Server mit einer Bridge, die z.B. für Virtualisierung genutzt wird, muss die Netzwerkkarte aber eben nicht mehr nur die Pakete entgegen nehmen, die direkt an den Host gerichtet sind, sondern auch die Pakete, die für die VMs gedacht sind.
 Diese haben alle eigene MAC-Adressem (bei Qemu mit dem Prefix `52:54:00`).
 Das Host-Interface muss deshalb im sog. `promiscuous mode` laufen, wodurch **alle** Ethernet-Pakete angekommen werden.

@@ -7,6 +7,7 @@ excerpt_separator: <!--more-->
 ---
 
 Folgendes ist mit Python 3 syntaktisch nicht mehr erlaubt:
+
 ```python
 try: pass
 except:
@@ -24,6 +25,7 @@ except ExceptionType as (a, b, c):
 <!--more-->
 
 Statt dessen sollte man die neue Syntax verwenden:
+
 ```python
 try: pass
 except Exception:
@@ -40,6 +42,7 @@ except (ExceptionType1, ExceptionType2) as var:
 
 Eine wichtige Änderung in Python 3 ist auch, das `var` nach der Abarbeitung des Exception-Blocks **gelöscht** wird!
 Das entspricht in Python 2 also in etwa folgendem Block:
+
 ```python
 try: pass
 except ExceptionType1 as var:
@@ -58,12 +61,15 @@ Möchte man also nach der Behandlung einer Ausnahme noch auf diese zugreifen, mu
 ## args
 
 In Python 2 konnte man man auch direkt über Exception iterieren:
+
 ```python
 try: pass
 except ExceptionType as (a, b, c):
  pass
 ```
+
 Das funktioniert mit Python 3 nicht mehr und mann muss explizit auf `args` zugreifen:
+
 ```python
 try: pass
 except ExceptionType as ex:

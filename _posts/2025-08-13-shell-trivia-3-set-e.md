@@ -31,6 +31,7 @@ Das nachfolgende `&& …` wird nicht mehr ausgeführt.
 Da das `false` aber dadurch nicht der letzte Befehl ist, bricht `set -e` nicht ab und das 2. `date` wird trotzdem ausgeführt.
 
 Das sollte man bedenken, wenn einem [shellcheck](https://www.shellcheck.net/) folgende Warnungen ausspuckt und einen dazu anregen, mehr `&&` zu benutzen:
+
 - [SC2015](https://www.shellcheck.net/wiki/SC2015): Note that `A && B || C` is not if-then-else. `C` may run when `A` is true.
 - [SC2166](https://www.shellcheck.net/wiki/SC2166): Prefer `[ p ] && [ q ]` as `[ p -a q ]` is not well-defined.
 

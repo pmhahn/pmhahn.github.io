@@ -15,6 +15,7 @@ Andererseits führt das eben dann ggf. erst zur Laufzeit dazu, dass einem der Co
 
 Neuerdings (zumindest in der aktuelle Version 0.630) hinterlässt `mypy` aber im aktuellen Arbeitsverzeichnis ein verstecktes Verzeichnis `.mypy_cache`, was ich ziemlich nervig finde.
 Zum Glück kann man über eine zentrals [Konfigurationsdatei](https://mypy.readthedocs.io/en/latest/config_file.html) `~/.mypy.ini` auch sagen, dass man selber lieber ein zentrales Verzeichnis verwenden will:
+
 ```ini
 [mypy]
 python_version = 2.7
@@ -26,6 +27,7 @@ Dann finden die globalen Einstellungen keine Anwendung mehr und man hat doch wie
 Entweder muss man den Eintrag also in jedem Projekt wiederholen, was aber nicht funktioniert, wenn mehrere Personen gemeinsam an dem Projekt arbeiten und deswegen unterschiedliche Verzeichnisse oder Einstellungen wünschen.
 
 Deswegen kann man die Umgebubgsvariable `MYPY_CACHE_DIR` z.B. in `~/.bashrc` setzten, die dann für alle eignenen Projekte gilt:
+
 ```bash
 export MYPY_CACHE_DIR="$HOME/.cache/mypy_cache"
 export RUFF_CACHE_DIR="$HOME/.cache/ruff_cache"

@@ -24,6 +24,7 @@ libvirt bietet die Möglichkeit, innerhalb der VM den sog. **qemu-guest-agent** 
 
 Dazu braucht libvirt zunächst einen Kanal in die VM:
 Mit `virsh edit "$VM"` fügt man innerhalb vom Abschnitt `<devices>..</devices>` folgendes Fragment hinzu:
+
 ```xml
  <channel type="unix">
   <source mode="bind"/>

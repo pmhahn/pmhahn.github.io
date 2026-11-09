@@ -14,6 +14,7 @@ Leider steckt der Teufel hier im Detail.
 <!--more-->
 
 Betrachten wir folgendes Beispiel:
+
 ```bash
 #!/bin/sh
 set -e

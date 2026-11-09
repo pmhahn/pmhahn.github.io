@@ -20,7 +20,7 @@ But this shows an annoying behavior, as you also get asked for that additional p
 
 I (temporarily) fixed this by changing my `/etc/pam.d/common-auth` to use [`pam_succeed_if`](https://linux.die.net/man/8/pam_succeed_if) like this:
 
-```
+```text
 auth    [default=1 success=ignore]      pam_succeed_if.so service notin sudo:polkit-1
 auth    optional        pam_ecryptfs.so unwrap
 ```

@@ -13,7 +13,7 @@ Das kann dazu führen, daß der Benutzer mit 10 Prozessen eben auch die 10-fache
 <!--more-->
 
 Unter Xen kann man die CPU-Zeit der virtuellen Instanzen per [xm sched-credit](http://wiki.xensource.com/xenwiki/CreditScheduler) limitieren, unter KVM sucht man Vergleichbares zunächst vergebens.
-Das ist auch kein Wunder, den die Philosophie der *Kernel-based Virtual Machine* (KVM) ist es ja gerade, die Standard-Funktionen des Linux-Kernel wie (Speicher- und Prozeßverwaltung) zu benutzen, anstatt sie abermals neu umzusetzen, wie es Xen mit seinem Hypervisor tut.
+Das ist auch kein Wunder, den die Philosophie der _Kernel-based Virtual Machine_ (KVM) ist es ja gerade, die Standard-Funktionen des Linux-Kernel wie (Speicher- und Prozeßverwaltung) zu benutzen, anstatt sie abermals neu umzusetzen, wie es Xen mit seinem Hypervisor tut.
 
 Umgekehrt bedeutet das eben, das die Funktionen zum Beschränken von Ressourcen eben nicht nur auf virtuelle Maschinen beschränkt ist, sondern für alle Prozesse eines Linux-Systems zur Verfügung stehen:
 Willkommen bei [cgroups](http://www.serverwatch.com/tutorials/article.php/3920051/Introduction-to-Linux-Cgroups.htm), dem Linux-Kernel-Subsystem für die Ressourcen-Verwaltung.
@@ -33,7 +33,7 @@ top -u "$USER"
 
 liefert dann folgendes Bild:
 
-```
+```text
 PID  USER     PR NI VIRT RES SHR S %CPU %MEM TIME+  COMMAND
 5823 Administ 20 0  100  12  8   R 65   0.0 1:02.93 burnP6
 5822 Administ 20 0  100  16  8   R 61   0.0 1:07.32 burnP6
@@ -44,10 +44,10 @@ PID  USER     PR NI VIRT RES SHR S %CPU %MEM TIME+  COMMAND
 ```
 
 Wichtig ist hier, das obwohl die 5 Prozesse eigentlich die selbe Endlosschleife ausführen, sie unterschiedliche CPU-Zeiten erhalten.
-Je nach dem in welcher Ressourcen-Gruppe (*hi* bzw. *low*) sie sind, erhalten sie zusammen von der insgesamt zur Verfügung stehenden CPU-Zeit entweder 512 Anteile oder nur 256 Anteile.
+Je nach dem in welcher Ressourcen-Gruppe (_hi_ bzw. _low_) sie sind, erhalten sie zusammen von der insgesamt zur Verfügung stehenden CPU-Zeit entweder 512 Anteile oder nur 256 Anteile.
 Die ersten beiden Prozesse (5822, 5823) erhalten zusammen etwa doppelt so viel Zeit wie die anderen drei Prozesse zusammen.
 
-Neben der CPU-Zeit-Begrenzung gibt es noch weitere Kategorien, so z.B. auch für die Beschränkung auf verschiedenen CPU-Kerne, das Beschränken des Öffnen von Gerätedateien unter */dev/*, das Beschränken der IO-Bandbreite, das Einfrieren kompletter Gruppen von Prozessen, und einige andere.
+Neben der CPU-Zeit-Begrenzung gibt es noch weitere Kategorien, so z.B. auch für die Beschränkung auf verschiedenen CPU-Kerne, das Beschränken des Öffnen von Gerätedateien unter _/dev/_, das Beschränken der IO-Bandbreite, das Einfrieren kompletter Gruppen von Prozessen, und einige andere.
 [libvirt](http://berrange.com/posts/2009/12/03/using-cgroups-with-libvirt-and-lxckvm-guests-in-fedora-12/ "Using CGroups with libvirt and LXC/KVM guests in Fedora 12") nutzt cgroups berreits, um die CPU-Zeit der virtuellen Instanzen zu beschränken oder den Zugriff von virtuellen Instanzen auf Block-Devices zu regeln.
 
 Das Interessante an cgroups ist, das Kind-Prozesse zunächst immer der gleichen cgroup angehören, wie ihr Vaterprozeß (außer sie werden eben explizit in eine andere Partition verschoben).

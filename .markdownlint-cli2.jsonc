@@ -1,0 +1,22 @@
+{
+  "config": {
+    "default": true,
+    "MD003": { "style": "atx" },  // headings
+    "MD004": { "style": "dash" },  // ul-style
+    "MD010": false,  // no-hard-tabs
+    "MD013": false,  // line-length
+    "MD033": false,  // no-inline-html
+    "MD041": true,  // first-line-heading
+    "MD049": { "style": "underscore" },  // emphasis-style
+    "MD050": { "style": "asterisk" },  // strong-style
+    "MD060": false,  // table-column-style
+  },
+  "fix": true,
+  "gitignore": true,
+  "ignores": [
+    "_site/",
+  ],
+  "noBanner": true,
+  "noProgress": true,
+  "showFound": true,
+}  // podman run --rm -ti -v "$"PWD:$PWD -w "$"PWD --userns=keep-id  harbor.avm.de/proxy-dockerhub/davidanson/markdownlint-cli2 _posts/*.md

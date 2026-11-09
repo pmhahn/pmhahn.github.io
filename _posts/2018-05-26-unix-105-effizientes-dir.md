@@ -20,6 +20,7 @@ Fangen wir mal damit an, uns das Verzeichnis genauer anzuschauen:
 ```
 
 In dem Verzeichnis liegen also 21k Dateien. Das `ls` macht folgendes:
+
 ```c
 fd = opendir(…)
 while(…) {
@@ -61,6 +62,7 @@ Das führt insbesondere bei rotierenden Festplatten gerne dazu, dass durch das S
 Deswegen lautet die Empfehlung, die `stat()`-Aufrufe in der Reihenfolge zu tätigen, wie die Einträge von `listdir()` geliefert werden – sofern man denn die `stat()`-Aufrufe überhaupt benötigt.
 
 Das ist auch ein Grund, warum man in der Shell an dieser Stelle keine Wildcards verwenden sollte:
+
 ```bash
 ls -1d *
 ```

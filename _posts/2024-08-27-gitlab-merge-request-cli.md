@@ -36,13 +36,13 @@ I have a `git alias` to push my branch and create a merge request at the same ti
 
 With that my workflow looks like this:
 
-```console
-$ git fetch origin
-$ git checkout -b feature/foo --track=inherit main
-$ # hack away
-$ git add …
-$ git commit …
-$ git mwp origin
+```bash
+git fetch origin
+git checkout -b feature/foo --track=inherit main
+# hack away
+git add …
+git commit …
+git mwp origin
 ```
 
 The last command will push my local branch `feature/foo` to the remote named `origin` as a new branch with the same name .

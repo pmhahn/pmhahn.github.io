@@ -92,7 +92,7 @@ group.add_argument(
 ## Sub-commands
 
 [`argparse.ArgumentParser.add_subparsers()`](https://docs.python.org/3/library/argparse.html#sub-commands) can be used to group several commands into one super-command, which is probably best known from `svn` or `git`.
-This becomes tricky as soon as you have *global* options and options per *sub-command*, as they cannot be intermixed:
+This becomes tricky as soon as you have _global_ options and options per _sub-command_, as they cannot be intermixed:
 The later must come after the sub-command name!
 This for example prevents the migration of `ucr` from `getopt` to `argparse` as the former allows this intermixing.
 

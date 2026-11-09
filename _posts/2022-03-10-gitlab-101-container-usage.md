@@ -13,13 +13,13 @@ Gitlab runners have different [flavors](https://docs.gitlab.com/runner/executors
 <!--more-->
 
 - [Shell](https://docs.gitlab.com/runner/executors/shell.html) and [ssh](https://docs.gitlab.com/runner/executors/shell.html) execute shell commands on a local or remote system as the logged in user.
-  Only commands which are available to that user can be used which puts those runners in the category *kitten*:
+  Only commands which are available to that user can be used which puts those runners in the category _kitten_:
   Someone has to setup and maintain them and you cannot easily scale them horizontally when you get into performance issues.
 - [Parallels](https://docs.gitlab.com/runner/executors/parallels.html) and [VirtualBox](https://docs.gitlab.com/runner/executors/virtualbox.html) use virtual machines:
   Scaling is easier as they support templates, but the setup time and resource usage is still high, which makes them unattractive for running short lived commands.
 - [Docker](https://docs.gitlab.com/runner/executors/docker.html) gives you the flexibility to choose any [OCI](https://opencontainers.org/ "Open Container Initiative") image for your job environment:
   You can use generic images and customize them as part of each job;
-  or you can setup a second pipeline to [build a customized image](#building), which your original job then can just use.
+  or you can setup a second pipeline to [build a customized image](#building-images), which your original job then can just use.
   Quiet often the second variant pays off very quickly, especially if you have many jobs using the same image.
   For example we do this already for the DocBook and Sphinx based documentation build or the different images `ucs-{min,apt,dev,deb}base` used for building UCS, which incrementally go from minimal to `build-essential` and `debhelper` already being installed.
 - [Docker machines](https://docs.gitlab.com/runner/executors/docker_machine.html) and [Kubernetes](https://docs.gitlab.com/runner/executors/kubernetes.html) (k8s) extend on Docker and add scalability on top:
@@ -45,8 +45,8 @@ Currently the following runners are available:
   do not use
 
 If your job requires a specific runner, you can use the [tags:](https://docs.gitlab.com/ee/ci/yaml/#tags) tag to specify a **list of tags**, which an eligible runner must all satisfy:
-`tag: [docker, test]` is only be matched by *sahrens-docker-test* and the job can only run there.
-Jobs with no tags are called *untagged* and are only processes by runners configured to do so.
+`tag: [docker, test]` is only be matched by _sahrens-docker-test_ and the job can only run there.
+Jobs with no tags are called _untagged_ and are only processes by runners configured to do so.
 Those runners are marked with `*` above.
 
 ## Using images
@@ -81,9 +81,9 @@ Basically you have the following options:
    Easy to setup, but then all your containers can do other bad things.
 2. Mount `/run/docker.sock` into your container and give `docker` access to `dockerd` **from the host**.
    Easy to setup, but then all your container can interfere with all other containers and the host.
-3. You can run *Docker in Docker* (DinD) as a **side-car** container and only give that one elevated permissions.
+3. You can run _Docker in Docker_ (DinD) as a **side-car** container and only give that one elevated permissions.
    This is harder to setup, but gives each job its own `dockerd`, which adds to security and prevents cross-job interference.
-   This is currently used by the runners on *lattjo*, *sparka* and *k8s* tagged with *docker*.
+   This is currently used by the runners on _lattjo_, _sparka_ and _k8s_ tagged with _docker_.
 
 For using DinD you can re-use the following template definition using [extends: .docker](https://docs.gitlab.com/ee/ci/yaml/#extends):
 
@@ -101,7 +101,7 @@ For using DinD you can re-use the following template definition using [extends: 
 
 - `DOCKR_HOST` tells `docker` to communicate with its `dockerd` over the given TCP connection.
 - `services:` creates that side-car container running our customized version of `dockerd`, which is accessible via the DNS name `docker`.
-- `name:` specifies an internal image, which already has the [KNUT root CA certificate](#storing) pre-installed and has [registry mirroring](#caching) setup correctly for our internal infrastructure.
+- `name:` specifies an internal image, which already has the [KNUT root CA certificate](#storing-images) pre-installed and has [registry mirroring](#caching-images) setup correctly for our internal infrastructure.
 - `tags:` restricts the job to running only one the hosts supporting DinD.
 - For now `DOCKER_TLS_VERIFY` disables using TLS between `docker` and `dockerd`.
   Gitlab guarantees that both containers run on the same host and that this is only a local connection between two chummy containers.
@@ -122,7 +122,7 @@ This also applies to VM based Gitlab Runners, where VMs are cloned and trashed r
 Every build or run has to pull the required images first.
 Since [DockerHub rate limiting](https://about.gitlab.com/blog/2020/10/30/mitigating-the-impact-of-docker-hub-pull-requests-limits/) this easily becomes a bottleneck:
 Not only are (large) images pulled multiple times taking bandwidth, but you're only allowed to do 100 requests per 6 hours.
-Therefore it is essential to use *Registry mirroring* and start `dockerd` with `--registry-mirrors http://docker-registry.knut.univention.de:5001`.
+Therefore it is essential to use _Registry mirroring_ and start `dockerd` with `--registry-mirrors http://docker-registry.knut.univention.de:5001`.
 With this you can continue using images like `debian:buster-slim` from [DockerHub](https://hub.docker.com/), which are then cached internally.
 As an alternative you can adapt the image names and pull from some other Registry, namely:
 

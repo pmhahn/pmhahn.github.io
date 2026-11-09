@@ -59,7 +59,7 @@ For many programs that is not a problem because the numeric IDs are sufficient f
 
 But any program doing a `getent passwd` or `getent group` will get no value and might do strange things:
 `ssh` will not start, `fop` creates directories named `?`, `sudo` refuses to work at all, ….
-Fixing this is not easy as you're already a *normal* user within the container, so you can no longer call `adduser` to create that user inside the container.
+Fixing this is not easy as you're already a _normal_ user within the container, so you can no longer call `adduser` to create that user inside the container.
 As `sudo` refuses to work, you're stuck.
 
 ## `nss_wap`

@@ -35,6 +35,7 @@ Falls das nicht gelingt zeigt er direkt ein Popup-Dialog an, über den man den B
 ggf. aber auch nur mein 43+ Problem 😉 )
 
 Dazu legt man z.B. folgende Konfigurationsdatei `/etc/NetworkManager/conf.d/10-connectivity.conf` an:
+
 ```ini
 [connectivity]
 uri=http://network-test.debian.org/nm
@@ -52,16 +53,18 @@ Die Leute von _Hotsplots_ sind aber nicht ganz doof und haben sich da so manche 
 
 1. Zunächst darf man einer Reihe von Redirects folgen, bis man dann irgendwann auf der Seite mit den AGB landet.
 2. Da muss man dann diese über eine Checkbox akzeptieren und einen Button clicken.
-3. Anschließend bekommt man eine *unvollständige* HTML-Seite, die über einen Meta-Eintrag `Content-Refresh` eine abschließende URL enthält.
+3. Anschließend bekommt man eine _unvollständige_ HTML-Seite, die über einen Meta-Eintrag `Content-Refresh` eine abschließende URL enthält.
 4. Erst wenn man diese URL angesurft hat, ist der Login abgeschlossen.
 
 Interessierte finden mein Skript unter `~phahn/misc/Ansible/files/NetworkManager/50http-captive-portal`.
 Ihr braucht neben Python auch noch die Module `lxml` und `requests`.
 Verlinkt habe ich es nach `/etc/NetworkManager/dispatcher.d/50http-captive-portal`, aber beim Aufruf geht derzeit leider noch etwas schief, so dass ich es manuell starten muss:
+
 ```bash
 /etc/NetworkManager/dispatcher.d/50http-captive-portal wlp5s0 up
 echo $?
 ```
+
 Wer dazu sachdienliche Hinweise hat oder Verbesserungsvorschläge für das Skript hat, darf mich gerne kontaktieren.
 
 Disclaimer: Wahrscheinlich steht in dern AGB irgendwo drin, dass man das nicht automatisieren darf, also "use at your own risk".

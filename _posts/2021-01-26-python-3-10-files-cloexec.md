@@ -15,6 +15,7 @@ Um aus [open()](https://docs.python.org/3.7/library/functions.html#open) zu ziti
 
 Bisher wurden Dateien normal geöffnet, d.h. Kindprozesse haben diese geöffneten Dateideskriptoren geerbt und sich diese mit den Eltern geteilt.
 Das ist das Standardverhalten, was notwendig ist, damit Prozesse gemeinsam an Dateien arbeiten können:
+
 ```bash
 (
  echo "Anfang"

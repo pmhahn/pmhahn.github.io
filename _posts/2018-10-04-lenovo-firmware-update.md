@@ -22,9 +22,11 @@ wget https://download.lenovo.com/pccbbs/mobiles/r0guj17wd.iso
 That gets me the file `r0guj17wd.iso`.
 
 Getting a USB-DVD drive and burning the image to a DVD media I somehow consider wasteful, so I tried to put the image on a spare USB stick (here `/dev/dec`):
+
 ```bash
 sudo dd bs=1M if=r0guj17wd.iso of=/dev/sdc
 ```
+
 But the Notebook refused to boot from it.
 
 Next I had a look at it using `isoinfo -d r0guj17wd.iso` which showed the DVD to be empty but only contain an [El Torito](https://de.wikipedia.org/wiki/El_Torito) boot image.

@@ -38,6 +38,7 @@ sys.stderr = codecs.getwriter(ENCODING)(sys.stderr)
 ```
 
 Wenn man dann noch statt `open(filename, mode)` besser nachfolgenden Code verwendet, dann ist man schon ein ganzes Stück weiter, ein portables Python-Programm schreiben zu können, das auch mit unterschiedlichen Encodings umgehen kann:
+
 ```python
 import codecs
 codecs.open(filename, mode, encoding=ENCODING)

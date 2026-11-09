@@ -19,6 +19,7 @@ ldapsearch -xLLLo ldif-wrap=no -b cn=Subschema -s base \
 <!--more-->
 
 oder die vom Lieblingsgetränk:
+
 ```bash
 ldapsearch -xLLLo ldif-wrap=no -b cn=Subschema -s base \
  attributeTypes -E mv='(attributeTypes=drink)'

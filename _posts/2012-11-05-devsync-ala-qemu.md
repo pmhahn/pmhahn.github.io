@@ -6,7 +6,7 @@ categories: virt
 excerpt_separator: <!--more-->
 ---
 
-Das `devsync`-Programm aus dem *toolshed* ermöglicht es ja, Dateien vom lokalen System in eine VM zu synchronisieren, um darin dann den Bauvorgang anzustoßen.
+Das `devsync`-Programm aus dem _toolshed_ ermöglicht es ja, Dateien vom lokalen System in eine VM zu synchronisieren, um darin dann den Bauvorgang anzustoßen.
 Mit QEmu/KVM auf dem lokalen System geht es übrigens noch ein bisschn besser, denn per [9p](http://wiki.qemu.org/Documentation/9psetup) (vom Betriebssystem [Plan 9](http://de.wikipedia.org/wiki/Plan_9_%28Betriebssystem%29)) kann man ein lokales Verzeichnis auch direkt innerhalb einer **lokalen** QEmu-VM einbinden, je nach Bedarf nur-lesend oder auch durchlässig in beide Richtungen.
 
 <!--more-->

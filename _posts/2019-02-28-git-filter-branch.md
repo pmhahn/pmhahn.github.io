@@ -12,11 +12,12 @@ Here are some more examples from my daily work.
 
 <!--more-->
 
-Removing files
-==============
+## Removing files
+
 The manual page for [git filter-branch](https://git-scm.com/docs/git-filter-branch) contains several examples already.
 
 The following two commands can be used to remove the file `filename` from all commits in the current branch:
+
 ```bash
 git filter-branch --tree-filter \
 	'rm -f filename' HEAD
@@ -27,8 +28,8 @@ git filter-branch --index-filter \
 The second command is faster (for large repositories) as it does not need to checkout each revision to the working space.
 You can use the `-d` option to specify an alternative working directory like a `tmpfs` file system or some other local file system on a fast SSD.
 
-Change files
-============
+## Change files
+
 For removing or reverting changes to files working with the index is fine and faster.
 But as soon as you want to apply a change to all commit, it is easier to use `--tree-filter`:
 The following example changes all occurrences of `foo` to `bar` in all revisions of the file `filename`:
@@ -41,8 +42,8 @@ git filter-branch -d /tmp --tree-filter \
 It is important to apply the same transformation to each commit:
 Otherwise the next commit after the one which got changed will accumulate all previous changes!
 
-Dropping changes to files
-=========================
+## Dropping changes to files
+
 Sometimes I have to apply the changes of one feature branch to multiple upstream branches.
 
 This often leads to conflicts with `debian/changelog` as different branches have different versions of this file.
@@ -78,17 +79,19 @@ git filter-branch --prune-empty --index-filter \
 
 which basically tells git to reset all `changelog` files back to the revision at the branch point.
 
-Dropping hunks
-==============
+## Dropping hunks
+
 The previous example is somehow easy, as we drop all changes to a single file.
 It gets more complicated if you only want to drop **some** changes (hunks), but keep others.
 Then the previous technique fails because `git` works **tree** based and not **diff** based:
 
-    a -> b -> c  -> d  -> HEAD
-          \
-           -> c' -> d' -> HEAD'
+```text
+a -> b -> c  -> d  -> HEAD
+      \
+       -> c' -> d' -> HEAD'
+```
 
-If for example you only do the filtering for `c'`, but not `d'`, then the diff from `c'` to `d'` will include the *dropped* change from `c` to `c'`.
+If for example you only do the filtering for `c'`, but not `d'`, then the diff from `c'` to `d'` will include the _dropped_ change from `c` to `c'`.
 
 TBC...
 

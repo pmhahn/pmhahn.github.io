@@ -6,8 +6,8 @@ categories: linux security
 excerpt_separator: <!--more-->
 ---
 
-Why
-===
+## Why
+
 Unwanted binaries like viruses should be prevented from loading.
 This is known as Secure-Boot.
 The (U)EFI firmware only loads binaries signed by the "Platform key" (PK) certificates.
@@ -36,10 +36,9 @@ This allows using SHIM from one distribution to load kernels from other distribu
 There are two databases within the firmware.
 They contain signatures and certificates for EFI drivers and boot-loaders.
 
-* The "Signatures Database" (DB) is a white-list.
+- The "Signatures Database" (DB) is a white-list.
   The firmware allows loading of binaries allowed by this database.
-
-* The "Forbidden Signatures Database" (DBX) is a black-list.
+- The "Forbidden Signatures Database" (DBX) is a black-list.
   The firmware prevents loading binaries forbidden by this database.
 
 The databases need updates when keys get compromised or new drivers are released.
@@ -48,8 +47,8 @@ The "Key Exchange Key" (KEK) is used for this.
 By default the Microsoft Key is used for this as well.
 You can change it if you have control over the PK.
 
-Create PK
----------
+### Create PK
+
 We create some keys and certificates for our platform:
 
 ```bash
@@ -115,8 +114,8 @@ After installing the new PK the firmware switches from "setup mode" into "user m
 You are now no longer able to modify any of variables unless you use one of those signed updates.
 Hopefully your firmware provides a mechanism to reset it back into "setup mode".
 
-Sign boot-loader
-----------------
+### Sign boot-loader
+
 GRUB is modular by design.
 You must built a customized image:
 It must not contain some modules.
@@ -175,8 +174,8 @@ See #Shim below.
 	The default boot entry.
 	This is used as the last fall back.
 
-Shim
-----
+### Shim
+
 We create our own certificate:
 
 ```bash
@@ -248,24 +247,28 @@ cp vmlinuz-4.9.0-ucs105-amd64 vmlinuz-4.9.0-ucs105-amd64.efi.signed
 sbattach --attach vmlinuz-4.9.0-ucs105-amd64.sig vmlinuz-4.9.0-ucs105-amd64.efi.signed
 ```
 
-NvVars
-------
+### NvVars
+
 UEFI requires a writable flash device.
 `qemu -bios` will only provide one big read-only ROM.
 In that case "OVMF" stores the EFI variables in `/boot/EFI/NvVars`.
 The correct way for QEMU is
-```
+
+```text
 -drive file=/usr/share/OVMF/OVMF_CODE.fd,if=pflash,format=raw,unit=0,readonly=on
 -drive file=/home/phahn/.config/libvirt/qemu/nvram/uefi_VARS.fd,if=pflash,format=raw,unit=1
 ```
+
 This stores the EFI-variables in the `VARS` file.
 But this does not implement the restriction, that some variables must only be modified by the boot-service, e.g. all Secure-Boot related ones.
 This requires System Management Mode (SMM) to work.
 In that case the EFI-variables flash is write protected, so only SMM can write it.
 This needs to be turned on:
-```
+
+```text
 -global driver=cfi.pflash01,property=secure,value=on
 ```
+
 If OVMF does not support SMM mode, writing to the flash will now fail.
 In that case OVMF will fall back to using `NvVars` again.
 But the EFI file system is too late for storing the SecureBoot related keys:

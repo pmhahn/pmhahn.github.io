@@ -22,12 +22,12 @@ So here is my step-by-step guide.
 
 <!--more-->
 
-```console
-$ cd /srv/www/nextcloud
-$ su -s /bin/bash www-data
-$ ./occ maintenance:mode --on
-$ grep --color db config/config.php
-$ mysql --user owncloud --password owncloud
+```bash
+cd /srv/www/nextcloud
+su -s /bin/bash www-data
+./occ maintenance:mode --on
+grep --color db config/config.php
+mysql --user owncloud --password owncloud
 ```
 
 ```sql
@@ -67,9 +67,9 @@ $ mysql --user owncloud --password owncloud
 > \q
 ```
 
-```console
-$ ./occ app:disable user_ldap
-$ ./occ maintenance:mode --off
+```bash
+./occ app:disable user_ldap
+./occ maintenance:mode --off
 ```
 
 {% include abbreviations.md %}

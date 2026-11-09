@@ -53,7 +53,7 @@ Binding the system `dnsmasq` to the `docker0` interface would work, but this is 
 Instead I choose to setup [Tinyproxy](http://tinyproxy.github.io/), a very small HTTP forwarding proxy.
 It needed two small changes to its configuration file `/etc/tinyproxy/tinyproxy.conf` to bind it to my `docker0` bridge only and allow arbitrary uses of `CONNECT`:
 
-```
+```text
 Allow 172.17.0.0/12
 #ConnectPort 443
 #ConnectPort 563
@@ -62,6 +62,7 @@ Allow 172.17.0.0/12
 ## Docker
 
 Next you have to tell the Docker client to [configure a proxy](https://docs.docker.com/network/proxy/#configure-the-docker-client) in `~/.docker/config.json`:
+
 ```json
 {
  "proxies": {

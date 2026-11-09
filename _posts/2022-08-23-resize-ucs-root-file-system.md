@@ -8,7 +8,7 @@ excerpt_separator: <!--more-->
 
 Q: How do I resize the root file system of my UCS VM?
 
-A: It depends on if you are using *Logical Volume Manager* (LVM) or not.
+A: It depends on if you are using _Logical Volume Manager_ (LVM) or not.
 
 <!--more-->
 
@@ -23,11 +23,11 @@ By default all of our `ucs-kt-get` templates use LVM.
 3. (Live-)attach the additional volume to the VM:
    `virsh attach-disk --persistent --live --domain "$DOMAIN" --type disk --driver qemu --subdriver qcow2 --cache unsafe --sourcetype file --source "/var/lib/libvirt/images/${DOMAIN}-2.qcow2" --targetbus virtio --target vdb`.
 4. Login to the VM as user `root`.
-5. Create a *Physical Volume* (PV) signature on the block device — no MBR/GPT partition table needed:
+5. Create a _Physical Volume_ (PV) signature on the block device — no MBR/GPT partition table needed:
    `pvcreate /dev/vdb`.
-6. Add the PV to the existing *Volume Group* (VG):
+6. Add the PV to the existing _Volume Group_ (VG):
    `vgextend vg_ucs /dev/vdb`.
-7. Resize the existing *Logical Volume* (LV) containing the root file system:
+7. Resize the existing _Logical Volume_ (LV) containing the root file system:
    `lvresize /dev/vg_ucs/root -L +100%FREE`.
 8. Resize the file system itself:
    `resize2fs /dev/vg_ucs/root`.

@@ -13,11 +13,11 @@ Nach einigem Suchen bin ich in `journalctl -u sssd` über folgende Fehlermeldung
 
 <!--more-->
 
-[SSSD](https://docs.pagure.org/SSSD.sssd/) ist der *System Security Services Daemon* und hat zur Aufgabe, die Benutzer-, Gruppen- und Login-Daten zu verwalten.
+[SSSD](https://docs.pagure.org/SSSD.sssd/) ist der _System Security Services Daemon_ und hat zur Aufgabe, die Benutzer-, Gruppen- und Login-Daten zu verwalten.
 In UCS verwenden wir noch `libpam-ldap` und `libnss-ldap,` sie allesamt ein funktionierendes Netzwerk voraussetzen und damit nicht offlinefähig sind, was aber für ein Notebook Pflicht ist.
 
 SSSD ist modular aufgebaut und kann neben den Benutzer- und Gruppendaten aus dem LDAP auch mit Kerbenos-Keys umgehen:
-Mit der Authentifizierung bekommt man sein *Kerberos Ticket Granting Ticket* (KRBTGT), was als Ausweis für eine erfolgreiche Authentifizierung dienst.
+Mit der Authentifizierung bekommt man sein _Kerberos Ticket Granting Ticket_ (KRBTGT), was als Ausweis für eine erfolgreiche Authentifizierung dienst.
 Damit weißt man sich gegenüber dem Kerberos-Server aus, wenn man auf weitere Dienste zugreifen will.
 Für jeden Dienst erhält man ein weiteres Ticket, was einen für den Zugriff legitimiert.
 
@@ -27,7 +27,7 @@ Auf diese muss man gut aufpassen, denn solange die Tickets gültig sind kann jed
 
 Aus Aspekten der Sicherheit ist es verpönt, solche Daten unverschlüsselt abzuspeichern (`/etc/*.secret` lässt grüßen).
 Auch gibt es Situationen, wo andere Dienste, die gerne auch mit einer eigenständigen Benutzer-ID laufen, dennoch auf diese Schlüssel zugreifen müssen.
-Ein prominentes Beispiel dafür ist das *Network File System* (NFS).
+Ein prominentes Beispiel dafür ist das _Network File System_ (NFS).
 Unter anderem deshalb hat der Linux daher einen eingebauten Keyring, in dem man kryptographisches Material ablegen kann.
 Mit `keyctl` kann man darauf zugreifen und SSSD kann das auch nutzen.
 

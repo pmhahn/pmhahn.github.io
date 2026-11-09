@@ -28,7 +28,7 @@ Intern reserviert Python für jedes Unicode-Zeichen entweder 2 oder 4 Byte, was 
 Ersteres spart Platz, hat aber den Nachteil, dass eben nur die ersten 65536 Unicode-Codepoints verarbeitet werden können, der derzeit aktuelle [Unicode Standard 12](https://home.unicode.org/) enthält aber jetzt schon ~130k Zeichen, weshalb aktuelle Python-Versionen intern alle mit 32 Bit pro Zeichen arbeiten.
 Intern belegt also unsere Zeichenkette 12 Byte zzgl. Längeninformation, was als Hex-Dump dann so aussieht:
 
-```
+```text
 00 00 00 e4  00 00 00 f6  00 00 00 fc
 ```
 
@@ -42,11 +42,13 @@ Die Unicode-Zeichen 1920 bis 65.536 benötigen 3 Byte, die Zeichen bis 2.097.152
 Vorteil von UTF-8 ist, dass nirgendwo `\0` vorkommt und man deshalb solche UTF-8 kodierten Texte weiterhin mit klassischen UNIX-Tools verarbeiten kann.
 
 Zur Umwandlung von der **internen** Unicode-Speicherung in eine UTF-8-Sequenz verwendet man `encode()`:
-```pytho
+
+```python
 u'ä ö ü'.encode('utf-8') == b'\xc3\xa4 \xc3\xb6 \xc3\xbc'
 ```
 
 Den Rückweg übernimmt `decode()`:
+
 ```python
 b'\xc3\xa4 \xc3\xb6 \xc3\xbc'.decode('utf-8') == u'ä ö ü'
 ```
@@ -75,15 +77,17 @@ D.h. wenn man sauber programmiert muss man immer damit rechnen, dass man eben ke
 ## byte vs unicode
 
 In Python 2 ist folgendes erlaubt:
+
 ```python
 b"" + u""
 ```
+
 Python 2 wandelt implizit das `bytes()`-Array in ein `unicode()`-Array und erlaubt das aneinanderhängen.
 Über `/etc/python2.7/sitecustomize.py` haben wir in UCS es so konfiguriert, dass Python hier implizit UTF-8 annimmt, weshalb das auch für Umlaute funktioniert.
 
 Python 3 dagegen steigt mit einem Fehler aus:
 
-```
+```text
 TypeError: can't concat str to bytes
 ```
 
@@ -110,6 +114,7 @@ Und ab hier unterschieden sich Python 2 und Python 3 dann in den Details, was da
   Unter Python 2 dagegen `False`, weil hier (standardmäßig) die Byte-Sequenz angeguckt wird und `'\xc3'.isalpha()` eben `False` ist;
   mit `from __future__ import unicode_literals` bzw. `u"ä".isalpha()` bekommt man auch mit Python 2 ein `True`.
 - Auch unterschieden sich die Ausgaben zwischen Python 2 und 3, wenn man `bytes()` oder `unicode()` ausgibt:
+
     |              | Python 2 | Python 3 |
     | ------------ | -------- | -------- |
     | `print(b"")` |          | b""      |

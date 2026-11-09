@@ -23,7 +23,8 @@ Postfix was complaining that its `lmtp` service was no longer able to establish 
 
 For historic reason my setup is using `STARTTLS`, which is now deprecated and has been disabled by default in Cyrus IMAPd.
 You have to explicitly re-enable it in your `/etc/imapd.conf` by adding some lines:
-```
+
+```conf
 imap_allowstarttls: yes
 lmtp_allowstarttls: yes
 ```
@@ -34,6 +35,7 @@ lmtp_allowstarttls: yes
 This also moves the location of the PID file to that directory, which then no longer matches the information in `/usr/lib/systemd/system/saslauthd.servie`, which expects the file in `/var/run/saslauthd.pid`.
 
 A fixed this by creating an override with `systemctl edit saslauthd.service`:
+
 ```ini
 [Service]
 PIDFile=/var/spool/postfix/var/run/saslauthd/saslauthd.pid
@@ -42,7 +44,8 @@ PIDFile=/var/spool/postfix/var/run/saslauthd/saslauthd.pid
 Previously I had a shell-hack in `/etc/default/saslauthd` to replace the old location with a symbolic link to the `chroot`-location.
 This no longer works as that file is not sourced by `systemd`, which does not execute that shell code.
 Therefore I had to tell Cyrus IMAPd to also use that changed location by putting this into `/etc/imapd.conf`:
-```
+
+```conf
 sasl_saslauthd_path: /var/spool/postfix/var/run/saslauthd/mux
 ```
 
@@ -100,6 +103,7 @@ Sadly I still need my `r8168-dkms` and `v4l2loopback-dkms` packages.
 ## Prometheus MySQL/MariaDB exporter
 
 [v0.15.0](https://github.com/prometheus/mysqld_exporter/releases/tag/v0.15.0) has a breaking change, which is neither mentioned in any `NEWS` file nor the [debian/changelog](https://salsa.debian.org/go-team/packages/prometheus-mysqld-exporter/-/blob/debian/sid/debian/changelog?ref_type=heads).
+
 - `DATA_SOURCE_NAME` is no longer supported and you must pass the credentials via `--mysqld.username=` and via `MYSQLD_EXPORTER_PASSWORD=`.
 - You also [cannot specify the UNIX domain socket](https://github.com/prometheus/mysqld_exporter/issues/754) `/run/mysqld/mysqld.sock`
 

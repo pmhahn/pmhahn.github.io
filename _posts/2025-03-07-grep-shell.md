@@ -11,8 +11,8 @@ Q: How do I recursively find all shell scripts in my current working directory?
 
 A: Search for the hash-bang line:
 
-```console
-$ git -c grep.fallbackToNoIndex=yes grep -lPe '\A#!\s*/bin/([bd]?a)?sh\b'
+```sh
+git -c grep.fallbackToNoIndex=yes grep -lPe '\A#!\s*/bin/([bd]?a)?sh\b'
 ```
 
 <!--more-->
@@ -34,8 +34,9 @@ Instead of [`git grep`](man:git-grep(1)) you also can use [`grep -r`](man:grep(1
 This will not find _shell libraries_, e.g. _shell scripts_ not starting with a hash-bang line.
 
 For Python use this:
-```console
-$ git -c grep.fallbackToNoIndex=yes grep -lPe '\A#!\s*/usr/bin/(env\s+)?python'
+
+```sh
+git -c grep.fallbackToNoIndex=yes grep -lPe '\A#!\s*/usr/bin/(env\s+)?python'
 ```
 
 {% include abbreviations.md %}

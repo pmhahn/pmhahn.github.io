@@ -15,13 +15,13 @@ Kennt ihr auch das Problem, dass ihr Debian- (oder UCS-)Systeme habt, die aber z
 
 Wenn ich in Bremen bin, möchte ich z.B. unseren _Internen Debian Mirror_ verwenden, weshalb meine `/etc/apt/sources.list` dann so aussieht:
 
-```
+```text
 deb http://debian.knut.univention.de/debian/ buster main contrib non-free
 ```
 
 Wenn ich aber von extern arbeite, möchte ich den [Geo-Location-Dienst deb.debian.org](http://deb.debian.org/) verwenden, um den Netz-topologisch nächsten Spiegelserver zu benutzen:
 
-```
+```text
 deb http://deb.debian.org/debian/ buster main contrib non-free
 ```
 
@@ -40,14 +40,14 @@ __EOF__
 
 Anschließend kann man diese Liste statt des Server-Namens in der `/etc/apt/sources.list` verwenden:
 
-```
+```text
 deb mirror+file:/etc/apt/mirrorlist.txt buster main
 deb mirror+file:/etc/apt/mirrorlist.txt buster-updates main
 ```
 
 PS: Die `sources.list` unterstützt übrigend eine 2. Syntax nach nach Deb822-Stiel:
 
-```
+```text
 Types: deb deb-src
 URIs: mirror+file:/etc/apt/mirrorlist.txt
 Suites: buster buster-updates
@@ -59,6 +59,6 @@ Suites: buster/updates
 Components: main contrib non-free
 ```
 
-Diese Schreibweise ist deutlich kompakter, vor allem wenn man viele *Suites* und *Componenten* einbinden will, doppelt wenn man auch die Quellen benötigt.
+Diese Schreibweise ist deutlich kompakter, vor allem wenn man viele _Suites_ und _Componenten_ einbinden will, doppelt wenn man auch die Quellen benötigt.
 
 {% include abbreviations.md %}

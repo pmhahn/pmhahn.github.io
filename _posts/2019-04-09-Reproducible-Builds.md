@@ -15,15 +15,15 @@ For that the project was later moved to <https://reproducible-builds.org/>.
 
 <!--more-->
 
-Build date
-==========
+## Build date
+
 Many packages include timestamps into the build.
 For that the environment variable `SOURCE_DATE_EPOCH` can be set to a number of seconds since the UNIX epoch.
 Several tolls then use that fixed date instead of the current time.
 <https://reproducible-builds.org/docs/source-date-epoch/> describes this in more detail.
 
-Apache FOP
-==========
+## Apache FOP
+
 [FOP](https://xmlgraphics.apache.org/fop/) is a tool to convert an XML description into PDF.
 It embeds the current time as `/CreationDate` inside any generated PDF file.
 

@@ -12,16 +12,18 @@ Let's take a look at some common practices to build images.
 <!--more-->
 
 1. Always include the _Kaniko_ fragment:
+
     ```yaml
     include:
      – project: univention/dist/docker-services
        file: kaniko.yml
     ```
+
 2. This fragments defines multiple base jobs, that you can use with the `extends` keyword in your pipeline definition in your `.gitlab-ci.yml` file.
    They use different Docker registries `$CI_REGISTRY` and image names `$CI_REGISTRY_IMAGE` by default.
    GitLab already defines these [predefined variables](https://docs.gitlab.com/ee/ci/variables/predefined_variables.html).
    Some jobs re-define them and you can them in the `variables` section of each job in your pipeline definition.
-3. The Kaniko fragment above defines `latest` for the *docker tag*, when the build runs in the `$CI_DEFAULT_BRANCH`.
+3. The Kaniko fragment above defines `latest` for the _docker tag_, when the build runs in the `$CI_DEFAULT_BRANCH`.
    Otherwise the Kaniko fragments assigns the `$CI_COMMIT_TAG` for tags and `$CI_COMMIT_REF_NAME` for feature branches.
 
 ## Default build with Gitlab docker registry

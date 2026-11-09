@@ -12,8 +12,8 @@ Long before `rpm` based distributions learned how to install dependant packages 
 You simply can install a high-level package using `apt-get install $pkg`, which  will then automatically resolve all dependencies:
 Dependant packages are downloaded and install along automatically.
 
-This works very well when you just use packages from a single *consistent* source like the *stable* Debian repository.
-It mostly also works with multiple repositories, but from time to time the resolver does *strange* things.
+This works very well when you just use packages from a single _consistent_ source like the _stable_ Debian repository.
+It mostly also works with multiple repositories, but from time to time the resolver does _strange_ things.
 
 Here at Univention GmbH we build our own packages.
 Therefore it is essential for our customers that we get the dependencies right.
@@ -50,25 +50,27 @@ LC_ALL=C apt-get install \
 ```
 
 - `-t apt` boosts all packages from my repository named `Suite: apt` in its `Release` file.
-- `-s` does a *simulated* install:
+- `-s` does a _simulated_ install:
   it only shows what would be done but does not modify the actual state of the system.
 - `-o Debug::pkgDepCache::Marker=yes` shows the initial package marking for installation, keep or removal.
 - `-o Debug::pkgDepCache::AutoInstall=yes` shows installation of additional dependencies.
 - `-o Debug::pkgProblemResolver=yes` enables debug output.
-- `-o Debug::pkgProblemResolver::ShowScores=yes` shows the calculated *importance* score of all packages.
+- `-o Debug::pkgProblemResolver::ShowScores=yes` shows the calculated _importance_ score of all packages.
 - `univention-s4-connector` is the package to install.
 
 ## Explanation
 
-```
+```text
 Reading package lists...
 Building dependency tree...
 Reading state information...
 ```
+
 Some progress information.
 
 ### Mark phase
-```
+
+```text
   MarkInstall univention-s4-connector:amd64 < none -> 14.0.10-2A~5.0.0.202207141231 @un puN Ib > FU=1
   Installing attr as Depends of univention-s4-connector
     MarkInstall attr:amd64 < none -> 1:2.4.48-4 @un uN > FU=0
@@ -141,10 +143,11 @@ Some progress information.
 ```
 
 For each package a line consisting of multiple fields is printed by [apt-pkg/prettyprinters.cc](https://github.com/Debian/apt/blob/main/apt-pkg/prettyprinters.cc#L19):
+
 - the package name
 - `<`: start of package details
 - the version of the currently installed package version or `none`.
-- `->` Optional *to-be-installed* package version.
+- `->` Optional _to-be-installed_ package version.
 - `|` Optional candidate package version if different then installed to to-be-installed version.
 - `@` the short status of the package, consisting of 2-3 characters describing the current and desired state:
   - Selected state:
@@ -194,13 +197,14 @@ For each package a line consisting of multiple fields is printed by [apt-pkg/pre
 
 ### Conflict resolution phase
 
-```
+```text
 Starting pkgProblemResolver with broken count: 1
 ```
-By just marking the given package as *to be installed*, the dependencies are then *broken* as not all dependencies are satisfied.
+
+By just marking the given package as _to be installed_, the dependencies are then _broken_ as not all dependencies are satisfied.
 Here one package is broken, which the resolver must now fix.
 
-```
+```text
 Settings used to calculate pkgProblemResolver::Scores::
   Required => 3
   Important => 2
@@ -221,13 +225,14 @@ Settings used to calculate pkgProblemResolver::Scores::
   AddProtected => 10000
   AddEssential => 5000
 ```
+
 All packages get a score, which matches how important they are:
 The more packages depends on it, the higher their score is.
 Packages are also boosted by their `Importance` and `Essential` status.
 As one package is to be installed via the command line they get the `AddProtected` boost;
 otherwise the resolver would resolve the conflict by not installing them in the first place.
 
-```
+```text
 Show Scores
 9999 univention-s4-connector:amd64 < none -> 14.0.10-2A~5.0.0.202207141231 @un puN >
 ...
@@ -238,73 +243,87 @@ Show Scores
 8 samba-dsdb-modules:amd64 < 2:4.16.2-1A~5.0.0.202206271026 -> 2:4.16.2-1A~5.0.0.202207191731 @ii umU Ib >
 ...
 ```
+
 All installed and to-be-installed packages are listed here.
 Each line starts with the calculated score for the package.
 
-```
+```text
 Starting 2 pkgProblemResolver with broken count: 1
 ```
+
 This is the same line as above, with just the `2` inserted to distinguish those two copy and pasted lines.
 
-```
+```text
 Investigating (0) samba-dsdb-modules:amd64 < 2:4.16.2-1A~5.0.0.202206271026 -> 2:4.16.2-1A~5.0.0.202207191731 @ii umU Ib >
 ```
+
 - The package `univention-samba4` depends on `samba-dsdb-modules`, which APT claims to be unresolved.
 - Actually version `2:4.16.2-1A~5.0.0.202206271026` is installed but `2:4.16.2-1A~5.0.0.202207191731` is to be installed.
   the `->` indicates a schedules action to update it;
-  `|` would be used to *inform* you instead that the package is either currently already installed or to be installed.
+  `|` would be used to _inform_ you instead that the package is either currently already installed or to be installed.
 - The package should be installed and actually is installed (`@ii`).
 - The package is upgradable `u`, marked `m` and currently scheduled for upgrade `U`.
 - The installation status us currently broken `Ib`.
 
-```
+```text
 Broken samba-dsdb-modules:amd64 Depends on libldb2:amd64 < 2:2.5.1-1A~5.0.0.202206171844 | 2:2.5.2-1A~5.0.0.202207191717 @ii umH > (> 2:2.5.2~)
 ```
+
 - The package `samba-dsdb-modules` itself depends on a newer version of `libldb2 (> 2:2.5.2~)`.
 - Currently version `2:2.5.1-1A~5.0.0.202206171844` is installed.
 - But a candidate `2:2.5.2-1A~5.0.0.202207191717` is available.
 - The package is upgradable `u`, marked `m` but currently held `H`.
 
-```
+```text
   Considering libldb2:amd64 30 as a solution to samba-dsdb-modules:amd64 8
 ```
+
 As the package `libldb2` has a higher priority `30` over the more low-level package `samba-dsdb-modules` with only priority `8` the resolver decides to upgrade that dependency.
-```
+
+```text
   Re-Instated libldb2:amd64
   Re-Instated samba-dsdb-modules:amd64
 ```
+
 The resolver decides to schedule upgrades for these two packages as it declares `Breaks:` on them.
 
-```
+```text
 Investigating (1) python3-ldb:amd64 < 2:2.5.1-1A~5.0.0.202206171844 | 2:2.5.2-1A~5.0.0.202207191717 @ii umH Ib >
 ```
+
 Upgrading `libdb2` alone violates the constraint of `python3-ldb`, which depends on the exact same version:
 `python3-ldb: Depends: libdb2 (= ${binary:Version})`.
+
 - Currently version `2:2.5.1-1A~5.0.0.202206171844` is installed.
 - Version `2:2.5.2-1A~5.0.0.202207191717` is available, but (currently) **not** scheduled for installation:
   notice the `|` here instead of `->`!
 - The package should be installed and actually is installed (`@ii`).
 - The package is upgradable `u`, marked `m` but currently held `H`.
-- The package is in the *install broken state*, which needs fixing next.
+- The package is in the _install broken state_, which needs fixing next.
 
-```
+```text
 Broken python3-ldb:amd64 Depends on libldb2:amd64 < 2:2.5.1-1A~5.0.0.202206171844 -> 2:2.5.2-1A~5.0.0.202207191717 @ii umU > (= 2:2.5.1-1A~5.0.0.202206171844)
 ```
+
 Due to the pending upgrade of `libdb2` package `python3-ldb` is now broken.
-```
+
+```text
   Considering libldb2:amd64 30 as a solution to python3-ldb:amd64 35
 ```
+
 Because the priority of `python3-ldb` with 35 is higher than priority 30 for `libldb2`, the resolver decides to keep `python3-ldb` in the current state.
 For that it cancels the upgrade of `libldb2`, which re-established the constraint on the same version match.
-```
+
+```text
   Added libldb2:amd64 to the remove list
   Fixing python3-ldb:amd64 via keep of libldb2:amd64
 ```
+
 The canceled upgrade of `libdb2` bubbles up the chain and the installation command aborts with an error.
 
 ## Fixes
 
-There are multiple *fixes*, to get the installation working.
+There are multiple _fixes_, to get the installation working.
 
 1. It can be fixed by adding `libdb2` manually to the `apt-get install` command.
    The will add `libdb2` with score `10000-2 = 9998` to the list, forcing an update.
@@ -327,6 +346,7 @@ It points to an [Ubuntu bug report](https://www.phoronix.com/news/Ubuntu-22.04-A
 ## Disclaimer
 
 Please note that there are different tools, which might use different resolvers:
+
 - `apt-get` is the stable command line tool, which should be used from scripts.
 - `aptitude` provides an interactive text user interface, but can also be used from scripts.
   It can be used interactively to resolve conflicts, but requires some extra knowledge.

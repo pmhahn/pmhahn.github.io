@@ -29,6 +29,7 @@ Bitte in der Benutzeroberfläche irgendwo anzeigen, wenn es Probleme mit der Pus
 ### Kritik 2: FRITZ!Box Web-Oberfläche
 
 Die Navigation durch die Web-Oberfläche ist auch alles andere als intuitiv:
+
 1. Die Konfiguration des globalen Push-Services ist unter _System_ → _Push Service_
 2. In der _Übersicht_ wird die 200 zwar als _Smart Home_ gerät angezeigt, aber nicht mit einem direkten Link zu deren Einstellungen
 3. Diese findet man erst unter _Smart Home_ → _Geräte und Gruppen_ → _Gerätename_ → _Einstellungen_ → _Allgemein_ bzw. _Energieanzeige_ → _Gesamtenergie (kWh)_
@@ -38,6 +39,7 @@ Bitte verkürzt den Weg, um an die Information zu kommen.
 ### Kritik 3: API
 
 Für die automatische Weiterverarbeitung ist E-Mail suboptimal:
+
 1. Man muss diese irgendwie per IMAP oder POP3 abholen
 2. Man muss die E-Mail parsen und nach dem CSV-Anhang durchsuchen
 3. Man muss dann die Daten irgendwo ablegen.
@@ -52,6 +54,7 @@ PS: Ich habe inzwischen meine Kollegen gefragt und sie haben mich auf das [AVM H
 ### Kritik 4: Dateinamen
 
 Die Dateinamen der CSV-Dateien folgen 2 Schemata, je nach dem ob man sich die Datei per Push-Service zuschicken lässt oder sie von der Web-Oberfläche herunterlädt:
+
 1. `YYYYmmdd-HHMMSS-idXXXXX_ZEITRAUM.csv` (Push-Service-E-Mail)
 2. `$NAME_dd.mm.YYYY_HH-MM_ZEITRUM.csv` (Download)
 
@@ -71,7 +74,8 @@ Bitte vereinheitlicht die Dateinamen für den Push-Service und den Download.
 
 Schauen wir uns nun den Inhalt der CSV-Dateien genauer an:
 Diese haben grob folgenden Aufbau:
-```
+
+```text
 sep=;
 Kopfzeile
 Datenzeilen…
@@ -80,7 +84,8 @@ Datenzeilen…
 ### Kritik 5: CSV Format
 
 [CSV-Dateien](https://de.wikipedia.org/wiki/CSV_(Dateiformat)) sind zwar einfach zu erzeugen, aber deren Weiterverarbeitung ist alles andere als trivial, weil es viele Unterformate gibt:
-- unterschiedliche **Zeichenkodierungen**, e.g. *ASCII*, *UTF-8*, *UTF-16*, *ISO-8859-1*, ̇…
+
+- unterschiedliche **Zeichenkodierungen**, e.g. _ASCII_, _UTF-8_, _UTF-16_, _ISO-8859-1_, ̇…
 - unterschiedliche Zeichen für den **Zeilenumbruch**, e.g. _LF_ (`\n`), _CR_ (`\r`), _CR_+_LF_ (`\r\n`), ̇…
 - unterschiedliche **Trennzeichen** für die Spalten: _Komma_ (`,`), _Semikolon_ (`;`), _Tabular_ (`\t`), Leerzeichen (` `), …
 - **Zeichenketten** in _einfache_ (`'`) bzw. _doppelte Anführungszeichen_ (`"`) einschließen oder nicht
@@ -98,6 +103,7 @@ Es handelt sich um eine Excel-Erweiterung, die von vielen anderen CSV-Parsern ni
 Sie ist nicht Bestandteil von [RFC 4180: Common Format and MIME Type for Comma-Separated Values (CSV) Files](https://www.rfc-editor.org/rfc/rfc4180).
 In [W3C: Model for Tabular Data and Metadata on the](https://www.w3.org/TR/tabular-data-model/#h-sotd) wird lediglich erwähnt, das manche Programm so _Metadaten_ ablegen.
 Davon wird davon abgeraten, denn es führt gerne zu Problemen:
+
 - Der [Python-Parser](https://docs.python.org/3/library/csv.html#csv.DictReader) erkennt z.B. nur Kopfzeilen, wenn sie in der ersten Zeile sind.
   Die zusätzliche Zeile mit dem `sep=;` zerstört diesen Mechanismus.
 
@@ -109,9 +115,9 @@ Als nächstes folgt die Kopfzeile.
 Normalerweise dient dieser der Benennung der Spalten.
 Hier ein paar Beispiele[^1]:
 
-[^1]: Für die bessere Lesbarkeit habe ich Leerzeichen eingefügt, um die Spalten besser kenntlich zu machen. 
+[^1]: Für die bessere Lesbarkeit habe ich Leerzeichen eingefügt, um die Spalten besser kenntlich zu machen.
 
-```
+```text
 1            |2             |3      |4                |5      |6           |7      |8|9       |10        |11|12     |13
 Datum/Uhrzeit;Verbrauchswert;Einheit;Verbrauch in Euro;Einheit;CO2-Ausstoss;Einheit; ;Ansicht:;Datum     ;  ;1 Monat;dd.mm.YYYY HH:MM Uhr
 Datum/   Zeit;Energie       ;Einheit;Energie   in Euro;Einheit;CO2-Ausstoss;Einheit; ;Ansicht:;1 Monat   ;  ;Datum  ;dd.mm.YYYY HH-MM Uhr
@@ -119,6 +125,7 @@ Datum/   Zeit;Energie       ;Einheit;Energie   in Euro;Einheit;CO2-Ausstoss;Einh
 Datum/   Zeit;Energie       ;Einheit;Energie   in Euro;Einheit;CO2-Ausstoss;Einheit; ;Ansicht:;24 Stunden;  ;Datum  ;dd.mm.YYYY HH-MM Uhr
 Datum/   Zeit;Energie       ;Einheit;Energie   in Euro;Einheit;CO2-Ausstoss;Einheit; ;Ansicht:;2 Jahre   ;  ;Datum  ;dd.mm.YYYY HH-MM Uhr
 ```
+
 1. Spalte 1 heißt **uneinheitlich** mal `…/Uhrzeit`, manchmal nur `…/Zeit`.
 2. Spalte 2 heißt **uneinheitlich** mal `Energie`, manchmal aber `Verbrauchswert`.
 3. Spalten 3, 5 und 7 haben jeweils die Überschrift `Einheit` und geben die physikalische Einheit der Spalte davor an.
@@ -155,13 +162,14 @@ Man benötigt also pro Format einen eigenen Parser.
 Die Datei mit den Datensätzen für einen Tag enthält für die letzten 24 Stunden jeweils 4 Datensätze im Abstand von 15 Minuten.
 Die erste Spalte sieht wie folgt aus:
 
-```
+```text
 23:45;…
 0:00;…
 jetzt;…
 ```
 
 Ohne Kontextwissen sind diese Zeitstempeln nicht zu interpretieren:
+
 1. Man benötigt den Erstellungszeitpunkt der Daten aus der Kopfzeile oder dem Dateinamen, um das korrekte Datum zu ergänzen.
 2. Man muss selber erkennen, zwischen welchen Zeilen der Datumswechel stattgefunden hat.
 3. Das `jetzt` erfordert eine weitere Sonderbehandlung.
@@ -178,7 +186,7 @@ Bitte dokumentieren, ob es sich um den _Beginn_ oder das _Ende_ der Erfassungspe
 Die Datei mit den Datensätzen für eine Woche enthält für die letzten 7 Tage jeweils 4 Datensätze im Abstand von 6 Stunden.
 Die erste Spalte sieht wie folgt aus:
 
-```
+```text
 12;…
 18;…
 Do.;…
@@ -186,6 +194,7 @@ Do.;…
 ```
 
 Ohne Kontextwissen sind diese Zeitstempeln nicht zu interpretieren:
+
 1. Man benötigt den Erstellungszeitpunkt der Daten aus der Kopfzeile oder dem Dateinamen, um das korrekte Datum zu ergänzen.
 2. Statt 0 Uhr wird der _Wochentag_ benannt, der aber ohne Kontextwissen nutzlos bleibt.
    Zudem ist unklar, ob der Wochentag lokalisiert ist, d.h. die Wochentage der Spracheinstellung nach unterschiedlich benannt werden.
@@ -204,12 +213,13 @@ Bitte dokumentieren, ob es sich um den _Beginn_ oder das _Ende_ der Erfassungspe
 Die Datei mit den Datensätzen für einen Monat enthält für die letzten 31 Tage jeweils einen Datensatz pro Tag.
 Die erste Spalte sieht wie folgt aus:
 
-```
+```text
 31.12.;…
 1.1.;…
 ```
 
 Ohne Kontextwissen sind diese Datumsangaben nicht zu interpretieren:
+
 1. Man benötigt den Erstellungszeitpunkt der Daten aus der Kopfzeile, um das korrekte Jahr zu ergänzen.
 2. Man muss selber erkennen, zwischen welchen Zeilen der Jahreswechsel stattgefunden hat.
 3. Es werden immer 31 Tage gelistet, auch wenn der Monat nur 30/29/28 Tage hat.
@@ -225,7 +235,7 @@ Bitte immer einen komplettes Datum inklusive Jahreszahl angeben.
 Die Datei mit den Datensätzen für die letzten 1-2 Jahre enthält für jeden Monat jeweils einen Datensatz.
 Die erste Spalte sieht wie folgt aus:
 
-```
+```text
 Mai 2023;…
 Juni 2023;…
 ```

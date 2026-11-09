@@ -7,14 +7,14 @@ excerpt_separator: <!--more-->
 ---
 
 For my employee [Univention](https://www.univention.de/) I want to setup a Continuous Integration system to build Debian packages.
-We have been using our own build-system called *Repo-NG* based on [pbuilder](https://pbuilder-team.pages.debian.net/pbuilder/), which show their age.
+We have been using our own build-system called _Repo-NG_ based on [pbuilder](https://pbuilder-team.pages.debian.net/pbuilder/), which show their age.
 I tried several tricks to improve the build speed as we have to build many packages and many of them multiple times.
 
 <!--more-->
 
 ## Improving pbuilder speed
 
-So far we have been using *pbuilder*, which in its initial form uses *compressed tape archives* `.tar.gz` to have clean build environments.
+So far we have been using _pbuilder_, which in its initial form uses _compressed tape archives_ `.tar.gz` to have clean build environments.
 For each build they are extracted to a new location, in which the package build happens.
 This is slow when using slow disk and was my first vector for optimization.
 
@@ -31,7 +31,7 @@ Enabling it in throw-away build environments is a first optimization.
 
 ### Using QEMU `cache=unsafe`
 
-When we moved *Repo-NG* from physical servers into *virtual machines*, we gave each VM a *scratch volume* using QEMUs `cache=unsafe` feature.
+When we moved _Repo-NG_ from physical servers into _virtual machines_, we gave each VM a _scratch volume_ using QEMUs `cache=unsafe` feature.
 This filters our all `sync()` calls to flush the data to disk, which greatly improves the time to setup the required build dependencies as `sync()` is used a lot during `dpkg` installing packages.
 
 ### Using Eat-my-data
@@ -48,13 +48,13 @@ This also breaks when doing cross-compiles, but other has the benefit, that I ca
 
 ### Using tmpfs
 
-For our [piuparts](https://wiki.debian.org/piuparts) system I'm using a very large *tmpfs* file-system backed by lots of swap space.
+For our [piuparts](https://wiki.debian.org/piuparts) system I'm using a very large _tmpfs_ file-system backed by lots of swap space.
 As long as everything fits into RAM it's ultra-fast as everything happens in RAM only most of the time.
 
 ### Using btrfs
 
 On my personal systems I have been using [btrfs](https://btrfs.wiki.kernel.org/index.php/Main_Page) with [btrfsbuilder](https://github.com/koalatux/btrfsbuilder).
-The idea is to use btrfs built-in feature *writeable snapshots* instead of using extracting `tar` files all the time.
+The idea is to use btrfs built-in feature _writeable snapshots_ instead of using extracting `tar` files all the time.
 This works well with fast disks, but the work to manage the meta-data costs lots of time:
 As btrfs must be prepared to be consistent in case of crashes, it uses `sync()` a lot, which makes it slow.
 Combining it with one of the other methods to reduce the `sync()`-load improves this.
@@ -66,6 +66,7 @@ It allows to stack multiple file systems over each other so that changes go to t
 
 [sbuild](https://wiki.debian.org/sbuild#sbuild_overlays_in_tmpfs) already describes a setup, where the base system is kept unpacked in the file system and each built gets a `tmpfs` overlay for the data.
 This sounds like an excellent solution as it combines the best of two worlds:
+
 - no time to unpack the tar file each time
 - use the ultra fast tmpfs for all temporary build data
 
@@ -81,12 +82,12 @@ Personally I don't like this approach I feat corruption:
 If the library does not intercept all calls correctly or a process by-passes the library, changes might leak back into the master environment and taint all following builds.
 
 Another variant is [qemu-builder](https://wiki.debian.org/qemubuilder), which uses [QEMU](https://www.qemu.org/) to setup a virtual machine for each build.
-QEMU has a built-in *snapshot* feature to protect the master image from changes:
+QEMU has a built-in _snapshot_ feature to protect the master image from changes:
 All changes go into an overlay image, which can be placed on tmpfs for extra speed.
 Using QEMU also allows cross-building for other architectures.
 
-*pbuilder* itself also include [LVM builder](https://pbuilder-team.pages.debian.net/pbuilder/#lvm).
-It uses the *snapshot* feature of the *Logical Volume Manager* built into the Linux kernel.
+_pbuilder_ itself also include [LVM builder](https://pbuilder-team.pages.debian.net/pbuilder/#lvm).
+It uses the _snapshot_ feature of the _Logical Volume Manager_ built into the Linux kernel.
 Each base image is setup as a separate logical volume and each build gets its own writeable snapshot.
 
 ## Using docker
@@ -95,10 +96,12 @@ Each base image is setup as a separate logical volume and each build gets its ow
 There already is [Whalebuilder](https://www.uhoreg.ca/programming/debian/whalebuilder).
 
 Multiple things make Docker attractive:
+
 - it is easy to create a clean environment with just a single command
 - it already implements caching
 
 If you build many packages multiple times, most of the time goes into preparing the build environment:
+
 - determine, which packages are required
 - downloading them
 - installing them
@@ -132,12 +135,14 @@ exit 0
 ```
 
 The good this about this approach is that you can easily use it inside a build pipeline:
+
 - GitLab (and others) already are based on using Docker images.
 - It's easy to install the required build dependencies.
 - You have to find a way to get the build artifacts archived.
   Using [Job artifacts](https://docs.gitlab.com/ee/ci/pipelines/job_artifacts.html) might be one option, but see [Repository hosting](#repository-hosting) below for more options.
 
 This naive approach has the following drawbacks:
+
 - you run the build as the user `root` inside the docker container.
   You have to call `adduser` and `su` to create them inside the container to fix this.
 - the time and network bandwidth to download and install the dependencies is wasted afterwards.
@@ -181,6 +186,7 @@ COPY --from=build /work/*.deb /
 ```
 
 The idea is to
+
 1. Use the previously prepared docker image
 2. Get the required `Build-Depends` and `Build-InDepends` from `debian/control` and install them.
 3. Build the package
@@ -219,8 +225,8 @@ This needs more investigation, especially with smaller packages and using less p
 
 `pbuilder` shows its age:
 It's a collection of shell script having multiple issues.
-Despite the name `pbuilder` prepares the *source package* on your host system, for which it installs all the build-dependencies *on your host*!
-You can disable that by using `--use-pdebuild-internal`, but this is *not* the default!
+Despite the name `pbuilder` prepares the _source package_ on your host system, for which it installs all the build-dependencies _on your host_!
+You can disable that by using `--use-pdebuild-internal`, but this is _not_ the default!
 As soon as you use that you get a new bunch of shell quoting errors, as many more things then need to be done inside the `chroot` environment.
 
 Debian's official build system uses [sbuild](https://wiki.debian.org/sbuild), which looks more robust.
@@ -229,7 +235,7 @@ Debian's official build system uses [sbuild](https://wiki.debian.org/sbuild), wh
 
 ### Speed up Package indexing
 
-*Repo-NG* uses `apt-ftparchive` internally with lots of trick to get it up to speed.
+_Repo-NG_ uses `apt-ftparchive` internally with lots of trick to get it up to speed.
 Most important is the option `--db` to use an database for caching the extracted package data.
 Historically we used `dpkg -I` to extract that data into a text file and concatenated those fragments into the resulting `Packages` file.
 This happened over NFS and resulted in too many `stat()` calls to implement proper cache invalidation:

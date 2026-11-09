@@ -30,10 +30,10 @@ Grob gesprochen funktioniert der [Vergleich](man:deb-version(7)) wie folgt:
   Deshalb sortiert sich z.B. `1~something` vor `1` ein:
   `"~something" < ""`
 - Es gibt weitere Einschränkungen, welche Zeichen in welchen Komponenten der Versionsnummer zulässig sind:
-    - Die Epoche muss rein numerisch sein,
-    - die Upstrem-Version muss mit einer Ziffer beginnen,
-    - die Debian-Revision kann kein Minuszeichen enthalten,
-    - …
+  - Die Epoche muss rein numerisch sein,
+  - die Upstrem-Version muss mit einer Ziffer beginnen,
+  - die Debian-Revision kann kein Minuszeichen enthalten,
+  - …
 
 ## Upstrean Version
 
@@ -151,7 +151,7 @@ Das wird erreicht durch Anhängen von `~bpo${release}+${update}`.
 ## Binary Package version
 
 Normalerweise haben alle Binärpakete, die aus einem Quellpaket gebaut werden, die selbe Versionsnummer wie das Quellpaket aus `debian/changelog`.
-Das ist aber nicht immer so und es tritt z.B. immer bei [binNMU](#binNMU)s auf.
+Das ist aber nicht immer so und es tritt z.B. immer bei [binNMU](#binnmu)s auf.
 Daneben gibt es viele weitere Ausnahmen, z.B. die Pakete des Linux-Kernels, von gcc, Firefox oder Thunderbird in Debian:
 
 ```console
@@ -176,7 +176,7 @@ Die daraus gebauten Binärpakete beziehen sich daher dann auf eine konkrete Vers
 Bis UCS-4.2 wurde für den Neubau der Pakete an die Debian-Version `.${counter}.${timestamp}` angehängt.
 Problematisch hier ist, das der "UCS"-Punkt `.` lexikografisch größer ist als fast alle anderen Zeichen und damit das obige Schema von Debian [kaputt](https://forge.univention.org/bugzilla/show_bug.cgi?id=37376) macht:
 Alle später von Debian veröffentlichten Pakete sortieren sich dann **vor** den UCS-Neubau ein, weshalb das dann jedesmal eine manuelle Anpassung der Versionsnummer für UCS erzwungen hat.
-Da `$counter` i.d.R. sehr viel größer als jeder `$nmu` ist, hat das schon für [NMU](#nmu)s nicht gut funktioniert.
+Da `$counter` i.d.R. sehr viel größer als jeder `$nmu` ist, hat das schon für [NMU](#non-maintainer-upload)s nicht gut funktioniert.
 Seit UCS-4.2 verwenden wir deshalb den Suffix `A~${major}.${minor}.${patch}.${timestamp}`, was wegen dem `A~` nur minimal größer ist als die Debian-Version und bisher kleiner als alle sonstigen verwendeten Suffixe wie `+debXuY` bzw. `+ubuntuZ` ist.
 
 Selbst in UCS-5 haben wir mit den Problemen aus unserem alten Schema zu kämpfen:

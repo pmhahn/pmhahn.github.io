@@ -20,19 +20,20 @@ While listening to the episode [Talk Python 441: Python = Syntactic Sugar?](http
 CPython already does some internal optimizations which saved you from re-implementing this again in Python yourself.
 Brett Cannon wrote several blog post about [Python's syntactic sugar](https://snarky.ca/tag/syntactic-sugar/).
 There are two very important posts about this:
+
 - [Unravelling binary arithmetic operations in Python](https://snarky.ca/unravelling-binary-arithmetic-operations-in-python/)
 - [Unravelling rich comparison operators](https://snarky.ca/unravelling-rich-comparison-operators/)
 
 My most important learnings from them are:
 
-- if *left hand side* (LHS) and *right hand side* (RHS) are of the same type, then CPython will only ever call the comparison method if the LHS, e.g. `1 < 2` will result in only `int.__lt__(1,2)` being called, not also `int.__ge__(2, 1)`.
+- if _left hand side_ (LHS) and _right hand side_ (RHS) are of the same type, then CPython will only ever call the comparison method if the LHS, e.g. `1 < 2` will result in only `int.__lt__(1,2)` being called, not also `int.__ge__(2, 1)`.
 
 - if one argument is a true sub-type of the other, CPython will ask the sub-type first to compare itself to the super-type, e.g. `1 < my_int(2)` is automatically translated to `my_int.__ge__(2, 1)`.
   So if you derive your class `my_subclass` from the super-class `super_class`, make sure your code is able to compare to `super_class`.
 
 Depending on what you compare, the function should `raise TypeError` when incompatible types are compared, but `return NotImplemented` if the types are compatible.
 
-For example comparing *apples* with *oranges* should return a `TypeError`:
+For example comparing _apples_ with _oranges_ should return a `TypeError`:
 
 ```python
 >>> 1 == None
